@@ -23,7 +23,7 @@ public class MyPageDAO {
         return jdbcTemplate.query(sql, new UsersRowMapper());
     }
 
-    public void usersUpdate(UsersVO vo) {
+    public void usersUpdate(UsersVO vo) { // 업데이트는 반환값이 필요 없으므로 void 사용
         String sql = "UPDATE USERS SET USERPW = ?, NNAME=?, PHONE=?, PWLOCK=?, PWKey=? WHERE USERID = ?";
         jdbcTemplate.update(sql,
                 vo.getUserPW(),
