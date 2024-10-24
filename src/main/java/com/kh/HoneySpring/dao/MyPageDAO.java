@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,22 +23,27 @@ public class MyPageDAO {
         return jdbcTemplate.query(sql, new UsersRowMapper());
     }
 
-    public boolean usersUpdate(UsersVO vo) {
-        
-        
+    public void usersUpdate(UsersVO vo) {
+        String sql = "UPDATE USERS SET USERPW = ?, NNAME=?, PHONE=?, PWLOCK=?, PWKey=? WHERE USERID = ?";
+        jdbcTemplate.update(sql,
+                vo.getUserPW(),
+                vo.getNName(),
+                vo.getPhone(),
+                vo.getPwLOCK(),
+                vo.getPwKey());
     }
 
     private static class UsersRowMapper implements RowMapper<UsersVO> {
         @Override
         public UsersVO mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new UsersVO(
-                    rs.getString("USER_ID"),
-                    rs.getString("USER_PW"),
+                    rs.getString("USERID"),
+                    rs.getString("USERPW"),
                     rs.getString("NNAME"),
                     rs.getString("PHONE"),
-                    rs.getDate("UPDATE_DATE"),
-                    rs.getString("PW_LOCK"),
-                    rs.getString("PW_KEY")
+                    rs.getDate("UDATE"),
+                    rs.getString("PWLOCK"),
+                    rs.getString("PWKEY")
             );
         }
     }
