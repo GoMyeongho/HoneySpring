@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Find ID</title>
+</head>
+<body>
+<h2>아이디 찾기</h2>
+<form action="/findID" method="post">
+  <label for="phone">전화번호:</label>
+  <input type="text" id="phone" name="phone" placeholder="010-0000-0000" required><br>
+  <button type="submit">아이디 찾기</button>
+</form>
+<p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+</body>
+</html>

@@ -16,7 +16,7 @@ public class MainController {
     private UsersDAO usersDAO;
 
     // 메인 페이지
-    @GetMapping("/")
+    @GetMapping("/main")
     public String mainPage() {
         return "main";  // main.html로 연결
     }
