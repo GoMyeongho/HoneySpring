@@ -1,11 +1,8 @@
 package com.kh.HoneySpring.dao;
 
 import com.kh.HoneySpring.Common.Common;
-import com.kh.HoneySpring.vo.UsersVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
 
@@ -205,8 +202,8 @@ public class UsersDAO {
 
 
     // !!!!!아이디 찾기------------------------------------------------------------------------------------------
-    public void findID() throws SQLException {
-        String userID;
+    public String findID() throws SQLException {
+        String userID = "";
         Scanner sc = new Scanner(System.in);
         String phone;
         List<String> phoneList = new ArrayList<>();
@@ -249,18 +246,19 @@ public class UsersDAO {
                 }
             }catch (Exception e) {
                 System.out.println(e + "연결 실패");
-                return;
+                return userID;
             }
             break;
         }
         Common.close(rs);
         Common.close(stmt);
         Common.close(conn);
+        return userID;
     }
 
 
     // !!!!!!비밀번호 찾기------------------------------------------------------------------------------
-    public void findPW() throws SQLException {
+    public String findPW() throws SQLException {
         String userID, pwLOCK, pwKey, userPW;
         Scanner sc = new Scanner(System.in);
         List<String> IDList = new ArrayList<>();
@@ -288,7 +286,7 @@ public class UsersDAO {
                 userPW = rs.getString("USERPW");
             } else {
                 System.out.println("해당 아이디로 가입된 계정이 없습니다.");
-                return;
+                return userID;
             }
 
             if (userID.getBytes().length >= 8 && userID.getBytes().length <= 16) {
@@ -313,7 +311,7 @@ public class UsersDAO {
             pwLOCK = rs.getString("pwLOCK");
         } catch (Exception e) {
             System.out.println(e + "연결 실패");
-            return;
+            return userID;
         }
         while (true) {
             System.out.println("제시문: " + pwLOCK);
@@ -335,7 +333,7 @@ public class UsersDAO {
                 userPW = rs.getString("userPW");
             }catch (Exception e) {
                 System.out.println(e + "연결 실패");
-                return;
+                return userID;
             }
             System.out.print("비밀번호는 " + userPW + "입니다.");
             break;
@@ -343,6 +341,7 @@ public class UsersDAO {
         Common.close(rs);
         Common.close(stmt);
         Common.close(conn);
+        return userID;
     }
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -374,8 +373,6 @@ public class UsersDAO {
         // 앞 4자를 제외한 문구는 *로 표기
         return visiblePart + maskedPart;
     }
-
-
 
 }
 
