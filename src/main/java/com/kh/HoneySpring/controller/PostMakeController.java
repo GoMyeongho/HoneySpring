@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/create")
+@RequestMapping("/posts")
 public class PostMakeController {
     private final PostMakeDAO postMakeDAO;
 
@@ -21,15 +21,15 @@ public class PostMakeController {
     }
 
     @GetMapping("/create")  // 카테고리를 보여주는 Mapping
-    public String shwCateOption(Model model) {  // http://localhost:8112/posts/create
+    public String showCreatePostForm(Model model) {  // http://localhost:8112/posts/create
         List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
         model.addAttribute("categories", categories);
-        model.addAttribute("postNo", new PostsVO());
+        model.addAttribute("post", new PostsVO());
         return "Thymeleaf/postMakeCreate";
     }
 
     @PostMapping("/create") // 글 작성시 DB로 전달하는 PostMapping
-    public String makePostIntoDB(@ModelAttribute("postNo") PostsVO postsVO, Model model) {
+    public String submitPost(@ModelAttribute("post") PostsVO postsVO, Model model) {
         boolean isSubmitted = postMakeDAO.PostmakeCreate(postsVO);
         model.addAttribute("isSubmitted", isSubmitted);
         return "Thymeleaf/postMakeResult";

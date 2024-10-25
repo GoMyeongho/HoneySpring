@@ -8,12 +8,12 @@
 <body class="container">
 <div class="form-container">
   <h1>새 글 작성</h1>
-  <form action="#" th:action="@{posts/create}" th:object="${postNo}" method="postNo">
+  <form th:action="@{/posts/create}" th:object="${post}" method="post">
     <div>
       <label for="categories">카테고리</label>
-      <select id="categories" th:field="*{categories}">
-      <option value="">카테고리를 선택 하세요</option>
-      <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+      <select id="categories" th:field="*{category}">
+        <option value="">카테고리를 선택하세요</option>
+        <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
       </select>
     </div>
     <div>
@@ -22,7 +22,7 @@
     </div>
     <div>
       <label for="content">글 본문 내용 입력</label>
-      <input type="text" id="content" th:field="*{content}" />
+      <textarea id="content" th:field="*{content}"></textarea>
     </div>
     <div>
       <button type="submit">등록하기</button>
