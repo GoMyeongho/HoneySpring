@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/posts")
 public class PostMakeController {
-    private final PostMakeDAO postMakeDA;
+    private final PostMakeDAO postMakeDAO;
 
-    public PostMakeController(PostMakeDAO postMakeDA) { // 의존성 주입
-        this.postMakeDA = postMakeDA;
+    public PostMakeController(PostMakeDAO postMakeDAO) { // 의존성 주입
+        this.postMakeDAO = postMakeDAO;
     }
     @GetMapping("/insert")
     public String makeViewPost(Model model) {
