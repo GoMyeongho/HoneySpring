@@ -12,7 +12,7 @@ public class PostMakeDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public boolean PostmakeInsert(PostsVO postVO) {
+    public boolean PostmakeCreate(PostsVO postVO) {
         int rst = 0;
         String sql = "INSERT into Posts (POSTNO, TITLE, USERID, PCONTENT, PDATE, CATE) values(seq_postno.nextval, ?, ?, ?, sysdate, ?)";
         try {

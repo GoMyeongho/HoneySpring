@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New Page</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="container">
+<div class="form-container">
+  <h1>새 글 작성</h1>
+  <form action="#" th:action="@{/posts/create}" th:object="${postNo}" method="postNo">
+    <div>
+      <label for="categories">카테고리</label>
+      <select id="categories" th:field="*{categories}">
+      <option value="">카테고리를 선택 하세요</option>
+      <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+      </select>
+    </div>
+    <div>
+      <label for="title">글 제목 입력</label>
+      <input type="text" id="title" th:field="*{title}" />
+    </div>
+    <div>
+      <label for="content">글 본문 내용 입력</label>
+      <input type="text" id="content" th:field="*{content}" />
+    </div>
+    <div>
+      <button type="submit">등록하기</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
