@@ -29,26 +29,17 @@ public class MyPageController {
         return "thymeleaf/usersSelect";
     }
 
-    // 사용자 정보를 조회하는 메소드 (중복 방지)
-    private UsersVO getUserById(String userId) {
-        return myPageDAO.usersSelect().stream()
-                .filter(user -> user.getUserID().equals(userId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + userId));
-    }
-
     // 사용자 업데이트 폼 (GET 요청)
     @GetMapping("/update")
     public String updateUserForm(@RequestParam("userId") String userId, Model model) {
-        UsersVO userToUpdate = getUserById(userId);
+        UsersVO userToUpdate = myPageDAO.findUserById(userId); // DAO를 통해 직접 조회
         model.addAttribute("user", userToUpdate);
         return "thymeleaf/updateUserForm";
     }
 
     // 사용자 업데이트 처리 (POST 요청)
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute UsersVO user, @RequestParam("userId") String userId, Model model) {
-        user.setUserID(userId);  // 반드시 userId를 설정
+    public String updateUser(@ModelAttribute UsersVO user) {
         myPageDAO.usersUpdate(user);  // 업데이트 처리
         return "redirect:/users/select";
     }
