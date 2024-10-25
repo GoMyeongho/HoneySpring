@@ -19,18 +19,15 @@ public class PostMakeController {
     public PostMakeController(PostMakeDAO postMakeDAO) { // 의존성 주입
         this.postMakeDAO = postMakeDAO;
     }
-    @GetMapping("/create")  // 글 작성 메뉴를 보여주는 GetMapping
-    public String showPostMake(Model model) {
-        model.addAttribute("postNo", new PostsVO());
-        return "Thymeleaf/postMakeCreate";
-    }
+
     @GetMapping("/create")  // 카테고리를 보여주는 Mapping
     public String shwCateOption(Model model) {
         List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
         model.addAttribute("categories", categories);
-        model.addAttribute("PostMake", new PostsVO());
+        model.addAttribute("postNo", new PostsVO());
         return "Thymeleaf/postMakeCreate";
     }
+
     @PostMapping("/create") // 글 작성시 DB로 전달하는 PostMapping
     public String makePostIntoDB(@ModelAttribute("postNo") PostsVO postsVO, Model model) {
         boolean isSubmitted = postMakeDAO.PostmakeCreate(postsVO);
