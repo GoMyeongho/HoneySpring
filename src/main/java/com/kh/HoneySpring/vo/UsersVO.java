@@ -1,4 +1,5 @@
 package com.kh.HoneySpring.vo;
+
 import lombok.*;
 import java.sql.Date;
 
@@ -7,6 +8,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+
 public class UsersVO {
     private String userID;
     private String userPW;
