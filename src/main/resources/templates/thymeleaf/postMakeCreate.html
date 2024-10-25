@@ -8,7 +8,7 @@
 <body class="container">
 <div class="form-container">
   <h1>새 글 작성</h1>
-  <form action="#" th:action="@{/posts/create}" th:object="${postNo}" method="postNo">
+  <form action="#" th:action="@{posts/create}" th:object="${postNo}" method="postNo">
     <div>
       <label for="categories">카테고리</label>
       <select id="categories" th:field="*{categories}">

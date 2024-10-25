@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/posts")
+@RequestMapping("/create")
 public class PostMakeController {
     private final PostMakeDAO postMakeDAO;
 
@@ -21,7 +21,7 @@ public class PostMakeController {
     }
 
     @GetMapping("/create")  // 카테고리를 보여주는 Mapping
-    public String shwCateOption(Model model) {
+    public String shwCateOption(Model model) {  // http://localhost:8112/posts/create
         List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
         model.addAttribute("categories", categories);
         model.addAttribute("postNo", new PostsVO());
