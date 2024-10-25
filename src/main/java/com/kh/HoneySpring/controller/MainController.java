@@ -1,6 +1,8 @@
 package com.kh.HoneySpring.controller;
 
 import com.kh.HoneySpring.dao.UsersDAO;
+import com.kh.HoneySpring.dao.findIDDAO;
+import com.kh.HoneySpring.dao.findPWDAO;
 import com.kh.HoneySpring.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainController {
     @Autowired
     private UsersDAO usersDAO;
+    private findIDDAO findIDDAO;
+    private findPWDAO findPWDAO;
 
     // 메인 페이지
     @GetMapping("/main")
@@ -71,7 +75,7 @@ public class MainController {
     @PostMapping("/findID")
     public String findID(@RequestParam("phone") String phone, Model model) {
         try {
-            String userID = usersDAO.findID();
+            String userID = findIDDAO.findID();
             model.addAttribute("userID", userID);
             return "showID";  // showID.html 페이지로 이동
         } catch (Exception e) {
@@ -91,7 +95,7 @@ public class MainController {
     public String findPW(@RequestParam("userID") String userID,
                          @RequestParam("pwKey") String pwKey, Model model) {
         try {
-            String userPW = usersDAO.findPW();
+            String userPW = findPWDAO.findPW();
             model.addAttribute("userPW", userPW);
             return "showPW";  // showPW.html 페이지로 이동
         } catch (Exception e) {

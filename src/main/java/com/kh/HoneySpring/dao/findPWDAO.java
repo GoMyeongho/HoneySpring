@@ -14,7 +14,7 @@ public class findPWDAO {
     static ResultSet rs = null;
     static Scanner sc = null;
 
-    public void findPW() throws SQLException {
+    public String findPW() throws SQLException {
         String userID, pwLOCK, pwKey, userPW;
         Scanner sc = new Scanner(System.in);
         List<String> IDList = new ArrayList<>();
@@ -42,7 +42,7 @@ public class findPWDAO {
             if (userID.getBytes().length >= 8 && userID.getBytes().length <= 16) {
             } else {
                 System.out.println("아이디 입력 조건을 다시 확인 해 주세요");
-                return;
+                return userID;
             }
             if (IDList.contains(userID)) ;
             else {
@@ -62,7 +62,7 @@ public class findPWDAO {
 
         } catch (Exception e) {
             System.out.println(e + "연결 실패");
-            return;
+            return userID;
         } finally {
             Common.close(rs);
             Common.close(psmt);
@@ -86,7 +86,7 @@ public class findPWDAO {
                 userPW = rs.getString("userPW");
             } catch (Exception e) {
                 System.out.println(e + "연결 실패");
-                return;
+                return userID;
             } finally {
                 Common.close(rs);
                 Common.close(psmt);
@@ -95,6 +95,7 @@ public class findPWDAO {
             System.out.println("비밀번호는 " + userPW + "입니다.");
             break;
         }
+        return userID;
     }
     public String noKor() {
         String name = sc.next();

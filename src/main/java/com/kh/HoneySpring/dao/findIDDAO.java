@@ -16,8 +16,8 @@ public class findIDDAO {
     static ResultSet rs = null;
     static Scanner sc = null;
 
-    public void findID() throws SQLException {
-        String userID;
+    public String findID() throws SQLException {
+        String userID = "";
         Scanner sc = new Scanner(System.in);
         String phone;
         List<String> phoneList = new ArrayList<>();
@@ -60,13 +60,14 @@ public class findIDDAO {
                 }
             }catch (Exception e) {
                 System.out.println(e + "연결 실패");
-                return;
+                return userID;
             }
             break;
         }
         Common.close(rs);
         Common.close(stmt);
         Common.close(conn);
+        return userID;
     }
 
     // 숫자와 - 외의 문자가 들어가지 않는지 확인하는 메서드(존재할 시 null리턴)
