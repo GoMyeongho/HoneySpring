@@ -5,7 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class Common {final static String ORACLE_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+public class Common {
+    final static String ORACLE_URL = "jdbc:oracle:thin:@localhost:1521:xe";
     final static String ORACLE_ID = "HONEY";
     final static String ORACLE_PW = "1234";
     final static String ORACLE_DRV = "oracle.jdbc.driver.OracleDriver";
@@ -34,7 +35,6 @@ public class Common {final static String ORACLE_URL = "jdbc:oracle:thin:@localho
         try {
             if(stmt != null && !stmt.isClosed()) {
                 stmt.close();
-                System.out.println("Statement 해제 성공");
             }
         } catch (Exception e) {
             System.out.println(e + "해제 실패");
@@ -54,7 +54,7 @@ public class Common {final static String ORACLE_URL = "jdbc:oracle:thin:@localho
         try {
             if(conn != null && !conn.isClosed()) {
                 conn.commit();
-                System.out.println("커밋 완료");
+
             }
 
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class Common {final static String ORACLE_URL = "jdbc:oracle:thin:@localho
         try {
             if (conn != null && !conn.isClosed()) {
                 conn.rollback();
-                System.out.println("롤백 완료");
+
             }
         } catch (Exception e) {
             e.printStackTrace();
