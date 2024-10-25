@@ -2,6 +2,8 @@ package com.kh.HoneySpring.vo;
 
 import lombok.*;
 
+import java.sql.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -11,7 +13,7 @@ public class PostsVO {
     private String title;
     private String content;
     private String author;
-    private String date;
+    private Date date;
     private String category;
     private String userID;
 
