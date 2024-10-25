@@ -33,6 +33,10 @@ public class MyPageDAO {
                 vo.getPwKey());
     }
 
+    public UsersVO findUserById(String userId) {
+        return null;
+    }
+
     private static class UsersRowMapper implements RowMapper<UsersVO> {
         @Override
         public UsersVO mapRow(ResultSet rs, int rowNum) throws SQLException {
