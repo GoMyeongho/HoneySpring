@@ -257,7 +257,7 @@ public class UsersDAO {
         try {
             conn = Common.getConnection();  // 오라클 DB 연결
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT PHONE FROM VM_LOGIN");
+            rs = stmt.executeQuery("SELECT PHONE FROM USERS");
             while(rs.next()){
                 String Phone = rs.getString("PHONE");
                 phoneList.add(Phone);
@@ -335,9 +335,8 @@ public class UsersDAO {
                 System.out.println("아이디 입력 조건을 다시 확인 해 주세요");
                 return userID;
             }
-            if (IDList.contains(userID)) {
-                userPW = rs.getString("USERPW");
-            } else {
+            if (IDList.contains(userID));
+            else {
                 System.out.println("해당 아이디로 가입된 계정이 없습니다.");
                 continue;
             }
@@ -347,9 +346,10 @@ public class UsersDAO {
         try {
             conn = Common.getConnection();
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT pwLOCK FROM USERS WHERE userID = '" + userID +"'");
+            rs = stmt.executeQuery("SELECT pwLOCK, PWKEY FROM USERS WHERE userID = '" + userID +"'");
             rs.next();
-            pwLOCK = rs.getString("pwLOCK");
+            pwLOCK = rs.getString("PWLOCK");
+            pwKey = rs.getString("PWKEY");
         } catch (Exception e) {
             System.out.println(e + "연결 실패");
             return userID;
@@ -363,17 +363,15 @@ public class UsersDAO {
             // 데이터베이스에 있는 아이디 확인하여 pwLOCK 가져오기
             System.out.println("키워드를 입력 해 주세요. 키워드는 한글 기준 8자 이하 입니다.");
             System.out.print("키워드: ");
-            pwKey = sc.next();
-            if (pwKey.getBytes().length <= 24) {
-
+            if (pwKey.equals(sc.next())) {
             } else {
-                System.out.println("키워드 입력 조건을 다시 확인 해 주세요");
+                System.out.println("키워드가 다릅니다.");
                 continue;
             }
             try {
                 conn = Common.getConnection();
                 stmt = conn.createStatement();
-                rs = stmt.executeQuery("SELECT userPW FROM USERS WHERE pwKey = '" + pwKey +"'");
+                rs = stmt.executeQuery("SELECT userPW FROM USERS WHERE USERID = '" + userID +"'");
                 rs.next();
                 userPW = rs.getString("userPW");
             }catch (Exception e) {
@@ -384,7 +382,7 @@ public class UsersDAO {
                 Common.close(psmt);
                 Common.close(conn);
             }
-            System.out.print("비밀번호는 " + userPW + "입니다.");
+            System.out.println("비밀번호는 " + userPW + "입니다.");
             break;
         }
         return userID;
