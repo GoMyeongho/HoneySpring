@@ -1,5 +1,6 @@
 package com.kh.HoneySpring.dao;
 
+import com.kh.HoneySpring.Common.Common;
 import com.kh.HoneySpring.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
 
+@Repository
 public class UsersDAO {
     static Connection conn = null;
     static Statement stmt = null;
@@ -373,4 +375,8 @@ public class UsersDAO {
         return visiblePart + maskedPart;
     }
 
+
+
 }
+
+
