@@ -1,6 +1,7 @@
 package com.kh.HoneySpring.controller;
 
 import com.kh.HoneySpring.dao.PostMakeDAO;
+import com.kh.HoneySpring.vo.PostsVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class PostMakeController {
     }
     @GetMapping("/insert")
     public String makeViewPost(Model model) {
-        model.addAttribute("postNo", new PostVO());
+        model.addAttribute("pos6tNo", new PostsVO());
+        return "Thymeleaf/PostInsert";
     }
 }

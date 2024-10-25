@@ -41,4 +41,7 @@ public class PostsVO {
         this.date = date;
         this.category = category;
     }
+
+    public PostsVO() {
+    }
 }
