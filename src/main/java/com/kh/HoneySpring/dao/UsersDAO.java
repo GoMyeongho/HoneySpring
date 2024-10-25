@@ -55,9 +55,11 @@ public class UsersDAO {
     }
 
     public void joinMember() {
-        String userPW="", userID ="", nName, phone ="", pwLOCK, pwKey;
+        String userPW="", userID ="", nName = "", phone ="", pwLOCK, pwKey;
         // 아이디 생성
-        while (true) {
+        boolean isRepeat = true;
+        while (isRepeat) {
+            isRepeat = false;
             System.out.println("아이디는 8자 이상 16자 이하의 영문 및 숫자이어야 합니다. (중복 불가능)");
             System.out.print("아이디: ");
             List<String> IDList = new ArrayList<>();
@@ -88,10 +90,11 @@ public class UsersDAO {
                 // if 중복된 아이디 확인
                 if (userID.equals(e)){
                     System.out.println("이미 존재하는 아이디 입니다.");
-                    continue;
+                    isRepeat = true;
+
                 }
             }
-            break;
+
         }
         // 비밀번호 생성
         while (true) {
@@ -116,7 +119,9 @@ public class UsersDAO {
 
         }
         // 닉네임 생성
-        while (true) {
+        isRepeat = true;
+        while (isRepeat) {
+            isRepeat = false;
             System.out.println("(사이트)에서 사용하실 닉네임을 입력 해 주세요");
             System.out.println("닉네임은 한글 기준 8자 까지 그리고 영어, 숫자 기준 16자까지 가능하며 중복 불가능합니다.");
             System.out.print("닉네임: ");
@@ -142,17 +147,18 @@ public class UsersDAO {
                 System.out.println("닉네임 생성 조건을 다시 확인 후 입력 해 주세요.");
                 continue;
             }
-            for (String e : nNameList) {
-                // if 중복된 닉네임
-                if (nNameList.contains(nName)){
-                    System.out.println("이미 존재하는 닉네임 입니다.");
-                    continue;
-                }
+            if (nNameList.contains(nName)){
+                System.out.println("이미 존재하는 닉네임 입니다.");
+                isRepeat = true;
+
+
             }
-            break;
+
         }
         // 전화번호 입력
-        while (true) {
+        isRepeat = true;
+        while (isRepeat) {
+            isRepeat = false;
             System.out.println("전화번호를 입력 해 주세요(010-0000-0000, 형태로 하이픈을 포함하여 입력 해 주세요)");
             System.out.print("전화번호: ");
             phone = sc.next();
@@ -160,9 +166,9 @@ public class UsersDAO {
             try {
                 conn = Common.getConnection();  // 오라클 DB 연결
                 stmt = conn.createStatement();
-                rs = stmt.executeQuery("SELECT USERID FROM VM_LOGIN");
+                rs = stmt.executeQuery("SELECT PHONE FROM USERS");
                 while(rs.next()){
-                    String Phone = rs.getString("Phone");
+                    String Phone = rs.getString("PHONE");
                     phonList.add(Phone);
                 }
             } catch (Exception e){
@@ -179,12 +185,12 @@ public class UsersDAO {
             }
             for (String e : phonList) {
                 // if 중복된 전화번호 확인
-                if (phonList.equals(e)){
+                if (phone.equals(e)){
                     System.out.println("이미 가입된 번호 입니다.");
-                    continue;
+                    isRepeat = true;
                 }
             }
-            break;
+
         }
         // 비밀번호 찾기 시 사용 할 질문 및 키워드
         while (true) {
@@ -194,9 +200,10 @@ public class UsersDAO {
             System.out.print("질문 입력: ");
             pwLOCK = sc.nextLine();
             if (pwLOCK.getBytes().length >= 60) {
+                System.out.print("질문 생성 조건을 확인 후 다시 입력 해 주세요.");
                 continue;
             } else {
-                System.out.print("질문 생성 조건을 확인 후 다시 입력 해 주세요.");
+
             }
             if(pwLOCK.contains(userPW)) {
                 continue;
@@ -250,9 +257,9 @@ public class UsersDAO {
         try {
             conn = Common.getConnection();  // 오라클 DB 연결
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT USERID FROM VM_LOGIN");
+            rs = stmt.executeQuery("SELECT PHONE FROM VM_LOGIN");
             while(rs.next()){
-                String Phone = rs.getString("Phone");
+                String Phone = rs.getString("PHONE");
                 phoneList.add(Phone);
             }
         } catch (Exception e){
@@ -276,7 +283,7 @@ public class UsersDAO {
             try {
                 conn = Common.getConnection();
                 stmt = conn.createStatement();
-                rs = stmt.executeQuery("SELECT userID FROM USERS WHERE PHONE = '" + phone +"';");
+                rs = stmt.executeQuery("SELECT userID FROM USERS WHERE PHONE = '" + phone +"'");
                 if (rs.next()) {
                     userID = rs.getString("USERID");
                     String maskedID = maskUserID(userID);
@@ -322,23 +329,17 @@ public class UsersDAO {
             System.out.print("아이디: ");
             System.out.println();
             userID = noKor();
-            if (rs.next()) {
-                userPW = rs.getString("USERPW");
-            } else {
-                System.out.println("해당 아이디로 가입된 계정이 없습니다.");
-                return userID;
-            }
 
             if (userID.getBytes().length >= 8 && userID.getBytes().length <= 16) {
             } else {
                 System.out.println("아이디 입력 조건을 다시 확인 해 주세요");
-                continue;
+                return userID;
             }
-            for (String e : IDList) {
-                if (IDList.equals(e)){
-                }
-                else {
-                }
+            if (IDList.contains(userID)) {
+                userPW = rs.getString("USERPW");
+            } else {
+                System.out.println("해당 아이디로 가입된 계정이 없습니다.");
+                continue;
             }
             break;
         }
@@ -346,12 +347,16 @@ public class UsersDAO {
         try {
             conn = Common.getConnection();
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT pwLOCK FROM USERS WHERE userID = '" + userID +"';");
+            rs = stmt.executeQuery("SELECT pwLOCK FROM USERS WHERE userID = '" + userID +"'");
             rs.next();
             pwLOCK = rs.getString("pwLOCK");
         } catch (Exception e) {
             System.out.println(e + "연결 실패");
             return userID;
+        }finally {
+            Common.close(rs);
+            Common.close(psmt);
+            Common.close(conn);
         }
         while (true) {
             System.out.println("제시문: " + pwLOCK);
@@ -368,19 +373,20 @@ public class UsersDAO {
             try {
                 conn = Common.getConnection();
                 stmt = conn.createStatement();
-                rs = stmt.executeQuery("SELECT userPW FROM USERS WHERE pwKey = '" + pwKey +"';");
+                rs = stmt.executeQuery("SELECT userPW FROM USERS WHERE pwKey = '" + pwKey +"'");
                 rs.next();
                 userPW = rs.getString("userPW");
             }catch (Exception e) {
                 System.out.println(e + "연결 실패");
                 return userID;
+            }finally {
+                Common.close(rs);
+                Common.close(psmt);
+                Common.close(conn);
             }
             System.out.print("비밀번호는 " + userPW + "입니다.");
             break;
         }
-        Common.close(rs);
-        Common.close(stmt);
-        Common.close(conn);
         return userID;
     }
 
@@ -398,8 +404,8 @@ public class UsersDAO {
     public String inputPhone() {
         String phone = sc.next();
         for (int i = 0; i < phone.length(); i++) {
-            if (phone.charAt(i) >= 48 || phone.charAt(i) <= 57 || phone.charAt(i) == 45)
-                //phone.matches("^010-\\d{4}-\\d{4}$")  << gpt가 추천해준 정규식
+            if (phone.matches("^010-\\d{4}-\\d{4}$"))
+                // gpt가 추천해준 정규식 사용
                 return phone;
         }
         System.out.println("전화번호 형식이 맞지 않습니다.");
