@@ -11,11 +11,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class UsersController {
+public class MainController {
     @Autowired
     private UsersDAO usersDAO;
 
-    // 회원가입 폼 페이지로 이동
+    // 메인 페이지
+    @GetMapping("/")
+    public String mainPage() {
+        return "main";  // main.html로 연결
+    }
+
+    // 로그인 페이지
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";  // login.html로 연결
+    }
+
+    // 로그인 처리
+    @PostMapping("/login")
+    public String login(@RequestParam("userID") String userID,
+                        @RequestParam("userPW") String userPW, Model model) {
+        String nickname = usersDAO.login(userID, userPW);
+        if (nickname != null) {
+            model.addAttribute("nickname", nickname);
+            return "welcome";  // 로그인 성공 시 welcome.html로 이동
+        } else {
+            model.addAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
+            return "login";  // 로그인 실패 시 다시 login.html로 이동
+        }
+    }
+
+    // 회원가입 페이지로 이동
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("userVO", new UsersVO());
@@ -73,5 +99,4 @@ public class UsersController {
             return "findPW";
         }
     }
-
 }
