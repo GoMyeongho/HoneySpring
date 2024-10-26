@@ -52,11 +52,22 @@ public class CommentsDAO {
         return result > 0;
     }
 
-    public boolean Comment(int postNo, String id) {
-        String sql = "INSERT INTO COMMENTS (COMMNO, SUBNO, POSTNO, USERID, CCONTENT, CDATE) VALUES(SEQ_COMMNO.NEXTVAL, SEQ_SUBNO.NEXTVAL, ?, ?, ?, SYSDATE)";
+    public boolean updateComment(CommentsVO vo) {
+        String sql = "UPDATE COMMENTS SET CCONTENT = ? WHERE SUBNO = ?";
         int result = 0;
         try {
-            result = jdbcTemplate.update(sql, id, postNo);
+            result = jdbcTemplate.update(sql, vo.getContent(), vo.getSubNo());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result > 0;
+    }
+
+    public boolean deleteComment(CommentsVO vo) {
+        String sql = "UPDATE COMMENTS SET CCONTENT = '삭제된 댓글입니다.\n' WHERE SUBNO = ?";
+        int result = 0;
+        try {
+            result = jdbcTemplate.update(sql, vo.getSubNo());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

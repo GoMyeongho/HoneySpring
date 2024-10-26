@@ -38,7 +38,7 @@ public class PostViewDAO {
         return result > 0;
     }
 
-    public boolean empDelete(int postNo) {
+    public boolean deletePost(int postNo) {
         String sql = "UPDATE POSTS SET CATE = 'DELETE' WHERE POSTNO = ?";
         int result = 0;
         try {
