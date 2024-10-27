@@ -231,26 +231,6 @@ public class UsersDAO {
         return name;
     }
 
-    // 숫자와 - 외의 문자가 들어가지 않는지 확인하는 메서드(존재할 시 null리턴)
-    public String inputPhone() {
-        String phone = sc.next();
-        for (int i = 0; i < phone.length(); i++) {
-            if (phone.matches("^010-\\d{4}-\\d{4}$"))
-                // gpt가 추천해준 정규식 사용
-                return phone;
-        }
-        System.out.println("전화번호 형식이 맞지 않습니다.");
-        return null;
-    }
-
-    // 유저 아이디를 마스킹하는 메서드 (아이디 찾기에서 사용)
-    public String maskUserID(String userID) {
-        String visiblePart = userID.substring(0, 4);
-        String maskedPart = "*".repeat(userID.length() - 4);
-        // 앞 4자를 제외한 문구는 *로 표기
-        return visiblePart + maskedPart;
-    }
-
 }
 
 
