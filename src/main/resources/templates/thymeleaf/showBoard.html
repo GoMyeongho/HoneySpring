@@ -6,19 +6,40 @@
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="container">
-<div class="form-container">
-  <h1>게시판</h1>
-  <form action="#" th:action="@{/board}" method="post">
-    <input type="text" name="title" placeholder="제목" required />
-    <textarea name="content" placeholder="내용" required></textarea>
-    <button type="submit">게시글 추가</button>
-  </form>
-  <ul>
-    <li th:each="post : ${posts}">
-      <h2 th:text="${post.title}"></h2>
-      <p th:text="${post.content}"></p>
-    </li>
-  </ul>
-</div>
+  <div class="head">
+    <a href="/main">
+      <img th:src="@{/image/honey.png}" alt = "메인" class="head">
+    </a>
+  </div>
+
+  <div id="posts">
+    <table>
+      <thead>
+        <tr>
+          <th>카테고리</th>
+          <th>제목</th>
+          <th>닉네임</th>
+          <th>게시일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="post : ${board}">
+          <td th:text="${post.category}"></td>
+          <td th:text="${post.title}"></td>
+          <td th:text="${post.author}"></td>
+          <td th:text="${post.getDate()}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+ <div id = search-input>
+   <label for="searchOptions">검색 조건</label>
+   <select id="searchOptions" th:field="*{category}">
+     <option value="">카테고리를 선택하세요</option>
+     <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+   </select>
+ </div>
+
 </body>
 </html>
