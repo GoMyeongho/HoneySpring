@@ -6,6 +6,16 @@
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="container">
+
+<script>
+    window.onload = function() {
+        const postDelete = /*[[${deleteSuccess}]]*/ false;
+        if (postDelete){
+            alert('글이 삭제되었습니다')
+        }
+    };
+</script>
+
   <div class="head">
     <a href="/main">
       <img th:src="image/honey.png" alt = "메인" class="head">
@@ -60,7 +70,7 @@
    </select>
     <input type="text" th:field="*{search}" placeholder="검색내용을 입력하세요"
           th:value="${search}"/>
-    <input type="hidden" id="type" name="type" th:value="${currentType}"/>
+    <input type="hidden" id="type" name="type" th:value="${type}"/>
     <input type="hidden" name="page" th:value="1"/>
    <button type="submit">검색</button>
  </form>

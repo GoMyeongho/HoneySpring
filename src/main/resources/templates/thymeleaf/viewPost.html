@@ -6,6 +6,28 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="container">
+
+<script>
+    window.onload = function() {
+        const postUpdate = /*[[${updateSuccess}]]*/ false; // 모델에서 상태 정보 가져오기
+        if (postUpdate) {
+            alert('글이 수정 되었습니다.');
+        }
+        const commDelete = /*[[${deleteCommSuccess}]]*/ false;
+        if (commDelete){
+            alert('댓글이 삭제 되었습니다')
+        }
+        const commUpdate = /*[[${updateCommSuccess}]]*/ false;
+        if (commDelete){
+            alert('댓글이 수정 되었습니다')
+        }
+        const commCreate = /*[[${createCommSuccess}]]*/ false;
+        if (commCreate){
+            alert('댓글이 생성 되었습니다')
+        }
+    };
+</script>
+
 <div class="head">
     <a th:href="/main">
         <img th:src="image/honey.png" alt = "메인" class="head">
@@ -26,7 +48,7 @@
     </h2>
     <div class="content" th:text="${post.content}">게시글 내용</div>
     <div class="like">
-        <form th:action="@{/view(postno=${post.postno})}" method="post">
+        <form th:action="@{/posts/view(postno=${post.postno})}" method="post">
             <button type="submit" class="like" th:text="${likeMark}">좋아요 <span th:text="${likeNo}">0</span></button>
         </form>
     </div>
@@ -37,16 +59,30 @@
         <span th:text="${comment.NName} ">작성자 </span>
         <span th:text="${#dates.format(comment.CDate, 'yyyy년 MM월 dd일')}">작성일</span>
     </h3>
-    <a class="button" th:href="@{/}"></a>
-    <a class="button" th:if="${name}==${comment.nName}" th:href="@{view/update(subno=${comment.subNo})}">댓글수정</a>
-    <a class="button" th:if="${name}==${comment.nName}" th:href="@{view/delete(subno=${comment.subNo})}">댓글삭제</a>
+    <div class="button">
+        <a  th:href="@{/posts/comment/create(commType='type2')}">댓글 생성</a>
+
+        <a  th:if="${name} == ${comment.NName}" th:href="@{/posts/comment/update(comment=${comment}, commNo = ${comment.commNo})}">댓글 수정</a>
+
+        <form th:if="${name} == ${comment.NName}" th:action="@{/posts/comment/delete}" method="post" style="display:inline;">
+            <input type="hidden" name="subno" th:value="${comment}"/> <!-- 댓글 ID를 전송 -->
+            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">댓글 삭제</button>
+        </form> <!-- POST 방식으로 삭제 -->
+    </div>
     <p th:text="${comment.content}">댓글 내용</p>
 
 </div>
+<a class="button" th:href="@{/posts/comment/create(commType='type1')}">댓글 생성</a>
 
 <div class="button">
-    <a th:if="${name}==${post.author}" th:href="@{/update(postno=${post.postno})} ">글 수정</a>
-    <a th:if="${name}==${post.author}" th:href="@{/delete(postno=${post.postno})} ">글 삭제</a>
+    <a th:if="${name} == ${post.author}" th:href="@{/posts/update(post=${post})}">글 수정</a> <!-- GET 방식으로 수정 -->
+
+    <form th:if="${name} == ${post.author}" th:action="@{/posts/delete}" method="post" style="display:inline;">
+        <input type="hidden" name="postId" th:value="${post}"/> <!-- 포스트 ID를 전송 -->
+        <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">글 삭제</button>
+    </form> <!-- POST 방식으로 삭제 -->
 </div>
+
+
 </body>
 </html>
