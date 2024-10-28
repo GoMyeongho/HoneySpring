@@ -23,10 +23,10 @@ public class MyPageController {
 
     // 사용자 목록 조회 페이지
     @GetMapping("/select")
-    public String selectViewEmp(Model model) {
+    public String selectViewUser(Model model) { // http://localhost:8112/posts/select
         List<UsersVO> users = myPageDAO.usersSelect();
         model.addAttribute("users", users);
-        return "thymeleaf/usersSelect";
+        return "thymeleaf/selectInfo";
     }
 
     // 사용자 업데이트 폼 (GET 요청)
@@ -34,7 +34,7 @@ public class MyPageController {
     public String updateUserForm(@RequestParam("userId") String userId, Model model) {
         UsersVO userToUpdate = myPageDAO.findUserById(userId); // DAO를 통해 직접 조회
         model.addAttribute("user", userToUpdate);
-        return "thymeleaf/updateUserForm";
+        return "thymeleaf/updateInfo";
     }
 
     // 사용자 업데이트 처리 (POST 요청)
@@ -45,8 +45,8 @@ public class MyPageController {
     }
 
     // 사용자 조회 결과 출력 페이지
-    @GetMapping("/print")
-    public String printUsers(Model model) {
+    @GetMapping("/print") //
+    public String printUsers(Model model) { // http://localhost:8112/posts/print
         List<UsersVO> users = myPageDAO.usersSelect();
         myPageDAO.usersSelectResult(users);  // 콘솔에 사용자 정보를 출력
         model.addAttribute("users", users);
