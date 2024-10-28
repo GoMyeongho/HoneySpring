@@ -29,16 +29,56 @@ public class PostListController {
     }
 
     @GetMapping("/board")    // http://localhost:8112/posts/list
-    public String showBoard(@ModelAttribute('login')UsersVO vo, Model model) {
+    public String showBoard(@ModelAttribute("login") UsersVO vo, Model model) {
         List<PostsVO> board = dao.selectPage();
-        List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
-        List<String> searchOptions = List.of("제목", "내용", "작성자", "제목 + 내용");
+        List<String> searchOptions = List.of("제목", "작성자");
         String id = vo.getUserID();
         List<LikesVO> like = lDao.likeList(id);
-        for (PostsVO post : board) post.setTitle(post.getTitle() +"[" + lDao.likeMark(like, post.getPostno()) +"]");
-        model.addAttribute("searchOptions", searchOptions);
+        for (PostsVO post : board) post.setTitle(post.getTitle() + "[" + lDao.likeMark(like, post.getPostno()) + "]");
+        String search ="";
+        List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
         model.addAttribute("categories", categories);
+        model.addAttribute("maxBoard",10);
+        model.addAttribute("boardNo", board.size()/10);
+        model.addAttribute("searchOptions", searchOptions);
         model.addAttribute("board", board);
+        model.addAttribute("search",search);
         return "thymeleaf/showBoard";
     }
+    @GetMapping("/board")
+    public String searchBoard(@ModelAttribute("login") UsersVO vo, @ModelAttribute("option") String option, @ModelAttribute("search") String search, Model model) {
+        List<String> searchOptions = List.of("제목", "작성자");
+        int sel = searchOptions.indexOf(option);
+        List<PostsVO> board = dao.selectPage(search,sel);
+        String id = vo.getUserID();
+        List<LikesVO> like = lDao.likeList(id);
+        for (PostsVO post : board) post.setTitle(post.getTitle() + "[" + lDao.likeMark(like, post.getPostno()) + "]");
+        List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
+        model.addAttribute("categories", categories);
+        model.addAttribute("maxBoard",10);
+        model.addAttribute("boardNo", board.size()/10);
+        model.addAttribute("searchOptions", searchOptions);
+        model.addAttribute("board", board);
+        model.addAttribute("search",search);
+        return "thymeleaf/showBoard";
+    }
+    @GetMapping("/board")
+    public String categoryBoard(@ModelAttribute("login") UsersVO vo, @ModelAttribute("category") String category, Model model) {
+        List<String> searchOptions = List.of("제목", "작성자");
+        List<PostsVO> board = dao.selectPage(category,3);
+        String id = vo.getUserID();
+        List<LikesVO> like = lDao.likeList(id);
+        String search ="";
+        for (PostsVO post : board) post.setTitle(post.getTitle() + "[" + lDao.likeMark(like, post.getPostno()) + "]");
+        List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
+        model.addAttribute("categories", categories);
+        model.addAttribute("maxBoard",10);
+        model.addAttribute("boardNo", board.size()/10);
+        model.addAttribute("searchOptions", searchOptions);
+        model.addAttribute("board", board);
+        model.addAttribute("search",search);
+        return "thymeleaf/showBoard";
+    }
+
+
 }

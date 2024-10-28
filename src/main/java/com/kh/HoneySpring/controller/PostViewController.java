@@ -26,13 +26,14 @@ public class PostViewController {
     }
 
     @GetMapping("/view")    // http://localhost:8112/posts/list
-    public String viewPost(@ModelAttribute("postSelect") int postNo, Model model) {
+    public String viewPost(@RequestParam int postNo, Model model) {
         PostsVO post= dao.viewPost(postNo);
         List<LikesVO> lList = lDao.likeList(postNo);
         List<CommentsVO> cList = cDao.commList(postNo);
         model.addAttribute("post", post);
         model.addAttribute("lList", lList);
         model.addAttribute("cList", cList);
+
         return "thymeleaf/viewPost";
     }
 

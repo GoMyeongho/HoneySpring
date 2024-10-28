@@ -50,8 +50,8 @@ public class PostListDAO {
 
     private final static String[] sql =
             {"SELECT * From VM_POSTS_PAGE WHERE NNAME LIKE ? ",
-                    "SELECT * From VM_POSTS_PAGE WHERE NNAME = ?",
                     "SELECT * From VM_POSTS_PAGE WHERE TITLE LIKE ?",
+                    "SELECT * From VM_POSTS_PAGE WHERE NNAME = ?",
                     "SELECT * From VM_POSTS_PAGE WHERE CATE = ?",
                     "SELECT * From VM_POSTS_PAGE WHERE POSTNO IN " +
                             "(SELECT POSTNO FROM LIKES WHERE NNAME = ?)",
