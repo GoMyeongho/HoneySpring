@@ -50,7 +50,7 @@ public class PostViewController {
         return "thymeleaf/viewPost";
     }
 
-    @GetMapping("/update")
+    @GetMapping("view/update")
     public String updatePost(@RequestParam("post") PostsVO vo, Model model) {
         List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
         model.addAttribute("categories", categories);
@@ -58,14 +58,14 @@ public class PostViewController {
         return "thymeleaf/updatePost";
     }
 
-    @PostMapping("/update")
+    @PostMapping("view/update")
     public String submitUpdatePost(@ModelAttribute("post") PostsVO vo, Model model) {
         boolean success = dao.updatePost(vo);
         model.addAttribute("success", success);
         return "thymeleaf/submitUpdatePost";
     }
 
-    @PostMapping("/view")
+    @PostMapping("/view/delete")
     public String submitDeletePost(@ModelAttribute("post") PostsVO vo, Model model) {
         boolean success = dao.deletePost(vo.getPostno());
         model.addAttribute("success", success);
