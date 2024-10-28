@@ -22,7 +22,7 @@ public class UsersDAO {
     }
 
     // !!!!!회원가입----------------------------------------------------------------------------------
-    public void joinMember() {
+    public boolean joinMember(UsersVO user) {
         String userPW="", userID ="", nName = "", phone ="", pwLOCK, pwKey;
         String rePW="";
         // 아이디 생성
@@ -225,6 +225,7 @@ public class UsersDAO {
         }
         Common.close(psmt);
         Common.close(conn);
+        return isRepeat;
     }
 
     public String noKor() {
