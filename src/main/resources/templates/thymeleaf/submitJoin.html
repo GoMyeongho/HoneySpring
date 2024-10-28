@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>회원가입 결과</title>
+  <meta charset="UTF-8">
+  <style>
+    .true {
+        color: green;
+        font-weight: bold;
+    }
+    .false {
+        color: red;
+        font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<h1>회원가입 결과</h1>
+
+<!-- Success Message -->
+<div th:if="${isJoin}" class="true">
+  회원가입 성공
+</div>
+
+<!-- Failure Message -->
+<div th:if="${!isJoin}" class="false">
+  회원가입 실패
+  <ul>
+    <li th:each="message : ${valid}" th:text="${message}"></li>
+  </ul>
+</div>
+
+<a href="/login">로그인 화면으로 이동</a>
+</body>
+</html>
