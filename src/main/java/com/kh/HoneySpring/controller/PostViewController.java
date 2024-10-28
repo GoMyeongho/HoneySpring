@@ -21,7 +21,7 @@ public class PostViewController {
     private final PostViewDAO dao;
     private final LikesDAO lDao;
     private final CommentsDAO cDao;
-    private final static List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
+    private final static List<String> CATEGORIES = List.of("Health", "Travel", "Life", "Cook", "Q&A");
 
     public PostViewController(PostViewDAO dao , LikesDAO ldao , CommentsDAO cdao) {
         this.dao = dao;
@@ -47,7 +47,7 @@ public class PostViewController {
         model.addAttribute("likeMark",likeMark);
         model.addAttribute("cList", cList);
         model.addAttribute("name", vo.getNName());
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", CATEGORIES);
         return "thymeleaf/viewPost";
     }
 
@@ -65,6 +65,7 @@ public class PostViewController {
         redirectAttributes.addFlashAttribute("updateSuccess", success);
         return "redirect:/posts/view";
     }
+
     @PostMapping("/delete")
     public String deletePost(@ModelAttribute("post") PostsVO vo, RedirectAttributes redirectAttributes) {
         boolean success = dao.deletePost(vo.getPostno());
@@ -79,7 +80,6 @@ public class PostViewController {
         comm.setNName(vo.getNName());
         comm.setUserId(vo.getUserID());
         model.addAttribute("comment", new CommentsVO());
-        model.addAttribute("commType", type);
         return "thymeleaf/createComment";
     }
 

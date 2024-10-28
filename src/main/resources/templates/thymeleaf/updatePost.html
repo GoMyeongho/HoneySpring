@@ -9,6 +9,8 @@
 <div class="form-container">
     <h1>글 수정</h1>
     <form th:action="@{/posts/update}" th:object="${post}" method="post">
+        <input type="hidden" id="postno" th:field="*{postno}"  th:value="${post.postno}"/>
+
         <div>
             <label for="categories">카테고리</label>
             <select id="categories" th:field="*{category}">
@@ -18,11 +20,14 @@
         </div>
         <div>
             <label for="title">글 제목 입력</label>
+
             <input type="text" id="title" maxlength="100" placeholder="제목을 입력 해 주세요(최대 100자)"
                    th:field="*{title}" th:value="${post.title}" />
         </div>
         <div>
             <label for="content">글 본문 내용 입력</label>
+        </div>
+        <div>
             <textarea id="content" maxlength="200" placeholder="내용을 입력 해 주세요(최대 200자)"
                       th:field="*{content}" th:value="${post.content}"></textarea>
         </div>
