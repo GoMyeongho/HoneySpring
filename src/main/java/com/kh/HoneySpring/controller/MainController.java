@@ -32,7 +32,7 @@ public class MainController {
                 "닉네임이 잘 못 됐습니다.", "전화번호가 잘 못 됐습니다.", "제시문이 잘 못 됐습니다.", "제시어가 잘 못 됐습니다.");
         validate.add(usersDAO.validateUserID(vo.getUserID()));
         validate.add(usersDAO.validatePW(vo.getUserPW()));
-//        validate.add(usersDAO.validateConfirmPassword());
+//        validate.add(usersDAO.validateConfirmPassword(vo.confirmPW));
         validate.add(usersDAO.validateNickname(vo.getNName()));
         validate.add(usersDAO.validatePhone(vo.getPhone()));
         validate.add(usersDAO.validatePwLOCK(vo.getPwLOCK()));

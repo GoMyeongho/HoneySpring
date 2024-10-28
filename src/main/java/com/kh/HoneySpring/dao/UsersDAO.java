@@ -49,8 +49,8 @@ public class UsersDAO {
         return false;
     }
 
-    public boolean validateConfirmPassword(String confirmPassword) {
-        if (Objects.equals(userPW, confirmPassword)) {
+    public boolean validateConfirmPassword(String confirmPW) {
+        if (Objects.equals(userPW, confirmPW)) {
             return true;
         } return false;
     }
