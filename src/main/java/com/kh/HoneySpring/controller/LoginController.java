@@ -26,7 +26,7 @@ public class LoginController {
     UsersVO dbBasedUser = loginDAO.FindByUserID(usersVO.getUserID());
         if (dbBasedUser != null && usersVO.getUserPW().equals(usersVO.getUserPW())) {
             model.addAttribute("userID", usersVO.getUserID());
-            return "Thymeleaf/showBoard"; // 로그인 후에 포스트 페이지로 전달
+            return "Thymeleaf/show"; // 로그인 후에 포스트 페이지로 전달
         } else {
             model.addAttribute("login", new UsersVO());
             model.addAttribute("에러", "아이디, 비밀번호가 올바르지 않습니다.");
