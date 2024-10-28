@@ -32,6 +32,6 @@ public class PostMakeController {
     public String submitPost(@ModelAttribute("post") PostsVO postsVO, Model model) {
         boolean isSubmitted = postMakeDAO.PostmakeCreate(postsVO);
         model.addAttribute("isSubmitted", isSubmitted);
-        return "Thymeleaf/";    // 로그인후 메인 페이지 완성되면 그쪽으로 반환
+        return "Thymeleaf/postMakeResult";    //
     }
 }
