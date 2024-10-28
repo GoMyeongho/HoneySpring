@@ -16,7 +16,7 @@ public class findIDDAO {
     static ResultSet rs = null;
     static Scanner sc = null;
 
-    public String findID() throws SQLException {
+    public String findID(String phone) throws SQLException {
         String userID = "";
         Scanner sc = new Scanner(System.in);
         String phone;

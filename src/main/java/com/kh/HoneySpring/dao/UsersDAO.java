@@ -81,50 +81,6 @@ public class UsersDAO {
         return exists;
     }
 
-    // 아이디 찾기 메서드-----------------------------------------------------------------
-    public String findID(String phone) {
-        String userID = null;
-        String query = "SELECT userID FROM USERS WHERE phone = ?";
-        try {
-            conn = Common.getConnection();
-            psmt = conn.prepareStatement(query);
-            psmt.setString(1, phone);
-            rs = psmt.executeQuery();
-            if (rs.next()) {
-                userID = maskUserID(rs.getString("userID"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Common.close(rs);
-            Common.close(psmt);
-            Common.close(conn);
-        }
-        return userID;
-    }
-
-    // 비밀번호 찾기 메서드----------------------------------------------------------
-    public String findPW(String userID, String pwKey) {
-        String userPW = null;
-        String query = "SELECT userPW FROM USERS WHERE userID = ? AND pwKey = ?";
-        try {
-            conn = Common.getConnection();
-            psmt = conn.prepareStatement(query);
-            psmt.setString(1, userID);
-            psmt.setString(2, pwKey);
-            rs = psmt.executeQuery();
-            if (rs.next()) {
-                userPW = rs.getString("userPW");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Common.close(rs);
-            Common.close(psmt);
-            Common.close(conn);
-        }
-        return userPW;
-    }
 
     // 유저 아이디 마스킹----------------------------------------------------------------
     private String maskUserID(String userID) {

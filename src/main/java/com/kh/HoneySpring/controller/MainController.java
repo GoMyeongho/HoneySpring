@@ -1,16 +1,22 @@
 package com.kh.HoneySpring.controller;
 
 import com.kh.HoneySpring.dao.UsersDAO;
+import com.kh.HoneySpring.dao.findIDDAO;
+import com.kh.HoneySpring.dao.findPWDAO;
 import com.kh.HoneySpring.vo.UsersVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/users")
 public class MainController {
 
     private final UsersDAO usersDAO = new UsersDAO();
+    private com.kh.HoneySpring.dao.findIDDAO findIDDAO;
+    private com.kh.HoneySpring.dao.findPWDAO findPWDAO;
 
     // 회원가입 폼 페이지로 이동
     @GetMapping("/join")
@@ -50,8 +56,8 @@ public class MainController {
 
     // 아이디 찾기 처리
     @PostMapping("/findID")
-    public String findID(@RequestParam("phone") String phone, Model model) {
-        String userID = usersDAO.findID(phone);
+    public String findID(@RequestParam("phone") String phone, Model model) throws SQLException {
+        String userID = findIDDAO.findID(phone);
         if (userID != null) {
             model.addAttribute("userID", userID);
             return "showID"; // 찾은 아이디를 보여주는 페이지 (showID.html)
@@ -69,8 +75,8 @@ public class MainController {
 
     // 비밀번호 찾기 처리
     @PostMapping("/findPW")
-    public String findPW(@RequestParam("userID") String userID, @RequestParam("pwKey") String pwKey, Model model) {
-        String userPW = usersDAO.findPW(userID, pwKey);
+    public String findPW(@RequestParam("userID") String userID, @RequestParam("pwKey") String pwKey, Model model) throws SQLException {
+        String userPW = findPWDAO.findPW(userID, pwKey);
         if (userPW != null) {
             model.addAttribute("userPW", userPW);
             return "showPW"; // 찾은 비밀번호를 보여주는 페이지 (showPW.html)

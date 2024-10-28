@@ -14,7 +14,7 @@ public class findPWDAO {
     static ResultSet rs = null;
     static Scanner sc = null;
 
-    public String findPW() throws SQLException {
+    public String findPW(String userID, String pwKey) throws SQLException {
         String userID, pwLOCK, pwKey, userPW;
         Scanner sc = new Scanner(System.in);
         List<String> IDList = new ArrayList<>();
