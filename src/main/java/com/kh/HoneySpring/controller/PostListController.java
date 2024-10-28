@@ -20,17 +20,15 @@ import java.util.List;
 public class PostListController {
     private final PostListDAO dao;
     private final LikesDAO lDao;
-    private final LikesDAO likesDAO;
     private final static List<String> searchOptions = List.of("제목", "작성자");
     private final static List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
 
-    public PostListController(PostListDAO dao, LikesDAO lDao, LikesDAO likesDAO) {
+    public PostListController(PostListDAO dao, LikesDAO lDao) {
         this.dao = dao;
         this.lDao = lDao;
-        this.likesDAO = likesDAO;
     }
 
-    @GetMapping("/showBoard")    // http://localhost:8112/posts/list
+    @GetMapping("/board")    // http://localhost:8112/posts/list
     public String showBoard(@ModelAttribute("login") UsersVO vo, Model model) {
         List<PostsVO> board = dao.selectPage();
         String id = vo.getUserID();
@@ -45,7 +43,7 @@ public class PostListController {
         model.addAttribute("search",search);
         return "thymeleaf/showBoard";
     }
-    @GetMapping("/searchBoard")
+    @GetMapping("/board/search")
     public String searchBoard(@ModelAttribute("login") UsersVO vo, @RequestParam("searchOptions") String option, @RequestParam("search") String search, Model model) {
         int sel = searchOptions.indexOf(option);
         List<PostsVO> board = dao.selectPage(search,sel);
@@ -61,7 +59,7 @@ public class PostListController {
         model.addAttribute("search","");
         return "thymeleaf/showBoard";
     }
-    @GetMapping("/categoryBoard")
+    @GetMapping("/board/category")
     public String categoryBoard(@ModelAttribute("login") UsersVO vo, @RequestParam("category") String category, Model model) {
         List<PostsVO> board = dao.selectPage(category,3);
         String id = vo.getUserID();
@@ -76,7 +74,7 @@ public class PostListController {
         model.addAttribute("search",search);
         return "thymeleaf/showBoard";
     }
-    @GetMapping("/userBoard")
+    @GetMapping("/board/user")
     public String userBoard(@ModelAttribute("login") UsersVO vo, @RequestParam("name") String name, Model model) {
         List<PostsVO> board = dao.selectPage(name,2);
         String id = vo.getUserID();
@@ -92,7 +90,7 @@ public class PostListController {
         return "thymeleaf/showBoard";
     }
 
-    @GetMapping("/loginBoard")
+    @GetMapping("/board/like")
     public String likeBoard(@ModelAttribute("login") UsersVO vo, @RequestParam("likeName") String name, Model model) {
         List<PostsVO> board = dao.selectPage(name,4);
         String id = vo.getUserID();
@@ -108,7 +106,7 @@ public class PostListController {
         return "thymeleaf/showBoard";
     }
 
-    @GetMapping("/commentBoard")
+    @GetMapping("/board/comment")
     public String commentBoard(@ModelAttribute("login") UsersVO vo, @RequestParam("comment") String name, Model model) {
         List<PostsVO> board = dao.selectPage(name,5);
         String id = vo.getUserID();
