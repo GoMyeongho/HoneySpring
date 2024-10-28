@@ -11,10 +11,12 @@
       <img th:src="image/honey.png" alt = "메인" class="head">
     </a>
   </div>
-  <form th:action="/showBoard" method="post">
-    <div th:each="category : ${categories}">
-      <button type="submit" name="selectedCategory" th:value="${category}" th:text="${category}"></button>
-    </div>
+  <form th:action="/board" method="get">
+      <div th:each="category : ${categories}">
+        <a th:href="@{/board(category=${category})}"
+           class="button"
+           th:text="${category}"></a>
+      </div>
   </form>
 
   <div id="posts">
@@ -46,15 +48,15 @@
     </table>
   </div>
 
-  <form th:action="/showBoard" method="post">
+  <form th:action="/board/search" method="get">
    <label for="searchOptions"><img th:src="image/honey.png" alt = "검색"></label>
    <select id="searchOptions" th:field="*{searchOptions}">
      <option value="">검색조건</option>
      <option th:each="option : ${searchOptions}" th:value="${option}" th:text="${option}"></option>
    </select>
-   <input type="text" th:field="*{search}" placeholder="검색내용을 입력하세요"/>
+   <input type="text" th:field="*{search}" placeholder="검색내용을 입력하세요"
+          th:value="${searchContent}"/>
    <button type="submit">검색</button>
  </form>
-
 </body>
 </html>

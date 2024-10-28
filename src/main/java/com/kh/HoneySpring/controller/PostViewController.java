@@ -26,7 +26,7 @@ public class PostViewController {
     }
 
     @GetMapping("/view")    // http://localhost:8112/posts/list
-    public String viewPost(@RequestParam int postNo, Model model) {
+    public String viewPost(@RequestParam("postno") int postNo, Model model) {
         PostsVO post= dao.viewPost(postNo);
         List<LikesVO> lList = lDao.likeList(postNo);
         List<CommentsVO> cList = cDao.commList(postNo);
