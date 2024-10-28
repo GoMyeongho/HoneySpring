@@ -37,9 +37,11 @@
         <span th:text="${comment.NName} ">작성자 </span>
         <span th:text="${#dates.format(comment.CDate, 'yyyy년 MM월 dd일')}">작성일</span>
     </h3>
-    <a class="button" th:if="${name}==${comment.nName}" th:href="@{/update(subno=${comment.subNo})}">댓글수정</a>
-    <a class="button" th:if="${name}==${comment.nName}" th:href="@{/delete(subno=${comment.subNo})}">댓글삭제</a>
+    <a class="button" th:href="@{/}"></a>
+    <a class="button" th:if="${name}==${comment.nName}" th:href="@{view/update(subno=${comment.subNo})}">댓글수정</a>
+    <a class="button" th:if="${name}==${comment.nName}" th:href="@{view/delete(subno=${comment.subNo})}">댓글삭제</a>
     <p th:text="${comment.content}">댓글 내용</p>
+
 </div>
 
 <div class="button">
