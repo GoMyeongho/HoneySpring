@@ -20,17 +20,18 @@ public class LoginController {
         this.loginDAO = loginDAO;
     }
 
-    @PostMapping("/login")
-    public String logIn(String userID, String userPW, Model model) {
-        UsersVO usersVO = loginDAO.FindByUserID(userID);
-        if (usersVO != null && usersVO.getUserPW().equals(userPW)) {
-            model.addAttribute("User", userID);
-            return "main"; // 로그인 후에 메인 페이지로 반환
+    @PostMapping("/login")  // http://localhost:8112/users/login
+    public String login(@ModelAttribute("login") UsersVO usersVO, Model model) {
+    UsersVO dbBasedUser = loginDAO.FindByUserID(usersVO.getUserID());
+        if (dbBasedUser != null && usersVO.getUserPW().equals(usersVO.getUserPW())) {
+            model.addAttribute("userID", usersVO.getUserID());
+            return "Thymeleaf/posts"; // 로그인 후에 포스트 페이지로 전달
         } else {
             model.addAttribute("에러", "아이디, 비밀번호가 올바르지 않습니다.");
-            return "login"; // 로그인 페이지 유지
+            return "Thymeleaf/login"; // 로그인 페이지 유지
         }
     }
+
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("login", new UsersVO());
