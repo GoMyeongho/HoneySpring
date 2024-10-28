@@ -18,11 +18,11 @@
     </div>
     <div>
       <label for="title">글 제목 입력</label>
-      <input type="text" id="title" th:field="*{title}" />
+      <input type="text" id="title" maxlength="100" placeholder="제목을 입력 해 주세요(최대 100자)" th:field="*{title}" />
     </div>
     <div>
       <label for="content">글 본문 내용 입력</label>
-      <textarea id="content" th:field="*{content}"></textarea>
+      <textarea id="content" maxlength="200" placeholder="내용을 입력 해 주세요(최대 200자)" th:field="*{content}"></textarea>
     </div>
     <div>
       <button type="submit">등록하기</button>

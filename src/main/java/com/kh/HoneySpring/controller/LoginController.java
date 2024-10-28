@@ -2,9 +2,11 @@ package com.kh.HoneySpring.controller;
 
 import com.kh.HoneySpring.dao.LoginDAO;
 import com.kh.HoneySpring.dao.UsersDAO;
+import com.kh.HoneySpring.vo.PostsVO;
 import com.kh.HoneySpring.vo.UsersVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,5 +29,20 @@ public class LoginController {
             model.addAttribute("에러", "아이디, 비밀번호가 올바르지 않습니다.");    // 정상적이지 않은 값
             return "login"; // 로그인페이지 유지
         }
+    }
+
+    @PostMapping("/findID") // html 에서 버튼 클릭시 아이디찾기 페이지로
+    public String findID() {    http://localhost:8112/findID
+        return "Thymeleaf/findIDForm";
+    }
+
+    @PostMapping("/create") // html 에서 버튼 클릭시 비밀번호 찾기 페이지로
+    public String findPW() {
+        return "Thymeleaf/findPWForm";
+    }
+
+    @PostMapping("/create") // html 에서 버튼 클릭시 회원가입 페이지로
+    public String signUp() {
+        return "Thymeleaf/joinForm";
     }
 }
