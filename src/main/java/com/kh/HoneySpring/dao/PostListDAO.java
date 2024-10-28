@@ -46,8 +46,16 @@ public class PostListDAO {
         }
         return result;
     }
+    private final static String[] sql =
+            {"SELECT * From VM_POSTS_PAGE WHERE NNAME = ?",
+                    "SELECT * From VM_POSTS_PAGE WHERE CATE = ?",
+                    "SELECT * From VM_POSTS_PAGE WHERE POSTNO IN " +
+                            "(SELECT POSTNO FROM LIKES WHERE NNAME = ?)",
+                    "SELECT POSTNO, TITLE, CATE, PDATE, NNAME FROM VM_POSTS_PAGE " +
+                            "WHERE POSTNO in (SELECT POSTNO FROM VM_COMM WHERE NNAME = ?)"
+            };
 
-
+/*
     private final static String[] sql =
             {"SELECT * From VM_POSTS_PAGE WHERE NNAME LIKE ? ",
                     "SELECT * From VM_POSTS_PAGE WHERE TITLE LIKE ?",
@@ -58,7 +66,7 @@ public class PostListDAO {
                     "SELECT POSTNO, TITLE, CATE, PDATE, NNAME FROM VM_POSTS_PAGE " +
                             "WHERE POSTNO in (SELECT POSTNO FROM VM_COMM WHERE NNAME = ?)"
             };
-
+*/
 
     private static class PostListRowMapper implements RowMapper<PostsVO> {
 
