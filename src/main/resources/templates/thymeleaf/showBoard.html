@@ -18,11 +18,11 @@
 
   <div class="head">
     <a href="/main">
-      <img th:src="image/honey.png" alt = "메인" class="head">
+      <img th:src="@{image/honey.png}" alt = "메인" class="head">
     </a>
   </div>
   <div th:each="category : ${categories}">
-        <a th:href="@{/posts/board(value=${category}, type='type5')}"
+        <a th:href="@{/posts/board(value=${category}, type='type3')}"
            class="button"
            th:text="${category}"></a>
   </div>
@@ -49,7 +49,7 @@
             <a th:href="@{posts/view(postno=${post.postno})}" th:text="${post.title}"></a>
           </td>
           <td>
-            <a th:href="@{posts/board(value=${post.author}, type='type4')}" th:text="${post.author}"></a>
+            <a th:href="@{posts/board(value=${post.author}, type='type2')}" th:text="${post.author}"></a>
           </td>
           <td th:text="${post.date}"></td>
         </tr>
@@ -58,31 +58,36 @@
   </div>
   <p>현재 페이지: <span th:text="${page}"></span></p>
   <a th:each="number : ${#numbers.sequence(1, boardNo)}" th:text="${number}"
-     th:href="@{/posts/board(value=${value}, page=${number}, type=${type})}">
+     th:href="@{/posts/board(value=${value}, page=${number},
+     type=${type}, search=${search}, searchType=${searchType})}">
   </a>
 
   <form th:action="@{/posts/board}" method="get">
    <label for="searchOptions"><img th:src="image/honey.png" alt = "검색"></label>
-   <select id="searchOptions" th:field="*{type}" onchange="updateType()">
+   <select id="searchOptions" th:field="*{searchType}" onchange="updateType()">
      <option value=""></option>
      <option th:each="option : ${searchOptions}" th:value="${option}" th:text="${option}"></option>
    </select>
-    <input type="text" th:field="*{valu}" placeholder="검색내용을 입력하세요"
-          th:value="${valu}"/>
-    <input type="hidden" id="type" name="type" th:value="${type}"/>
+    <input type="text" th:field="*{search}" placeholder="검색내용을 입력하세요"
+          th:value="${search}"/>
+    <input type="hidden" id="searchType" name="searchType" th:value="${searchType}"/>
     <input type="hidden" name="page" th:value="1"/>
    <button type="submit">검색</button>
  </form>
   <script>
     function updateType() {
       const selectedOption = document.getElementById('searchOptions').value;
-      const typeInput = document.getElementById('type');
+      const typeInput = document.getElementById('searchType');
 
       // 선택된 옵션에 따라 type 값을 설정합니다.
       if (selectedOption === '제목') {
-        typeInput.value = 'type3';
-      } else if (selectedOption === '작성자') {
         typeInput.value = 'type2';
+      } else if (selectedOption === '작성자') {
+        typeInput.value = 'type3';
+      } else if (selectedOption === '내용') {
+          typeInput.value = 'type4';
+      } else if (selectedOption === '제목 + 내용') {
+          typeInput.value = 'type5';
       } else {
         typeInput.value = 'type1'; // 기본값
       }

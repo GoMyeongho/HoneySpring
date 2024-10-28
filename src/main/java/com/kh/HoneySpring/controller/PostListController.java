@@ -21,7 +21,7 @@ import java.util.List;
 public class PostListController {
     private final PostListDAO dao;
     private final LikesDAO lDao;
-    private final static List<String> SEARCHOPTIONS = List.of("제목", "작성자");
+    private final static List<String> SEARCHOPTIONS = List.of("제목", "작성자", "내용", "제목 + 내용");
     private final static List<String> CATEGORIES = List.of("Health", "Travel", "Life", "Cook", "Q&A");
     private final static int MAXBOARD = 10;
 
@@ -98,6 +98,8 @@ public class PostListController {
         model.addAttribute("searchOptions", SEARCHOPTIONS);
         model.addAttribute("board", boardTemp);
         model.addAttribute("search",search);
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("value", value);
         model.addAttribute("page", page);
         model.addAttribute("type", type);
         return "thymeleaf/showBoard";
