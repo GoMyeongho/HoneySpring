@@ -21,7 +21,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String logIn(String userID, Model model) {   // http://localhost:8112/users/login
+    public String logIn(String userID, Model model) {   // http://localhost:8112/login
         UsersVO usersVO = loginDAO.FindByUserID(userID);
         if (usersVO != null) {  // 로그인에 Null 값이 아닌 정상적인 값
             model.addAttribute("User", userID);
@@ -33,17 +33,17 @@ public class LoginController {
     }
 
     @GetMapping("/findID") // html 에서 버튼 클릭시 아이디찾기 페이지로
-    public String findID() {    // http://localhost:8112/findIDForm
+    public String findID(Model model) {    // http://localhost:8112/findIDForm
         return "Thymeleaf/findIDForm";
     }
 
     @GetMapping("/findPW") // html 에서 버튼 클릭시 비밀번호 찾기 페이지로
-    public String findPW() {    // http://localhost:8112/findPWForm
+    public String findPW(Model model) {    // http://localhost:8112/findPWForm
         return "Thymeleaf/findPWForm";
     }
 
     @GetMapping("/signUp") // html 에서 버튼 클릭시 회원가입 페이지로
-    public String signUp() {    // http://localhost:8112/findjoinForm
+    public String signUp(Model model) {    // http://localhost:8112/findjoinForm
         return "Thymeleaf/joinForm";
     }
 }

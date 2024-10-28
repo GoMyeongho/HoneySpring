@@ -9,7 +9,7 @@
 <div class="form-container">
   <!--헤드부분-->
   <h1>로그인</h1>
-  <form th:action="@{/login}" th:object="${login}" method="post">
+  <form th:action="@{/users/login}" th:object="${login}">
     <div>
       <!--아이디 입력 제한 16자-->
       <label for="id">아이디</label>
