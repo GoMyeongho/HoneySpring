@@ -5,35 +5,43 @@
   <title>회원가입</title>
 </head>
 <body>
-<h1>회원가입</h1>
-
-<form action="/users/join" method="post">
-
+<form action="/register" method="post" th:object="${user}">
   <label for="userID">아이디:</label>
-  <input type="text" id="userID" name="userID" required> <button type="submit">중복 확인</button><br>
+  <input type="text" id="userID" name="userID">
+  <button type="button" onclick="validateField('userID')">검증</button>
+  <span id="userIDMessage"></span><br/>
 
-  <label for="userPW">비밀번호:</label>
-  <input type="password" id="userPW" name="userPW" required> <button type="submit">확인</button><br>
+  <label for="password">비밀번호:</label>
+  <input type="password" id="password" name="password">
+  <button type="button" onclick="validateField('password')">검증</button>
+  <span id="passwordMessage"></span><br/>
 
-  <label for="userPW">비밀번호 확인:</label>
-  <input type="password" id="rePW" name="rePW" required> <button type="submit">확인</button><br>
+  <label for="confirmPassword">비밀번호 확인:</label>
+  <input type="password" id="confirmPassword" name="confirmPassword">
+  <button type="button" onclick="validateField('confirmPassword')">검증</button>
+  <span id="confirmPasswordMessage"></span><br/>
 
-  <label for="nName">닉네임:</label>
-  <input type="text" id="nName" name="nName" required> <button type="submit"> 중복 확인</button><br>
+  <label for="nickname">닉네임:</label>
+  <input type="text" id="nickname" name="nickname">
+  <button type="button" onclick="validateField('nickname')">검증</button>
+  <span id="nicknameMessage"></span><br/>
 
   <label for="phone">전화번호:</label>
-  <input type="text" id="phone" name="phone" placeholder="010-0000-0000" required> <button type="submit">중복 확인</button><br>
+  <input type="text" id="phone" name="phone" placeholder="010-0000-0000">
+  <button type="button" onclick="validateField('phone')">검증</button>
+  <span id="phoneMessage"></span><br/>
 
-  <label for="pwLOCK">비밀번호 찾기 질문:</label>
-  <input type="text" id="pwLOCK" name="pwLOCK" required> <button type="submit">확인</button><br>
+  <label for="hintStatement">제시문:</label>
+  <input type="text" id="hintStatement" name="hintStatement">
+  <button type="button" onclick="validateField('hintStatement')">검증</button>
+  <span id="hintStatementMessage"></span><br/>
 
-  <label for="pwKey">비밀번호 찾기 답변:</label>
-  <input type="text" id="pwKey" name="pwKey" required> <button type="submit">확인</button><br>
+  <label for="hintWord">제시어:</label>
+  <input type="text" id="hintWord" name="hintWord">
+  <button type="button" onclick="validateField('hintWord')">검증</button>
+  <span id="hintWordMessage"></span><br/>
 
-  <button type="submit">회원가입</button>
+  <button type="submit">가입</button>
 </form>
-
-<p th:if="${error}" th:text="${error}"></p>
-<p th:if="${message}" th:text="${message}"></p>
 </body>
 </html>
