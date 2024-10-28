@@ -23,9 +23,8 @@ public class MyPageController {
 
     // 사용자 목록 조회 페이지
     @GetMapping("/select")
-    public String selectViewUser(Model model) { // http://localhost:8112/posts/select
-        List<UsersVO> users = myPageDAO.usersSelect();
-        model.addAttribute("users", users);
+    public String selectViewUser(@ModelAttribute("login") UsersVO vo,Model model) { // http://localhost:8112/posts/select
+        model.addAttribute("user", vo);
         return "thymeleaf/selectInfo";
     }
 
@@ -41,15 +40,6 @@ public class MyPageController {
     @PostMapping("/update")
     public String updateUser(@ModelAttribute UsersVO user) {
         myPageDAO.usersUpdate(user);  // 업데이트 처리
-        return "redirect:/users/select";
-    }
-
-    // 사용자 조회 결과 출력 페이지
-    @GetMapping("/print") //
-    public String printUsers(Model model) { // http://localhost:8112/posts/print
-        List<UsersVO> users = myPageDAO.usersSelect();
-        myPageDAO.usersSelectResult(users);  // 콘솔에 사용자 정보를 출력
-        model.addAttribute("users", users);
-        return "thymeleaf/usersPrint";
+        return "thymeleaf/submitUpdateInfo";
     }
 }
