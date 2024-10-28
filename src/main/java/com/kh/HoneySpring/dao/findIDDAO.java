@@ -19,7 +19,6 @@ public class findIDDAO {
     public String findID(String phone) throws SQLException {
         String userID = "";
         Scanner sc = new Scanner(System.in);
-        String phone;
         List<String> phoneList = new ArrayList<>();
         try {
             conn = Common.getConnection();  // 오라클 DB 연결
