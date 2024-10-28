@@ -20,7 +20,7 @@ public class LoginController {
         this.loginDAO = loginDAO;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login")  // http://localhost:8112/users/login
     public String logIn(String userID, String userPW, Model model) {
         UsersVO usersVO = loginDAO.FindByUserID(userID);
         if (usersVO != null && usersVO.getUserPW().equals(userPW)) {
