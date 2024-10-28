@@ -48,7 +48,7 @@ public class LoginController {
         return "Thymeleaf/findPWForm";
     }
 
-    @GetMapping("/signUp") // html 에서 버튼 클릭시 회원가입 페이지로
+    @GetMapping("/joinUser") // html 에서 버튼 클릭시 회원가입 페이지로
     public String signUp(Model model) {    // http://localhost:8112/findjoinForm
         return "Thymeleaf/joinForm";
     }
