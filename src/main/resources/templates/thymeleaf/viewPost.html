@@ -2,14 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>
-
-    </title>
+    <title th:text="${post.title}">게시글</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="container">
 <div class="head">
-    <a href="/main">
+    <a th:href="/main">
         <img th:src="image/honey.png" alt = "메인" class="head">
     </a>
 </div>
@@ -21,44 +19,31 @@
     </div>
 </form>
 
-<div id="posts">
-    <table>
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>카테고리</th>
-            <th>제목</th>
-            <th>닉네임</th>
-            <th>게시일</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr th:each="post, postStat : ${board}"
-            th:if="${postStat.index < maxBoard}">
-            <td th:text="${postStat.index + 1}"></td>
-            <td th:text="${post.category}"></td>
-            <td>
-                <a th:href="@{/view(postno=${post.postno})}" th:text="${post.title}"></a>
-            </td>
-            <td>
-                <a th:href="@{/board(name=${post.author})}" th:text="${post.author}"></a>
-            </td>
-            <td th:text="${post.getDate()}"></td>
-        </tr>
-        </tbody>
-    </table>
+<div class="post">
+    <h2>
+        <span th:text="${post.title}">게시글 제목</span>
+        <span class="category" th:text="' [' + ${post.category} + ']'">[카테고리]</span>
+        <span class="author" th:text="'[작성자: ' + ${post.author} + ']'">작성자</span>
+        <span class="date" th:text="${#dates.format(post.date, 'yyyy년 MM월 dd일')}">작성일</span>
+    </h2>
+    <div class="content" th:text="${post.content}">게시글 내용</div>
+    <div class="like" th:text="${likeMark}">좋아요</div>
+    <div class="likeNo" th:text="likeNo">좋아요 개수</div>
 </div>
 
-<form th:action="/board/search" method="get">
-    <label for="searchOptions"><img th:src="image/honey.png" alt = "검색"></label>
-    <select id="searchOptions" th:field="*{searchOptions}">
-        <option value="">검색조건</option>
-        <option th:each="option : ${searchOptions}" th:value="${option}" th:text="${option}"></option>
-    </select>
-    <input type="text" th:field="*{search}" placeholder="검색내용을 입력하세요"
-           th:value="${searchContent}"/>
-    <button type="submit">검색</button>
-</form>
+<div class="comment" th:each="comment : ${cList}">
+    <h3>
+        <span th:text="${comment.NName} ">작성자 </span>
+        <span th:text="${#dates.format(comment.CDate, 'yyyy년 MM월 dd일')}">작성일</span>
+    </h3>
+    <p th:text="${comment.content}">댓글 내용</p>
+</div>
+
+<div class="button">
+    <a th:if="${isPoster}" th:href="@{/update(postno=${post.postno})} ">글 수정</a>
+    <a th:if="${isPoster}" th:href="@{/delete(postno=${post.postno})} ">글 삭제</a>
+</div>
+
+
 </body>
 </html>

@@ -8,7 +8,7 @@ import java.sql.Date;
 @Setter
 @AllArgsConstructor
 @ToString
-public class PostsVO {
+public class PostsVO implements Comparable<PostsVO>{
     private int postno;
     private String title;
     private String content;
@@ -17,6 +17,10 @@ public class PostsVO {
     private String category;
     private String userID;
 
+    @Override
+    public int compareTo(PostsVO o) {
+        return o.getPostno() - getPostno();
+    }
     // 글 작성자용 생성자
     public PostsVO(String category, String author, String content, String title, int postno) {
         this.category = category;
@@ -46,4 +50,6 @@ public class PostsVO {
 
     public PostsVO() {
     }
+
+
 }
