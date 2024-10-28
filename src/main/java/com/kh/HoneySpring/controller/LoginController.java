@@ -6,6 +6,7 @@ import com.kh.HoneySpring.vo.PostsVO;
 import com.kh.HoneySpring.vo.UsersVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,18 +32,18 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/findID") // html 에서 버튼 클릭시 아이디찾기 페이지로
-    public String findID() {    http://localhost:8112/findID
+    @GetMapping("/findID") // html 에서 버튼 클릭시 아이디찾기 페이지로
+    public String findID() {    // http://localhost:8112/findIDForm
         return "Thymeleaf/findIDForm";
     }
 
-    @PostMapping("/findPW") // html 에서 버튼 클릭시 비밀번호 찾기 페이지로
-    public String findPW() {
+    @GetMapping("/findPW") // html 에서 버튼 클릭시 비밀번호 찾기 페이지로
+    public String findPW() {    // http://localhost:8112/findPWForm
         return "Thymeleaf/findPWForm";
     }
 
-    @PostMapping("/signUp") // html 에서 버튼 클릭시 회원가입 페이지로
-    public String signUp() {
+    @GetMapping("/signUp") // html 에서 버튼 클릭시 회원가입 페이지로
+    public String signUp() {    // http://localhost:8112/findjoinForm
         return "Thymeleaf/joinForm";
     }
 }
