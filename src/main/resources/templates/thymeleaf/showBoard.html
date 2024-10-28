@@ -45,6 +45,9 @@
       </tbody>
     </table>
   </div>
+  <div id="page" class="button" th:each="page : ${boardNo}">
+    <a
+  </div>
 
   <form th:action="/board" method="get">
    <label for="searchOptions"><img th:src="image/honey.png" alt = "검색"></label>

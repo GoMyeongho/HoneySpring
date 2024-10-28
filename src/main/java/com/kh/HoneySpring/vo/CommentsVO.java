@@ -8,7 +8,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-
 public class CommentsVO implements Comparable<CommentsVO>{
     private int postNo;
     private String nName;
