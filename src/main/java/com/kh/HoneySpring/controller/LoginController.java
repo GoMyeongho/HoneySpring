@@ -36,12 +36,12 @@ public class LoginController {
         return "Thymeleaf/findIDForm";
     }
 
-    @PostMapping("/create") // html 에서 버튼 클릭시 비밀번호 찾기 페이지로
+    @PostMapping("/findPW") // html 에서 버튼 클릭시 비밀번호 찾기 페이지로
     public String findPW() {
         return "Thymeleaf/findPWForm";
     }
 
-    @PostMapping("/create") // html 에서 버튼 클릭시 회원가입 페이지로
+    @PostMapping("/signUp") // html 에서 버튼 클릭시 회원가입 페이지로
     public String signUp() {
         return "Thymeleaf/joinForm";
     }
