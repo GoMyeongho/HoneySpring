@@ -11,13 +11,11 @@
         <img th:src="image/honey.png" alt = "메인" class="head">
     </a>
 </div>
-<form th:action="/board" method="get">
-    <div th:each="category : ${categories}">
-        <a th:href="@{/board(category=${category})}"
-           class="button"
-           th:text="${category}"></a>
-    </div>
-</form>
+<div th:each="category : ${categories}">
+    <a th:href="@{/board(category=${category})}"
+       class="button"
+       th:text="${category}"></a>
+</div>
 
 <div class="post">
     <h2>
@@ -27,21 +25,26 @@
         <span class="date" th:text="${#dates.format(post.date, 'yyyy년 MM월 dd일')}">작성일</span>
     </h2>
     <div class="content" th:text="${post.content}">게시글 내용</div>
-    <div class="like" th:text="${likeMark}">좋아요</div>
-    <div class="likeNo" th:text="likeNo">좋아요 개수</div>
+    <div class="like">
+        <form th:action="@{/view(postno=${post.postno})}" method="post">
+            <button type="submit" class="like" th:text="${likeMark}">좋아요 <span th:text="${likeNo}">0</span></button>
+        </form>
+    </div>
 </div>
 
-<div class="comment" th:each="comment : ${cList}">
+<div class="comments" th:each="comment : ${cList}">
     <h3>
         <span th:text="${comment.NName} ">작성자 </span>
         <span th:text="${#dates.format(comment.CDate, 'yyyy년 MM월 dd일')}">작성일</span>
     </h3>
+    <a class="button" th:if="${name}==${comment.NName}" th:href="@{/update(subno=${comment.subNo})}">댓글수정</a>
+    <a class="button" th:if="${name}==${comment.NName}" th:href="@{/delete(subno=${comment.subNo})}">댓글삭제</a>
     <p th:text="${comment.content}">댓글 내용</p>
 </div>
 
 <div class="button">
-    <a th:if="${isPoster}" th:href="@{/update(postno=${post.postno})} ">글 수정</a>
-    <a th:if="${isPoster}" th:href="@{/delete(postno=${post.postno})} ">글 삭제</a>
+    <a th:if="${name}==${post.author}" th:href="@{/update(postno=${post.postno})} ">글 수정</a>
+    <a th:if="${name}==${post.author}" th:href="@{/delete(postno=${post.postno})} ">글 삭제</a>
 </div>
 
 

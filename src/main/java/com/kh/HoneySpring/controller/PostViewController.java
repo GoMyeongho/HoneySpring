@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -19,6 +20,7 @@ public class PostViewController {
     private final PostViewDAO dao;
     private final LikesDAO lDao;
     private final CommentsDAO cDao;
+    private final static List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
 
     public PostViewController(PostViewDAO dao , LikesDAO ldao , CommentsDAO cdao) {
         this.dao = dao;
@@ -32,13 +34,19 @@ public class PostViewController {
         List<LikesVO> lList = lDao.likeList(vo.getUserID());
         int likeNo = lDao.likeList(postNo).size();
         String likeMark = lDao.likeMark(lList,postNo);
-        boolean isPoster = post.getAuthor().equals(vo.getNName());
         List<CommentsVO> cList = cDao.commList(postNo);
+        Collections.sort(cList);
+        for (int i = 1; i < cList.size(); i++) {
+            if (cList.get(i).getCommNo() == cList.get(i - 1).getCommNo()) {
+                cList.get(i).setContent("->" + cList.get(i).getContent());
+            }
+        }
         model.addAttribute("post", post);
         model.addAttribute("likeNo",likeNo);
         model.addAttribute("likeMark",likeMark);
         model.addAttribute("cList", cList);
-        model.addAttribute("isPoster", isPoster);
+        model.addAttribute("name", vo.getNName());
+        model.addAttribute("categories", categories);
         return "thymeleaf/viewPost";
     }
 
