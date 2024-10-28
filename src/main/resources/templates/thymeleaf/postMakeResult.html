@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>글 등록 확인</title>
+  <meta charset="UTF-8">
+  <style>
+    .success {
+        color: green;
+        font-weight: bold;
+    }
+    .failure {
+        color: red;
+        font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<h1>글 등록 결과</h1>
+
+<!-- Success Message -->
+<div th:if="${isSubmitted}" class="success">
+  글 등록 성공
+</div>
+
+<!-- Failure Message -->
+<div th:if="${!isSubmitted}" class="failure">
+  글 등록 실패
+</div>
+
+<a href="/posts/create">뒤로가기</a>
+<a href="/posts/board">게시판으로 이동</a>
+</body>
+</html>
