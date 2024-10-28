@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/login")
 public class MainController {
 
     private final UsersDAO usersDAO = new UsersDAO();
@@ -27,15 +27,6 @@ public class MainController {
     // 회원가입 처리
     @PostMapping("/join")
     public String joinMember(@ModelAttribute UsersVO user, Model model) {
-        // 중복 체크
-        if (usersDAO.checkUserID(user.getUserID())) {
-            model.addAttribute("error", "이미 사용 중인 아이디입니다.");
-            return "joinForm";
-        }
-        if (usersDAO.checkNName(user.getNName())) {
-            model.addAttribute("error", "이미 사용 중인 닉네임입니다.");
-            return "joinForm";
-        }
 
         // 회원가입 처리
         boolean isJoined = usersDAO.joinMember(user);
