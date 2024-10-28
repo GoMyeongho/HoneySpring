@@ -31,6 +31,11 @@ public class LoginController {
             return "login"; // 로그인 페이지 유지
         }
     }
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("login", new UsersVO());
+        return "Thymeleaf/login";
+    }
 
     @GetMapping("/findID") // html 에서 버튼 클릭시 아이디찾기 페이지로
     public String findID(Model model) {    // http://localhost:8112/findIDForm
