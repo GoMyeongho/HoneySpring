@@ -56,8 +56,10 @@ public class PostViewController {
         return "thymeleaf/viewPost";
     }
     @PostMapping("/view")
-    public String like(@SessionAttribute("login") UsersVO vo, @RequestParam("postno") int postno, Model model){
-        boolean success = lDao.addLike(postno, vo.getUserID());
+    public String like(@SessionAttribute("login") UsersVO vo, @RequestParam("postno") int postno, RedirectAttributes redirectAttributes) {
+        List<LikesVO> lList = lDao.likeList(postno);
+        boolean success =(lDao.isLike(lList,vo.getNName()))?lDao.cancelLike(postno, vo.getUserID()):lDao.addLike(postno, vo.getUserID());
+        redirectAttributes.addFlashAttribute("likeSuccess", success);
         return "redirect:/posts/view?postno="+postno;
     }
 
