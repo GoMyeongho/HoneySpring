@@ -13,23 +13,22 @@ public class findPWDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // 제시문 가져오기
+    // 제시문(pwLOCK)을 가져오는 메서드
     public String getPWLock(String userID) {
         String sql = "SELECT pwLOCK FROM USERS WHERE userID = ?";
         try {
             return jdbcTemplate.queryForObject(sql, new Object[]{userID}, String.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            // 아이디가 존재하지 않는 경우 null 반환
             return null;
         }
     }
 
-    // 비밀번호 가져오기
+    // 비밀번호를 찾는 메서드
     public String findPW(String userID, String pwKey) {
         String sql = "SELECT PWKEY, userPW FROM USERS WHERE userID = ?";
-
         try {
-            return jdbcTemplate.queryForObject(sql, new Object[]{userID}, new RowMapper<String>() {
+            return jdbcTemplate.query(sql, new Object[]{userID}, new RowMapper<String>() {
                 @Override
                 public String mapRow(ResultSet rs, int rowNum) throws SQLException {
                     String actualPwKey = rs.getString("PWKEY");
@@ -39,10 +38,10 @@ public class findPWDAO {
                         return "제시어가 다릅니다.";
                     }
                 }
-            });
+            }).stream().findFirst().orElse("해당 아이디로 가입된 계정이 없습니다.");
         } catch (Exception e) {
             e.printStackTrace();
-            return "해당 아이디로 가입된 계정이 없습니다.";
+            return "비밀번호 찾기 실패";
         }
     }
 }
