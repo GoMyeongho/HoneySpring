@@ -8,7 +8,7 @@
 <body>
 <div class="container mt-5">
   <h2>회원가입</h2>
-  <form th:action="@{/signUp}" th:object="${signUp}" method="post">
+  <form th:action="@{/login/signUp}" th:object="${signUp}" method="post">
     <div class="form-group">
       <label for="userID">아이디:</label>
       <input type="text" id="userID" th:field="*{userID}" class="form-control" placeholder="아이디 입력">
@@ -23,7 +23,7 @@
 
     <div class="form-group">
       <label for="confirmPW">비밀번호 확인:</label>
-      <input type="password" id="confirmPW" th:field="*{confirmPW}" class="form-control" placeholder="비밀번호 확인 입력">
+      <input type="password" id="confirmPW" th:object="*{confirmPW}" class="form-control" placeholder="비밀번호 확인 입력">
       <span th:text="${validConfirmPW}" class="text-danger"></span>
     </div>
 

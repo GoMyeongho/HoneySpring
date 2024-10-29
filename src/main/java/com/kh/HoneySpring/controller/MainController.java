@@ -23,6 +23,7 @@ public class MainController {
     @GetMapping("/signUp") //  http://localhost:8112/login/signUp
     public String signUp(Model model){
         model.addAttribute("signUp", new UsersVO());
+        model.addAttribute("confirmPW","");
         return "Thymeleaf/signUp";
     }
     @PostMapping("/signUp")
