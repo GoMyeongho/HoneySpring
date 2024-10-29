@@ -38,8 +38,6 @@ public class MainController {
         validate.add(usersDAO.validatePhone(vo.getPhone()));
         validate.add(usersDAO.validatePwLOCK(vo.getPwLOCK()));
         validate.add(usersDAO.validatePwKey(vo.getPwKey()));
-        System.out.println(vo.getConfirmPW());
-        System.out.println(vo.getUserPW());
         boolean isValid = true;
         List<String> valid = new ArrayList<>();
         for (int i = 0; i < validate.size(); i++) {
