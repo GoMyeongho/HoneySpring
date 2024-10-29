@@ -35,8 +35,8 @@ public class MyPageController {
 
     // 사용자 업데이트 처리 (POST 요청)
     @PostMapping("/update")
-    public String updateUser(@SessionAttribute UsersVO user) { // http://localhost:8112/posts/submitUpdateInfo
-        myPageDAO.usersUpdate(user);  // 업데이트 처리
+    public String updateUser(@ModelAttribute UsersVO vo) { // http://localhost:8112/posts/submitUpdateInfo
+        myPageDAO.usersUpdate(vo);  // 업데이트 처리
         return "thymeleaf/submitUpdateInfo";
     }
 }
