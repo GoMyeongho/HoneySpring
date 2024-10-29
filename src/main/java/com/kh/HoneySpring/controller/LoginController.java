@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/users")
@@ -22,10 +25,11 @@ public class LoginController {
     }
 
     @PostMapping("/login")  // http://localhost:8112/users/login
-    public String login(@ModelAttribute("login") UsersVO usersVO, Model model) {
+    public String login(@ModelAttribute("login") UsersVO usersVO, Model model, HttpSession session) {
         UsersVO dbBasedUser = loginDAO.FindByUserID(usersVO.getUserID());
         if (dbBasedUser != null && usersVO.getUserPW().equals(dbBasedUser.getUserPW())) {
-            model.addAttribute("userID", usersVO.getUserID());
+            dbBasedUser.setUserPW(null);    // 비밀번호 가리기
+            session.setAttribute("login", dbBasedUser);
             return "redirect:/posts/board"; // 로그인 성공 시 posts/board로 리디렉션
         } else {
             model.addAttribute("login", new UsersVO());

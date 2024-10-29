@@ -30,7 +30,7 @@ public class LikesDAO {
     }
 
     public List<LikesVO> likeList (String id) {
-        String sql = "SELECT POSTNO FROM VM_LIKE WHERE USERID = ?";
+        String sql = "SELECT * FROM VM_LIKE WHERE USERID = ?";
         List<LikesVO> result = null;
         try {
             result = jdbcTemplate.query(sql,new Object[]{id}, new LikesRowMapper());

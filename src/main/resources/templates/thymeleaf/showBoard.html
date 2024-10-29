@@ -67,7 +67,6 @@
         </tr>
       </thead>
       <tbody>
-
         <tr th:each="post, postStat : ${board}"
         th:if="${postStat.index < page * maxBoard
         and postStat.index >= (page - 1) * maxBoard}">

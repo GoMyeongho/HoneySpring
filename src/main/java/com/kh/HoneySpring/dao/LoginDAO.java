@@ -26,6 +26,7 @@ public class LoginDAO {
                 UsersVO usersVO = new UsersVO();
                 usersVO.setUserID(rs.getString("USERID"));
                 usersVO.setUserPW(rs.getString("USERPW"));
+                usersVO.setNName(rs.getString("NNAME"));
                 return usersVO;
             }
         };

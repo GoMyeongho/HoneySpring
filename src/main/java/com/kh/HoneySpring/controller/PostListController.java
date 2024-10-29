@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +39,8 @@ public class PostListController {
                             @RequestParam(value = "search", defaultValue = "") String search,
                             @RequestParam(value = "value", defaultValue = "") String value,
                             @RequestParam(value = "searchType", defaultValue = "type1") String searchType ,
-                            Model model) {
+                            Model model, RedirectAttributes redirectAttributes) {
         List<PostsVO> boardTemp = new ArrayList<>();
-
         switch (type) {
             case "type1":
                 // 전체 검색
@@ -89,7 +89,6 @@ public class PostListController {
                 }
             }
         }
-
         String id = vo.getUserID();
         List<LikesVO> like = lDao.likeList(id);
         int boardNo = (int)Math.ceil((double) board.size()/MAXBOARD);
