@@ -64,7 +64,7 @@ public class CommentsDAO {
     }
 
     public boolean deleteComment(CommentsVO vo) {
-        String sql = "UPDATE COMMENTS SET CCONTENT = '삭제된 댓글입니다.\n' WHERE SUBNO = ?";
+        String sql = "UPDATE COMMENTS SET CCONTENT = '삭제된 댓글입니다.\n' , USERID = 'unknown' WHERE SUBNO = ?";
         int result = 0;
         try {
             result = jdbcTemplate.update(sql, vo.getSubNo());
@@ -73,7 +73,16 @@ public class CommentsDAO {
         }
         return result > 0;
     }
-
+    public CommentsVO getComment(int subNo) {
+        String sql = "SELECT * FROM VM_COMM WHERE SUBNO = ?";
+        List<CommentsVO> result = null;
+        try {
+            result = jdbcTemplate.query(sql,new Object[]{subNo}, new CommentsRowMapper());
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return (result != null && !result.isEmpty()) ? result.get(0) : null;
+    }
 
     private static class CommentsRowMapper implements RowMapper<CommentsVO> {
 

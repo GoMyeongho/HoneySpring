@@ -7,34 +7,32 @@
 </head>
 <body class="container">
 
-<script>
-    window.onload = function() {
+<script th:inline="javascript">
         const postUpdate = /*[[${updateSuccess}]]*/ 0; // 모델에서 상태 정보 가져오기
-        if(postUpdate!==0){
-            if (postUpdate) alert('글이 수정 되었습니다.');
+        if(postUpdate > 0){
+            if (postUpdate === 1) alert('글이 수정 되었습니다.');
             else alert('글 수정에 실패하였습니다')
         }
         const commDelete = /*[[${deleteCommSuccess}]]*/ 0;
-        if(commDelete!==0){
-            if (commDelete) alert('댓글이 삭제 되었습니다.');
+        if(commDelete > 0){
+            if (commDelete===1) alert('댓글이 삭제 되었습니다.');
             else alert('댓글 삭제에 실패하였습니다')
         }
         const commUpdate = /*[[${updateCommSuccess}]]*/ 0;
-        if(commUpdate!==0){
-            if (commUpdate) alert('댓글이 수정 되었습니다.');
+        if(commUpdate > 0){
+            if (commUpdate===1) alert('댓글이 수정 되었습니다.');
             else alert('댓글 수정에 실패하였습니다')
         }
         const commCreate = /*[[${createCommSuccess}]]*/ 0;
-        if(commCreate!==0){
-            if (commCreate) alert('댓글이 생성 되었습니다.');
+        if(commCreate > 0){
+            if (commCreate===1) alert('댓글이 생성 되었습니다.');
             else alert('댓글 생성에 실패하였습니다')
         }
         const like = /*[[${likeSuccess}]]*/ 0;
-        if(like!==0){
-            if (like) alert('좋아요가 수정 되었습니다.');
+        if(like > 0){
+            if (like===1) alert('좋아요가 수정 되었습니다.');
             else alert('좋아요 수정에 실패하였습니다')
         }
-    };
 </script>
 
 <div th:class="head">
@@ -55,7 +53,7 @@
               <!-- isUser가 true일 때 마이페이지와 내정보수정 링크 표시 -->
               <td th:if="${isUser}" th:class="mypage-select">
                   <a th:href="@{/users/select}">마이페이지</a>
-                  <a th:href="@{/users/update}">내정보수정</a>
+                  <a th:href="@{/users/logout}">로그아웃</a>
               </td>
               <!-- isUser가 false일 때 로그인과 회원가입 링크 표시 -->
               <td th:unless="${isUser}" th:class="mypage-select">
@@ -95,26 +93,24 @@
         <span th:text="${comment.NName} ">작성자 </span>
         <span th:text="${#dates.format(comment.CDate, 'yyyy년 MM월 dd일')}">작성일</span>
     </h3>
+    <p th:text="${comment.content}">댓글 내용</p>
     <div th:if="${isUser}">
         <div style="display: inline-block; margin-right: 10px;">
-        <a  class="button"  th:href="@{/posts/comment/create(commType='type2')}">댓글 생성</a>
+        <a  class="button"  th:href="@{/posts/comment/create(commType='type2', postno =${post.postno}, commNo=${comment.commNo})}">댓글 생성</a>
         </div>
         <div style="display: inline-block; margin-right: 10px;">
-        <a  class="button"  th:if="${name} == ${comment.NName}" th:href="@{/posts/comment/update(comment=${comment}, commNo = ${comment.commNo})}">댓글 수정</a>
+        <a  class="button"  th:if="${name} == ${comment.NName}" th:href="@{/posts/comment/update(subNo = ${comment.subNo})}">댓글 수정</a>
         </div>
         <div style="display: inline-block; margin-right: 10px;">
         <form th:if="${name} == ${comment.NName}" th:action="@{/posts/comment/delete}" method="post" style="display:inline;">
-            <input type="hidden" name="comment" th:value="${comment}"/> <!-- 댓글 ID를 전송 -->
+            <input type="hidden" name="subNo" th:value="${comment.subNo}"/> <!-- 댓글 ID를 전송 -->
             <button  class="button"  type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">댓글 삭제</button>
         </form> <!-- POST 방식으로 삭제 -->
         </div>
-
     </div>
-    <p th:text="${comment.content}">댓글 내용</p>
-
 </div >
 <div th:if="${isUser}">
-<a class="button"  th:href="@{/posts/comment/create(commType='type1')}">댓글 생성</a>
+<a class="button"  th:href="@{/posts/comment/create(commType='type1', postno=${post.postno})}">댓글 생성</a>
 </div>
 <div>
     <a  th:if="${name} == ${post.author}" th:href="@{/posts/update(postno=${post.postno})}" class="button" style="display:inline;">글 수정</a>

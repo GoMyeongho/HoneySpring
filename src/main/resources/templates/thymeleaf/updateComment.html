@@ -8,8 +8,13 @@
 <body class="container">
 <div class="form-container">
     <h1>새 글 작성</h1>
-    <form th:action="@{/post/comment/update}" th:object="${comment}" method="post">
-
+    <form th:action="@{/posts/comment/update}" th:object="${comment}" method="post">
+        <input type="hidden" th:field="*{userId}">
+        <input type="hidden" th:field="*{NName}">
+        <input type="hidden" th:field="*{postNo}">
+        <input type="hidden" th:field="*{CDate}">
+        <input type="hidden" th:field="*{commNo}">
+        <input type="hidden" th:field="*{subNo}">
         <div>
             <label for="content">댓글 내용 입력</label>
             <textarea id="content" maxlength="200" placeholder="내용을 입력 해 주세요(최대 200자)"

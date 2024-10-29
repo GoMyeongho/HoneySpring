@@ -2,7 +2,6 @@ package com.kh.HoneySpring.controller;
 
 import com.kh.HoneySpring.dao.CommentsDAO;
 import com.kh.HoneySpring.dao.LikesDAO;
-import com.kh.HoneySpring.dao.PostListDAO;
 import com.kh.HoneySpring.dao.PostViewDAO;
 import com.kh.HoneySpring.vo.CommentsVO;
 import com.kh.HoneySpring.vo.LikesVO;
@@ -60,7 +59,7 @@ public class PostViewController {
     public String like(@SessionAttribute("login") UsersVO vo, @RequestParam("postno") int postno, RedirectAttributes redirectAttributes) {
         List<LikesVO> lList = lDao.likeList(postno);
         boolean success =(lDao.isLike(lList,vo.getNName()))?lDao.cancelLike(postno, vo.getUserID()):lDao.addLike(postno, vo.getUserID());
-        redirectAttributes.addFlashAttribute("likeSuccess", success);
+        redirectAttributes.addFlashAttribute("likeSuccess", (success)?1:2);
         return "redirect:/posts/view?postno="+postno;
     }
 
@@ -75,7 +74,7 @@ public class PostViewController {
     @PostMapping("/update")
     public String submitUpdatePost(@ModelAttribute("post") PostsVO post, RedirectAttributes redirectAttributes) {
         boolean success = dao.updatePost(post);
-        redirectAttributes.addFlashAttribute("updateSuccess", success);
+        redirectAttributes.addFlashAttribute("updateSuccess", (success)?1:2);
         return "redirect:/posts/view?postno="+post.getPostno();
     }
 
@@ -83,47 +82,52 @@ public class PostViewController {
     public String deletePost(@RequestParam("postno") int postNo, RedirectAttributes redirectAttributes) {
         PostsVO post= dao.viewPost(postNo);
         boolean success = dao.deletePost(post.getPostno());
-        redirectAttributes.addFlashAttribute("deleteSuccess", success);
-        return "redirect:/posts/view?postno="+postNo;
+        redirectAttributes.addFlashAttribute("deleteSuccess", (success)?1:2);
+        return "redirect:/posts/board";
     }
 
     @GetMapping("/comment/create")
-    public String createComment(@SessionAttribute("login") UsersVO vo, @RequestParam("commType")String type, @RequestParam(value = "commNo", required = false) int commNo, Model model) {
+    public String createComment(@SessionAttribute("login") UsersVO vo, @RequestParam("commType")String type,
+                                @RequestParam(value = "commNo", required = false) Integer commNo,
+                                @RequestParam("postno") int postNo, Model model) {
         CommentsVO comm = new CommentsVO();
         comm.setCommNo((type.equals("type1") ? 0 : commNo));
         comm.setNName(vo.getNName());
         comm.setUserId(vo.getUserID());
-        model.addAttribute("comment", new CommentsVO());
+        comm.setPostNo(postNo);
+        model.addAttribute("comment", comm);
         return "thymeleaf/createComment";
     }
 
     @PostMapping("/comment/create")
-    public String submitComment(@RequestParam("comment") CommentsVO vo, @RequestParam(value = "commNo", defaultValue = "0") int commNo, RedirectAttributes redirectAttributes) {
+    public String submitComment(@ModelAttribute("comment") CommentsVO vo, @RequestParam(value = "commNo", defaultValue = "0") int commNo, RedirectAttributes redirectAttributes) {
         boolean success;
         if (commNo == 0) success = cDao.addComment(vo);
         else success = cDao.addComment(vo, commNo);
-        redirectAttributes.addFlashAttribute("createCommSuccess", success);
+        redirectAttributes.addFlashAttribute("createCommSuccess", (success)?1:2);
         return "redirect:/posts/view?postno="+vo.getPostNo();
     }
 
     @GetMapping("/comment/update")
-    public String updateComment(@RequestParam("comment") CommentsVO vo, Model model) {
+    public String updateComment(@RequestParam("subNo") int subno, Model model) {
+        CommentsVO vo = cDao.getComment(subno);
         model.addAttribute("comment", vo);
         return "thymeleaf/updateComment";
     }
 
     @PostMapping("/comment/update")
-    public String submitUpdateComment(@RequestParam("comment") CommentsVO vo, RedirectAttributes redirectAttributes) {
+    public String submitUpdateComment(@ModelAttribute("comment") CommentsVO vo, RedirectAttributes redirectAttributes) {
         boolean success = cDao.updateComment(vo);
-        redirectAttributes.addFlashAttribute("updateCommSuccess", success);
+        redirectAttributes.addFlashAttribute("updateCommSuccess", (success)?1:2);
         return "redirect:/posts/view?postno="+vo.getPostNo();
     }
 
     @PostMapping("/comment/delete")
-    public String submitDeleteComment(@RequestParam("comment") CommentsVO vo, RedirectAttributes redirectAttributes) {
+    public String submitDeleteComment(@RequestParam("subNo") int subNo, RedirectAttributes redirectAttributes) {
+        CommentsVO vo = cDao.getComment(subNo);
         boolean success = cDao.deleteComment(vo);
-        redirectAttributes.addFlashAttribute("deleteCommSuccess", success);
-        return "redirect:/posts/board";
+        redirectAttributes.addFlashAttribute("deleteCommSuccess", (success)?1:2);
+        return "redirect:/posts/view?postno="+vo.getPostNo();
     }
 
 
