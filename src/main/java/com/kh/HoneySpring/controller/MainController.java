@@ -18,13 +18,13 @@ public class MainController {
     private final UsersDAO usersDAO;
     private final findIDDAO findIDDAO;
     private final findPWDAO findPWDAO;
-
+// 의존성 주입
     public MainController(UsersDAO usersDAO, findIDDAO findIDDAO, findPWDAO findPWDAO) {
         this.usersDAO = usersDAO;
         this.findIDDAO = findIDDAO;
         this.findPWDAO = findPWDAO;
     }
-
+//회원가입----------------------------------------------------------------------------------------------------
     @GetMapping("/signUp") //  http://localhost:8112/login/signUp
     public String signUp(Model model) {
         model.addAttribute("signUp", new UsersVO());
@@ -84,7 +84,7 @@ public class MainController {
     }
 
 
-    // 아이디 찾기---------------------------------------------------------------------------------------------
+// 아이디 찾기---------------------------------------------------------------------------------------------
     @GetMapping("/findID")
     public String findID() {
         return "Thymeleaf/findID";
@@ -103,7 +103,7 @@ public class MainController {
         return "Thymeleaf/showID";
     }
 
-    // 아이디 마스킹------------------------------------------------------------------------------------
+// 아이디 마스킹------------------------------------------------------------------------------------
     private String maskUserID(String userID) {
         if (userID == null || userID.length() == 0) {
             throw new IllegalArgumentException("사용자 ID는 비어있을 수 없습니다.");
@@ -116,7 +116,7 @@ public class MainController {
         return visiblePart + maskedPart;
     }
 
-    // 비밀번호 찾기----------------------------------------------------------------------------
+// 비밀번호 찾기----------------------------------------------------------------------------
     @GetMapping("/findPW")
     public String findPW() {
         return "Thymeleaf/findPW";
