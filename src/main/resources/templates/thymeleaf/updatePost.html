@@ -9,7 +9,10 @@
 <div class="form-container">
     <h1>글 수정</h1>
     <form th:action="@{/posts/update}" th:object="${post}" method="post">
-
+        <input type="hidden" th:field="*{postno}">
+        <input type="hidden" th:field="*{date}">
+        <input type="hidden" th:field="*{author}">
+        <input type="hidden" th:field="*{userID}">
         <div>
             <label for="categories">카테고리</label>
             <select id="categories" th:field="*{category}">

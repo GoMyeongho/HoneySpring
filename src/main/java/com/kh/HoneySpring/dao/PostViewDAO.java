@@ -20,13 +20,12 @@ public class PostViewDAO {
     public PostsVO viewPost(int postNo) {
         List<PostsVO> result = null;
         String sql = "select * from VM_POST where POSTNO = ?";
-            try {
+        try {
             result = jdbcTemplate.query(sql,new Object[]{postNo}, new PostViewRowMapper());
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-            return result != null ? result.get(0) : null;
+            return (result != null && !result.isEmpty())? result.get(0) : null;
     }
     public boolean updatePost(PostsVO vo){
         String sql = "UPDATE POSTS SET TITLE = ?, PCONTENT = ?, CATE = ? WHERE POSTNO = ?";
@@ -76,20 +75,6 @@ public class PostViewDAO {
         });
         return result;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private static class PostViewRowMapper implements RowMapper<PostsVO> {
 

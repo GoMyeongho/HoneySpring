@@ -92,7 +92,7 @@
   </div>
   <p>현재 페이지:
       <span th:text="${page}"></span>
-      <span><a th:class="button" th:href="@{/posts/create}">글 작성</a> </span></p>
+      <span><a th:if="${isUser}" th:class="button" th:href="@{/posts/create}">글 작성</a> </span></p>
 <div th:if="${boardNo > 0}">
   <a class="button" th:each="number : ${#numbers.sequence(1, boardNo)}" th:text="${number}"
      th:href="@{/posts/board(value=${value}, page=${number},

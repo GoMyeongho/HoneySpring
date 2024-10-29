@@ -33,7 +33,8 @@ public class PostViewController {
     }
 
     @GetMapping("/view")    // http://localhost:8112/posts/list
-    public String viewPost(@SessionAttribute(value="login", required = false)UsersVO vo, @RequestParam("postno") int postNo, Model model) {
+    public String viewPost(@SessionAttribute(value="login", required = false)UsersVO vo,
+                           @RequestParam("postno") int postNo, Model model) {
         PostsVO post= dao.viewPost(postNo);
         List<LikesVO> lList = lDao.likeList((vo!=null)?vo.getUserID():"");
         int likeNo = lDao.likeList(postNo).size();
@@ -45,9 +46,9 @@ public class PostViewController {
                 cList.get(i).setContent("->" + cList.get(i).getContent());
             }
         }
+        model.addAttribute("post", post);
         model.addAttribute("user",vo);
         model.addAttribute("isUser",vo!=null);
-        model.addAttribute("post", post);
         model.addAttribute("likeNo",likeNo);
         model.addAttribute("likeMark",likeMark);
         model.addAttribute("cList", cList);
@@ -64,24 +65,26 @@ public class PostViewController {
     }
 
     @GetMapping("/update")
-    public String updatePost(@ModelAttribute("post") PostsVO vo, Model model) {
+    public String updatePost(@RequestParam("postno") int postNo, Model model) {
+        PostsVO post= dao.viewPost(postNo);
         model.addAttribute("categories", CATEGORIES);
-        model.addAttribute("post", vo);
+        model.addAttribute("post", post);
         return "thymeleaf/updatePost";
     }
 
     @PostMapping("/update")
-    public String submitUpdatePost(@ModelAttribute("post") PostsVO vo, RedirectAttributes redirectAttributes) {
-        boolean success = dao.updatePost(vo);
+    public String submitUpdatePost(@ModelAttribute("post") PostsVO post, RedirectAttributes redirectAttributes) {
+        boolean success = dao.updatePost(post);
         redirectAttributes.addFlashAttribute("updateSuccess", success);
-        return "redirect:/posts/view?postno="+vo.getPostno();
+        return "redirect:/posts/view?postno="+post.getPostno();
     }
 
     @PostMapping("/delete")
-    public String deletePost(@ModelAttribute("post") PostsVO vo, RedirectAttributes redirectAttributes) {
-        boolean success = dao.deletePost(vo.getPostno());
+    public String deletePost(@RequestParam("postno") int postNo, RedirectAttributes redirectAttributes) {
+        PostsVO post= dao.viewPost(postNo);
+        boolean success = dao.deletePost(post.getPostno());
         redirectAttributes.addFlashAttribute("deleteSuccess", success);
-        return "redirect:/posts/view?postno="+vo.getPostno();
+        return "redirect:/posts/view?postno="+postNo;
     }
 
     @GetMapping("/comment/create")

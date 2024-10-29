@@ -9,6 +9,8 @@
 <div class="form-container">
   <h1>새 글 작성</h1>
   <form th:action="@{/posts/create}" th:object="${post}" method="post">
+    <input type="hidden" th:field="*{author}">
+    <input type="hidden" th:field="*{userID}">
     <div>
       <label for="categories">카테고리</label>
       <select id="categories" th:field="*{category}">
@@ -17,6 +19,7 @@
       </select>
     </div>
     <div>
+      <p th:text="${id}"></p>
       <label for="title">글 제목 입력</label>
       <input type="text" id="title" maxlength="100" placeholder="제목을 입력 해 주세요(최대 100자)" th:field="*{title}" />
     </div>

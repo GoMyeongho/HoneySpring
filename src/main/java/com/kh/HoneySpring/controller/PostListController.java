@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -36,7 +37,7 @@ public class PostListController {
                             @RequestParam(value = "search", defaultValue = "") String search,
                             @RequestParam(value = "value", defaultValue = "") String value,
                             @RequestParam(value = "searchType", defaultValue = "type1") String searchType ,
-                            Model model, RedirectAttributes redirectAttributes) {
+                            Model model) {
         List<PostsVO> boardTemp = new ArrayList<>();
         switch (type) {
             case "type1":
@@ -85,11 +86,13 @@ public class PostListController {
                         break;
                 }
             }
+
         }
         String id = (vo != null)?vo.getUserID():null;
         List<LikesVO> like = lDao.likeList(id);
         int boardNo = (int)Math.ceil((double) board.size()/MAXBOARD);
         for (PostsVO post : board) post.setTitle(post.getTitle() + "[" + lDao.likeMark(like, post.getPostno()) + "]");
+        Collections.sort(board);
         model.addAttribute("user",vo);
         model.addAttribute("isUser",  vo != null);
         model.addAttribute("categories", CATEGORIES);
