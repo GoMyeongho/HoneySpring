@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -30,14 +29,15 @@ public class MyPageDAO {
                 vo.getNName(),
                 vo.getPhone(),
                 vo.getPwLOCK(),
-                vo.getPwKey());
+                vo.getPwKey(),
+                vo.getUserID()
+        );
     }
 
     public UsersVO findUserById(String userId) {
-        String sql = "SELECT * From USERS WHERE USERID = ?";
-        List<UsersVO> vo;
-        vo = jdbcTemplate.query(sql,new Object[]{userId}, new UsersRowMapper());
-        return vo.get(0);
+        String sql = "SELECT * FROM USERS WHERE USERID = ?";
+        List<UsersVO> vo = jdbcTemplate.query(sql, new Object[]{userId}, new UsersRowMapper());
+        return vo.isEmpty() ? null : vo.get(0);
     }
 
     private static class UsersRowMapper implements RowMapper<UsersVO> {

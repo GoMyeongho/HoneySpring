@@ -33,10 +33,11 @@ public class PostViewController {
     }
 
     @GetMapping("/view")    // http://localhost:8112/posts/list
-    public String viewPost(@SessionAttribute("login")UsersVO vo, @RequestParam("postno") int postNo, Model model) {
+    public String viewPost(@SessionAttribute(value="login", required = false)UsersVO vo, @RequestParam("postno") int postNo, Model model) {
         PostsVO post= dao.viewPost(postNo);
-        List<LikesVO> lList = lDao.likeList(vo.getUserID());
+        List<LikesVO> lList = lDao.likeList((vo!=null)?vo.getUserID():"");
         int likeNo = lDao.likeList(postNo).size();
+        System.out.println(likeNo);
         String likeMark = lDao.likeMark(lList,postNo);
         List<CommentsVO> cList = cDao.commList(postNo);
         Collections.sort(cList);
@@ -45,11 +46,12 @@ public class PostViewController {
                 cList.get(i).setContent("->" + cList.get(i).getContent());
             }
         }
+        model.addAttribute("user",vo);
+        model.addAttribute("isUser",vo!=null);
         model.addAttribute("post", post);
         model.addAttribute("likeNo",likeNo);
         model.addAttribute("likeMark",likeMark);
         model.addAttribute("cList", cList);
-        model.addAttribute("name", vo.getNName());
         model.addAttribute("categories", CATEGORIES);
         return "thymeleaf/viewPost";
     }

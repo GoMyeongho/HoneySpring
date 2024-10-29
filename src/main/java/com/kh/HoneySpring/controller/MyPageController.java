@@ -27,8 +27,8 @@ public class MyPageController {
 
     // 사용자 업데이트 폼 (GET 요청)
     @GetMapping("/update")
-    public String updateUserForm(@RequestParam("userId") String userId, Model model) { // http://localhost:8112/posts/update
-        UsersVO userToUpdate = myPageDAO.findUserById(userId); // DAO를 통해 직접 조회
+    public String updateUserForm(@SessionAttribute("login") UsersVO vo, Model model) { // http://localhost:8112/posts/update
+        UsersVO userToUpdate = myPageDAO.findUserById(vo.getUserID()); // DAO를 통해 직접 조회
         model.addAttribute("user", userToUpdate);
         return "thymeleaf/updateInfo";
     }
