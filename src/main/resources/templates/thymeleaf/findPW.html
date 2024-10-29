@@ -6,13 +6,13 @@
 </head>
 <body>
 <h1>비밀번호 찾기</h1>
-<form action="#" th:action="@{/getHint}" method="post">
+<form action="#" th:action="@{/login/inputPWKey}" method="post">
   <label for="userID">아이디:</label>
   <input type="text" id="userID" name="userID" required>
   <br>
   <button type="submit">제시문 가져오기</button>
 </form>
 <p th:text="${error}" style="color:red;"></p> <!-- 오류 메시지 표시 -->
-<a href="/login">로그인 페이지로 돌아가기</a>
+<a href="/users/login">로그인 페이지로 돌아가기</a>
 </body>
 </html>

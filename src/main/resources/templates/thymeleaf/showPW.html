@@ -6,7 +6,11 @@
 </head>
 <body>
 <h1>비밀번호 찾기 결과</h1>
-<p th:text="${result}"></p> <!-- 결과 메시지를 표시 -->
-<a href="/users/login">로그인 페이지로 돌아가기</a> <!-- 로그인 페이지로 돌아가기 -->
+
+<!-- 결과 출력 -->
+<p th:if="${result != null}">비밀번호: <span th:text="${result}"></span></p>
+<p th:if="${result == null}">제시어가 일치하지 않거나 아이디가 존재하지 않습니다.</p>
+
+<a href="/users/login">로그인 페이지로</a>
 </body>
 </html>

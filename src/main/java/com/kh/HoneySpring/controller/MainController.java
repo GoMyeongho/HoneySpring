@@ -113,6 +113,12 @@ public class MainController {
 
     // 아이디 마스킹------------------------------------------------------------------------------------
     private String maskUserID(String userID) {
+        if (userID == null || userID.length() == 0) {
+            throw new IllegalArgumentException("사용자 ID는 비어있을 수 없습니다.");
+        }
+        if (userID.length() < 4) {
+            return userID; // 길이가 4 미만일 경우 원본 문자열 반환
+        }
         String visiblePart = userID.substring(0, 4);
         String maskedPart = "*".repeat(userID.length() - 4);
         return visiblePart + maskedPart;
@@ -134,7 +140,6 @@ public class MainController {
         } else {
             // 아이디가 존재하지 않을 경우
             model.addAttribute("error", "해당 아이디로 가입된 계정이 없습니다.");
-            model.addAttribute("result", "해당 아이디로 가입된 계정이 없습니다."); // 결과를 추가
             return "Thymeleaf/showPW"; // 결과 페이지로 이동
         }
     }

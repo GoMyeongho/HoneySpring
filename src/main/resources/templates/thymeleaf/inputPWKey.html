@@ -5,15 +5,16 @@
   <title>제시어 입력</title>
 </head>
 <body>
-<h1>제시어 입력</h1>
-<p>제시문: <span th:text="${pwLOCK}"></span></p> <!-- 제시문 표시 -->
-<form action="#" th:action="@{/findPW}" method="post">
-  <input type="hidden" name="userID" th:value="${userID}"/> <!-- 사용자 ID 숨김 필드 -->
-  <label for="pwKey">제시어:</label>
-  <input type="text" id="pwKey" name="pwKey" required>
-  <br>
-  <button type="submit">확인</button>
+<h1>비밀번호 찾기 - 제시어 입력</h1>
+
+<p>제시문: <span th:text="${pwLOCK}"></span></p>
+
+<form th:action="@{/login/inputPWKey}" method="post">
+  <input type="hidden" name="userID" th:value="${userID}" />
+  <label for="pwKey">제시어를 입력하세요:</label>
+  <input type="text" id="pwKey" name="pwKey" required />
+  <button type="submit">제시어 확인</button>
 </form>
-<a href="/users/login">로그인 페이지로 돌아가기</a>
+
 </body>
 </html>

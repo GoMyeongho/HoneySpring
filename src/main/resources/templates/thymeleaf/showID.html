@@ -7,7 +7,11 @@
 <body>
 <h1>아이디 찾기 결과</h1>
 
-<p>아이디: <span th:text="${userID}"></span></p>
+<p th:if="${result != null}">아이디: <span th:text="${result}"></span></p>
+
+<!-- 아이디가 없을 경우 메시지 출력 -->
+<p th:if="${result == null}">해당 전화번호로 가입된 아이디가 없습니다.</p>
+
 <a href="/users/login">로그인 페이지로</a>
 </body>
 </html>
