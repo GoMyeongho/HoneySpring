@@ -1,107 +1,52 @@
 package com.kh.HoneySpring.dao;
 
 import com.kh.HoneySpring.Common.Common;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
+@Repository
 public class findPWDAO {
-    static Connection conn = null;
-    static Statement stmt = null;
-    PreparedStatement psmt = null;
-    static ResultSet rs = null;
-    static Scanner sc = null;
+    public String findPW(String userID, String pwKey) {
+        String userPW = null;
 
-    public String findPW(String userID, String pwKey) throws SQLException {
-        String  pwLOCK, userPW;
-        Scanner sc = new Scanner(System.in);
-        List<String> IDList = new ArrayList<>();
-        try {
-            conn = Common.getConnection();  // 오라클 DB 연결
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT USERID FROM VM_LOGIN");
-            while (rs.next()) {
-                String ID = rs.getString("USERID");
-                IDList.add(ID);
-            }
-        } catch (Exception e) {
-            System.out.println(e + " 연결 실패");
-        } finally {
-            Common.close(rs);
-            Common.close(stmt);
-            Common.close(conn);
-        }
-        while (true) {
-            System.out.println("가입한 아이디를 입력 해 주세요");
-            System.out.print("아이디: ");
-            System.out.println();
-            userID = noKor();
+        try (Connection conn = Common.getConnection();
+             PreparedStatement psmt = conn.prepareStatement("SELECT pwLOCK, PWKEY, userPW FROM USERS WHERE userID = ?")) {
 
-            if (userID.getBytes().length >= 8 && userID.getBytes().length <= 16) {
-            } else {
-                System.out.println("아이디 입력 조건을 다시 확인 해 주세요");
-                return userID;
-            }
-            if (IDList.contains(userID)) ;
-            else {
-                System.out.println("해당 아이디로 가입된 계정이 없습니다.");
-                continue;
-            }
-            break;
-        }
+            psmt.setString(1, userID);
+            ResultSet rs = psmt.executeQuery();
 
-        try {
-            conn = Common.getConnection();
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT pwLOCK , PWKEY  FROM USERS WHERE userID = '" + userID + "'");
-            rs.next();
-            pwLOCK = rs.getString("PWLOCK");
-            pwKey = rs.getString("PWKEY");
-
-        } catch (Exception e) {
-            System.out.println(e + "연결 실패");
-            return userID;
-        } finally {
-            Common.close(rs);
-            Common.close(psmt);
-            Common.close(conn);
-        }
-        while (true) {
-            System.out.println("제시문: " + pwLOCK);
-            // 데이터베이스에 있는 아이디 확인하여 pwLOCK 가져오기
-            System.out.println("제시어를 입력 해 주세요. 제시어는 한글 기준 8자 이하 입니다.");
-            System.out.print("키워드: ");
-            if (pwKey.equals(sc.nextLine())) {
-            } else {
-                System.out.println("제시어가 다릅니다");
-                continue;
-            }
-            try {
-                conn = Common.getConnection();
-                stmt = conn.createStatement();
-                rs = stmt.executeQuery("SELECT userPW FROM USERS WHERE USERID = '" + userID + "'");
-                rs.next();
+            if (rs.next()) {
+                String actualPwKey = rs.getString("PWKEY");
                 userPW = rs.getString("userPW");
-            } catch (Exception e) {
-                System.out.println(e + "연결 실패");
-                return userID;
-            } finally {
-                Common.close(rs);
-                Common.close(psmt);
-                Common.close(conn);
+
+                // 제시어 검증
+                if (!actualPwKey.equals(pwKey)) {
+                    return "제시어가 다릅니다.";
+                }
+            } else {
+                return "해당 아이디로 가입된 계정이 없습니다.";
             }
-            System.out.println("비밀번호는 " + userPW + "입니다.");
-            break;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "비밀번호 찾기 실패";
         }
-        return userID;
+
+        return userPW;
     }
-    public String noKor() {
-        String name = sc.next();
-        for (int i = 0; i < name.length(); i++) {
-            if (name.charAt(i) < 33 || name.charAt(i) > 126) return "";
+
+    public String getPWLock(String userID) {
+        String pwLOCK = null;
+        try (Connection conn = Common.getConnection();
+             PreparedStatement psmt = conn.prepareStatement("SELECT pwLOCK FROM USERS WHERE userID = ?")) {
+
+            psmt.setString(1, userID);
+            ResultSet rs = psmt.executeQuery();
+            if (rs.next()) {
+                pwLOCK = rs.getString("pwLOCK");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return name;
+        return pwLOCK;
     }
 }

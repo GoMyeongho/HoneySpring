@@ -6,13 +6,11 @@
 </head>
 <body>
 <h1>아이디 찾기</h1>
-
-<form action="/users/findID" method="post">
+<form action="#" th:action="@{/login/findID}" method="post">
   <label for="phone">전화번호:</label>
-  <input type="text" id="phone" name="phone" placeholder="010-0000-0000" required><br>
-  <button type="submit">아이디 찾기</button>
+  <input type="text" id="phone" name="phone" required placeholder="010-0000-0000">
+  <br>
+  <button type="submit">확인</button>
 </form>
-
-<p th:if="${error}" th:text="${error}"></p>
 </body>
 </html>
