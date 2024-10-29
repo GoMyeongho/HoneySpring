@@ -3,12 +3,21 @@
     border-collapse: collapse; /* 테이블 경계선 겹치기 방지 */
     margin-top: 20px; /* 위쪽 여백 */
     font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
+    background-color: #FFEBB2; /* 테이블의 배경색을 헤더보다 약간 연하게 설정 */
 }
 
-.board-table th, .board-table td {
+.board-table th, .button-cell {
     padding: 10px; /* 셀 안 여백 */
-    text-align: left; /* 텍스트 왼쪽 정렬 */
-    border: 1px solid #F94144; /* 셀 테두리 색상 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    border: none; /* 셀 테두리 제거 */
+    cursor: pointer; /* 커서를 포인터로 변경 */
+    transition: background-color 0.3s; /* 배경색 전환 효과 */
+}
+
+.board-table th, .cell {
+    padding: 10px; /* 셀 안 여백 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    border: none; /* 셀 테두리 제거 */
 }
 
 .board-table th {
@@ -16,8 +25,16 @@
     color: #333; /* 헤더 글자색 */
 }
 
-.board-table tr:nth-child(even) {
-    background-color: #FFE5B4; /* 짝수 행의 배경색 */
+.button-cell {
+    background-color: #FFE5B4; /* 셀 기본 배경색 */
+    display: flex; /* Flexbox로 셀 내용 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.button-cell:hover {
+    background-color: #FF9800; /* 마우스 오버 시 배경색 변경 */
 }
 
 .post-title {
@@ -39,12 +56,6 @@
     border-radius: 5px; /* 둥근 모서리 */
     text-decoration: none; /* 밑줄 제거 */
     transition: background-color 0.3s, transform 0.3s; /* 전환 효과 */
-}
-
-/* 링크가 있는 셀에 마우스 오버 시 배경색 변경 */
-td:hover .button {
-    background-color: #FF9800; /* 마우스 오버 시 버튼 색상 변경 */
-    transform: scale(1.05); /* 마우스 오버 시 크기 증가 효과 */
 }
 
 /* 버튼 hover 효과를 유지하려면 아래 규칙을 추가 */

@@ -53,6 +53,11 @@ public class PostViewController {
         model.addAttribute("categories", CATEGORIES);
         return "thymeleaf/viewPost";
     }
+    @PostMapping("/view")
+    public String like(@ModelAttribute("login") UsersVO vo, @RequestParam("postno") int postno, Model model){
+        boolean success = lDao.addLike(postno, vo.getUserID());
+        return "redirect:/posts/view?postno="+postno;
+    }
 
     @GetMapping("/update")
     public String updatePost(@RequestParam("post") PostsVO vo, Model model) {
@@ -73,7 +78,7 @@ public class PostViewController {
     public String deletePost(@ModelAttribute("post") PostsVO vo, RedirectAttributes redirectAttributes) {
         boolean success = dao.deletePost(vo.getPostno());
         redirectAttributes.addFlashAttribute("deleteSuccess", success);
-        return "redirect:/posts/view";
+        return "redirect:/posts/view?postno="+vo.getPostno();
     }
 
     @GetMapping("/comment/create")
@@ -92,7 +97,7 @@ public class PostViewController {
         if (commNo == 0) success = cDao.addComment(vo);
         else success = cDao.addComment(vo, commNo);
         redirectAttributes.addFlashAttribute("createCommSuccess", success);
-        return "redirect:/posts/view";
+        return "redirect:/posts/view?postno="+vo.getPostNo();
     }
 
     @GetMapping("/comment/update")
@@ -105,14 +110,14 @@ public class PostViewController {
     public String submitUpdateComment(@RequestParam("comment") CommentsVO vo, RedirectAttributes redirectAttributes) {
         boolean success = cDao.updateComment(vo);
         redirectAttributes.addFlashAttribute("updateCommSuccess", success);
-        return "redirect:/posts/view";
+        return "redirect:/posts/view?postno="+vo.getPostNo();
     }
 
     @PostMapping("/comment/delete")
     public String submitDeleteComment(@RequestParam("comment") CommentsVO vo, RedirectAttributes redirectAttributes) {
         boolean success = cDao.deleteComment(vo);
         redirectAttributes.addFlashAttribute("deleteCommSuccess", success);
-        return "redirect:/posts/view";
+        return "redirect:/posts/board";
     }
 
 

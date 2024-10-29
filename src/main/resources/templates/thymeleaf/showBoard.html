@@ -44,15 +44,15 @@
         <tr th:each="post, postStat : ${board}"
         th:if="${postStat.index < page * maxBoard
         and postStat.index >= (page - 1) * maxBoard}">
-          <td th:text="${postStat.index + 1}"></td>
-          <td th:text="${post.category}"></td>
+          <td th:class="cell" th:text="${postStat.index + 1}"></td>
+          <td th:class="cell" th:text="${post.category}"></td>
           <td>
-            <a class="button" th:href="@{/posts/view(postno=${post.postno})}" th:text="${post.title}"></a>
+            <a th:class="button-cell" th:href="@{/posts/view(postno=${post.postno})}" th:text="${post.title}"></a>
           </td>
           <td>
-            <a class="button" th:href="@{/posts/board(value=${post.author}, type='type2')}" th:text="${post.author}"></a>
+            <a th:class="button-cell" th:href="@{/posts/board(value=${post.author}, type='type2')}" th:text="${post.author}"></a>
           </td>
-          <td th:text="${post.date}"></td>
+          <td th:class="cell" th:text="${post.date}"></td>
         </tr>
       </tbody>
     </table>
