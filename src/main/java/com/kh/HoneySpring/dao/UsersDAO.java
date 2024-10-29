@@ -18,7 +18,7 @@ public class UsersDAO {
 
     public boolean joinMember(UsersVO vo) {
         int result = 0;
-        String sql = "INSERT INTO users (userID, password, nickname, phone, hintStatement, hintWord) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (userID, userPW, NName, phone, PWLock, PWKey, UDATE) VALUES (?, ?, ?, ?, ?, ?, SYSDATE)";
 
         try {
             result = jdbcTemplate.update(sql, vo.getUserID(), vo.getUserPW(), vo.getNName(),
