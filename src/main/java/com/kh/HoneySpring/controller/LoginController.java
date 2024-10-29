@@ -26,15 +26,16 @@ public class LoginController {
         UsersVO dbBasedUser = loginDAO.FindByUserID(usersVO.getUserID());
         if (dbBasedUser != null && usersVO.getUserPW().equals(dbBasedUser.getUserPW())) {
             model.addAttribute("userID", usersVO.getUserID());
-            return "redirect:/showBoard"; // 성공 시 리디렉션 처리
+            return "redirect:/posts/board"; // 로그인 성공 시 posts/board로 리디렉션
         } else {
             model.addAttribute("login", new UsersVO());
             model.addAttribute("에러", "아이디, 비밀번호가 올바르지 않습니다.");
             return "redirect:/users/login"; // 실패 시 로그인 페이지로 리디렉션
         }
     }
-    @GetMapping("/posts")
-    public String posts() {
+
+    @GetMapping("/board")
+    public String board() {
         return "Thymeleaf/showBoard";
     }
 
