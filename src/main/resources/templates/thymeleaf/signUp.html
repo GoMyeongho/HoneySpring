@@ -23,7 +23,7 @@
 
     <div class="form-group">
       <label for="confirmPW">비밀번호 확인:</label>
-      <input type="password" id="confirmPW" name="confirmPW" class="form-control" placeholder="비밀번호 확인 입력">
+      <input type="password" id="confirmPW" th:field="*{confirmPW}" class="form-control" placeholder="비밀번호 확인 입력">
       <span th:text="${validConfirmPW}" class="text-danger"></span>
     </div>
 
