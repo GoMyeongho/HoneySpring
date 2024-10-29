@@ -1,9 +1,12 @@
 .board-table {
     width: 100%; /* 테이블 폭을 100%로 설정 */
-    border-collapse: collapse; /* 테이블 경계선 겹치기 방지 */
     margin-top: 20px; /* 위쪽 여백 */
     font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
     background-color: #FFEBB2; /* 테이블의 배경색을 헤더보다 약간 연하게 설정 */
+    border: 2px solid #F94144; /* 테두리 */
+    border-radius: 5px; /* 둥근 모서리 */
+    border-collapse: collapse;
+    overflow: hidden;
 }
 
 .board-table th, .button-cell {
@@ -23,6 +26,18 @@
 .board-table th {
     background-color: #FFC107; /* 헤더 배경색 */
     color: #333; /* 헤더 글자색 */
+    border-bottom: 1px solid #F94144; /* 상단 가로 경계선 */
+}
+
+/* 각 행에 대한 경계선 추가 */
+.board-table tr {
+    border-bottom: 1px solid #F94144; /* 행 아래 경계선 */
+}
+
+.cell {
+    background-color: #FFE5B4; /* 셀 기본 배경색 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
 }
 
 .button-cell {
@@ -35,6 +50,15 @@
 
 .button-cell:hover {
     background-color: #FF9800; /* 마우스 오버 시 배경색 변경 */
+}
+
+.post-title {
+    color: #333; /* 제목 글자색 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.post-title:hover {
+    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
 }
 
 .post-title {
@@ -63,10 +87,46 @@
     background-color: #F94144; /* 마우스 오버 시 색상 변경 */
     transform: scale(1.05); /* 마우스 오버 시 크기 증가 효과 */
 }
-
-.icon{
-width: 40px; /* 원하는 너비 */
-height: auto; /* 비율 유지 */
+.head {
+    display: flex;
+    align-items: center;
 }
 
+.icon {
+    width: 50px;
+    height: auto;
+    margin-right: 15px;
+}
 
+.mypage-table {
+    border-collapse: collapse;
+    background-color: #fff7d5;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+}
+
+.mypage-head, .mypage-select {
+    padding: 10px;
+}
+
+.mypage-name th {
+    padding: 10px;
+    text-align: center;
+}
+
+.no-login {
+    text-align: center; /* "로그인이 안되어 있습니다"를 중앙 정렬 */
+    color: #666; /* 색상 변경 (선택 사항) */
+}
+
+.mypage-select a {
+    margin: 0 10px; /* 링크 간 간격 */
+    text-decoration: none;
+    color: #007BFF; /* 링크 색상 */
+}
+
+.mypage-select td {
+    text-align: center;
+}

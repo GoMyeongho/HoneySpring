@@ -39,7 +39,7 @@ public class PostListDAO {
 
 
     public List<PostsVO> selectPage() {
-        String sqlTemp = "SELECT POSTNO, TITLE, NNAME, PDATE, CATE From VM_POSTS_PAGE";
+        String sqlTemp = "SELECT * From VM_POSTS_PAGE";
         List<PostsVO> result = null;
         try {
             result = jdbcTemplate.query(sqlTemp, new PostListRowMapper());

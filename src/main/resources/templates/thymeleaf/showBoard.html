@@ -16,11 +16,38 @@
     };
 </script>
 
-  <div class="head">
+<div th:class="head">
     <a th:href="@{/post/board}">
-      <img th:src="@{/image/honey.png}" alt = "메인" class="icon">
+        <img th:src="@{/image/honey.png}" alt="메인" class="icon">
     </a>
-  </div>
+    <span>
+      <table th:class="mypage-table">
+          <thead th:class="mypage-head">
+          <tr th:class="mypage-name">
+              <!-- isUser가 true일 때는 닉네임 표시, false일 때는 "로그인이 안되어 있습니다" 메시지 표시 -->
+              <th th:if="${isUser}" th:text="${user.NName}"></th>
+              <th th:unless="${isUser}" class="no-login">로그인이 안되어 있습니다</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:class="mypage-select">
+              <!-- isUser가 true일 때 마이페이지와 내정보수정 링크 표시 -->
+              <td th:if="${isUser}" th:class="mypage-select">
+                  <a th:href="@{/users/select}">마이페이지</a>
+                  <a th:href="@{/users/update}">내정보수정</a>
+              </td>
+              <!-- isUser가 false일 때 로그인과 회원가입 링크 표시 -->
+              <td th:unless="${isUser}" th:class="mypage-select">
+                  <a th:href="@{/users/login}">로그인하기</a>
+                  <a th:href="@{/login/signUp}">회원가입</a>
+              </td>
+          </tr>
+          </tbody>
+      </table>
+    </span>
+</div>
+
+
 <div>
     <div th:each="category : ${categories}" style="display: inline-block; margin-right: 10px;">
         <a th:href="@{/posts/board(value=${category}, type='type3')}" class="button">
@@ -29,7 +56,7 @@
     </div>
 </div>
   <div id="posts">
-    <table class="board-table">
+    <table th:class="board-table">
       <thead>
         <tr>
           <th>번호</th>
