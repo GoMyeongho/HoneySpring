@@ -4,7 +4,6 @@ import com.kh.HoneySpring.vo.UsersVO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
 import java.util.Objects;
 
 
@@ -36,8 +35,8 @@ public class UsersDAO {
             return true;
         } else {
             System.out.println("-아이디 생성 조건을 다시 확인 후 입력 해 주세요.");
+            return false;
         }
-        return false;
     }
 
     public boolean validatePW(String userPW) {
@@ -49,10 +48,8 @@ public class UsersDAO {
         return false;
     }
 
-    public boolean validateConfirmPassword(String confirmPW) {
-        if (Objects.equals(userPW, confirmPW)) {
-            return true;
-        } return false;
+    public boolean validateConfirmPW(String userPW, String confirmPW) {
+        return Objects.equals(this.userPW, confirmPW);
     }
 
     public boolean validateNickname(String nName) {
@@ -60,8 +57,8 @@ public class UsersDAO {
             return true;
         } else {
             System.out.println("-닉네임 생성 조건을 다시 확인 후 입력 해 주세요.");
+            return false;
         }
-        return true;
     }
 
     public boolean validatePhone(String phone) {
@@ -69,24 +66,25 @@ public class UsersDAO {
             return true;
         } else {
             System.out.print("-전화번호를 확인 후 다시 입력 해 주세요");
+            return false;
         }
-        return false;
     }
 
     public boolean validatePwLOCK(String pwLock) {
         if (pwLock.getBytes().length >= 60) {
             System.out.print("-제시문 생성 조건을 확인 후 다시 입력 해 주세요.");
+            return false;
         } else {
             return true;
         }
-        return false;
     }
 
     public boolean validatePwKey(String pwKey) {
         if (pwKey.getBytes().length <= 24) {
+            return true;
         } else {
             System.out.print("-제시어 생성 조건을 확인 후 다시 입력 해 주세요.");
+            return false;
         }
-        return false;
     }
 }

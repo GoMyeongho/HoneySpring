@@ -20,19 +20,19 @@ public class MainController {
     public MainController (UsersDAO usersDAO) {
         this.usersDAO = usersDAO;
     }
-    @GetMapping("/joinUser")
-    public String joinUser(Model model){
-        model.addAttribute("joinuser", new UsersVO());
-        return "Thymeleaf.joinUser";
+    @GetMapping("/signUp") //  http://localhost:8112/users/login
+    public String signUp(Model model){
+        model.addAttribute("signUp", new UsersVO());
+        return "Thymeleaf/signUp";
     }
-    @PostMapping("/joinUser")
-    public String validAndJoin(@ModelAttribute("joinUser") UsersVO vo, Model model){
+    @PostMapping("/signUp")
+    public String validAndJoin(@ModelAttribute("signUp") UsersVO vo, @RequestParam("confirmPW") String confirmPW, Model model){
         List<Boolean> validate = new ArrayList<>();
-        List<String> validString = List.of("아이디가 잘 못 됐습니다", "비밀번호가 잘 못 됐습니다.", "비밀번호가 일치하지 않습니다.",
-                "닉네임이 잘 못 됐습니다.", "전화번호가 잘 못 됐습니다.", "제시문이 잘 못 됐습니다.", "제시어가 잘 못 됐습니다.");
+        List<String> validString = List.of("아이디가 잘 못 되었습니다", "비밀번호가 잘 못 되었습니다.", "비밀번호가 일치하지 않습니다.",
+                "닉네임이 잘 못 되었습니다.", "전화번호가 잘 못 되었습니다.", "제시문이 잘 못 되었습니다.", "제시어가 잘 못 되었습니다.");
         validate.add(usersDAO.validateUserID(vo.getUserID()));
         validate.add(usersDAO.validatePW(vo.getUserPW()));
-//        validate.add(usersDAO.validateConfirmPassword(vo.confirmPW));
+        validate.add(usersDAO.validateConfirmPW(vo.getUserPW(), confirmPW));
         validate.add(usersDAO.validateNickname(vo.getNName()));
         validate.add(usersDAO.validatePhone(vo.getPhone()));
         validate.add(usersDAO.validatePwLOCK(vo.getPwLOCK()));
@@ -49,10 +49,11 @@ public class MainController {
         if(isValid) {
             isJoin = usersDAO.joinMember(vo);
         }
+        model.addAttribute("signUp", vo);
         model.addAttribute("valid",valid);
         model.addAttribute("isValid",isValid);
         model.addAttribute("isJoin",isJoin);
-        return "Thymeleaf/submitJoin";
+        return "Thymeleaf/submitSignUp";
     }
 
 //    @GetMapping("/validateUserID")
@@ -87,7 +88,7 @@ public class MainController {
     // 아이디 찾기 폼 페이지로 이동
     @GetMapping("/findID")
     public String showFindIDForm() {
-        return "findIDForm"; // 아이디 찾기 폼 뷰 페이지 (findIDForm.html)
+        return "Thymeleaf/findID";
     }
 
     // 아이디 찾기 처리
@@ -96,17 +97,17 @@ public class MainController {
         String userID = findIDDAO.findID(phone);
         if (userID != null) {
             model.addAttribute("userID", userID);
-            return "showID"; // 찾은 아이디를 보여주는 페이지 (showID.html)
+            return "Thymeleaf/showID"; // 찾은 아이디를 보여주는 페이지 (showID.html)
         } else {
             model.addAttribute("error", "해당 전화번호로 가입된 아이디가 없습니다.");
-            return "findID";
+            return "Thymeleaf/findID";
         }
     }
 
     // 비밀번호 찾기 폼 페이지로 이동
     @GetMapping("/findPW")
     public String showFindPWForm() {
-        return "findPWForm"; // 비밀번호 찾기 폼 뷰 페이지 (findPWForm.html)
+        return "Thymeleaf/findPW";
     }
 
     // 비밀번호 찾기 처리
@@ -115,10 +116,10 @@ public class MainController {
         String userPW = findPWDAO.findPW(userID, pwKey);
         if (userPW != null) {
             model.addAttribute("userPW", userPW);
-            return "login";
+            return "Thymeleaf/login";
         } else {
             model.addAttribute("error", "제시어가 일치하지 않거나 잘못된 아이디입니다.");
-            return "findPW";
+            return "Thymeleaf/findPW";
         }
     }
 }
