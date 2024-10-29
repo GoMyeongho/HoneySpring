@@ -1,6 +1,7 @@
 package com.kh.HoneySpring.dao;
 
 import com.kh.HoneySpring.vo.UsersVO;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -28,6 +29,12 @@ public class LoginDAO {
                 return usersVO;
             }
         };
-        return jdbcTemplate.queryForObject(sql, rowMapper, userID);
+
+        try {
+            return jdbcTemplate.queryForObject(sql, rowMapper, userID);
+        } catch (EmptyResultDataAccessException e) {    // Try Catch 구문 추가
+            return null;    // 실패시 Null 로 반환
+        }
     }
 }
+

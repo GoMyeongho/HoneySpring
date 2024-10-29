@@ -23,15 +23,19 @@ public class LoginController {
 
     @PostMapping("/login")  // http://localhost:8112/users/login
     public String login(@ModelAttribute("login") UsersVO usersVO, Model model) {
-    UsersVO dbBasedUser = loginDAO.FindByUserID(usersVO.getUserID());
-        if (dbBasedUser != null && usersVO.getUserPW().equals(usersVO.getUserPW())) {
+        UsersVO dbBasedUser = loginDAO.FindByUserID(usersVO.getUserID());
+        if (dbBasedUser != null && usersVO.getUserPW().equals(dbBasedUser.getUserPW())) {
             model.addAttribute("userID", usersVO.getUserID());
-            return "Thymeleaf/showBoards"; // 로그인 후에 포스트 페이지로 전달
+            return "redirect:/showBoard"; // 성공 시 리디렉션 처리
         } else {
             model.addAttribute("login", new UsersVO());
             model.addAttribute("에러", "아이디, 비밀번호가 올바르지 않습니다.");
-            return "Thymeleaf/login"; // 로그인 페이지 유지
+            return "redirect:/users/login"; // 실패 시 로그인 페이지로 리디렉션
         }
+    }
+    @GetMapping("/posts")
+    public String posts() {
+        return "Thymeleaf/showBoard";
     }
 
     @GetMapping("/login")
@@ -52,6 +56,6 @@ public class LoginController {
 
     @GetMapping("/signUp") // html 에서 버튼 클릭시 회원가입 페이지로
     public String signUp(Model model) {    // http://localhost:8112/joinUser
-        return "Thymeleaf/joinUser";
+        return "Thymeleaf/signUp";
     }
 }
