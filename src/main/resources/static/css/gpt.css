@@ -74,7 +74,7 @@
     display: inline-block; /* 버튼처럼 보이도록 inline-block 설정 */
     padding: 5px 10px; /* 여백 */
     font-size: 14px; /* 글자 크기 */
-    color: white; /* 글자 색상 */
+    color: #1976D2; /* 글자 색상 */
     background-color: #FFC107; /* 벌꿀 색상 */
     border: 2px solid #F94144; /* 테두리 */
     border-radius: 5px; /* 둥근 모서리 */
@@ -129,4 +129,75 @@
 
 .mypage-select td {
     text-align: center;
+}
+/* 전체 폼 스타일 */
+.search-form {
+    display: flex; /* Flexbox로 아이템 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    margin: 20px 0; /* 위아래 여백 */
+    padding: 10px; /* 안쪽 여백 */
+    border: 1px solid #F94144; /* 테두리 */
+    border-radius: 5px; /* 둥근 모서리 */
+    background-color: #FFEBB2; /* 배경색 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+/* 레이블 스타일 */
+.search-form label {
+    margin-right: 10px; /* 레이블과 select 사이 여백 */
+    font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
+    color: #333; /* 글자 색상 */
+}
+
+/* 선택 박스 스타일 */
+.search-form select {
+    padding: 10px; /* 안쪽 여백 */
+    border: 1px solid #F94144; /* 테두리 */
+    border-radius: 5px; /* 둥근 모서리 */
+    background-color: #fff; /* 배경색 */
+    font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+    transition: border-color 0.3s; /* 테두리 색상 전환 효과 */
+}
+
+/* 선택 박스 포커스 스타일 */
+.search-form select:focus {
+    border-color: #FF9800; /* 포커스 시 테두리 색상 */
+    outline: none; /* 기본 아웃라인 제거 */
+}
+
+/* 텍스트 입력 필드 스타일 */
+.search-form input[type="text"] {
+    padding: 10px; /* 안쪽 여백 */
+    border: 1px solid #F94144; /* 테두리 */
+    border-radius: 5px; /* 둥근 모서리 */
+    margin-left: 10px; /* 왼쪽 여백 */
+    flex-grow: 1; /* 남은 공간 차지 */
+    font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
+}
+
+/* 텍스트 입력 필드 포커스 스타일 */
+.search-form input[type="text"]:focus {
+    border-color: #FF9800; /* 포커스 시 테두리 색상 */
+    outline: none; /* 기본 아웃라인 제거 */
+}
+
+/* 검색 버튼 스타일 */
+.search-form button {
+    padding: 10px 15px; /* 안쪽 여백 */
+    border: none; /* 테두리 제거 */
+    border-radius: 5px; /* 둥근 모서리 */
+    background-color: #F94144; /* 배경색 */
+    color: white; /* 글자 색상 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+    transition: background-color 0.3s; /* 배경색 전환 효과 */
+    font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
+}
+
+/* 검색 버튼 호버 스타일 */
+.search-form button:hover {
+    background-color: #FF9800; /* 마우스 오버 시 배경색 변경 */
+}
+body {
+    background-color: #FFF1D1;
 }

@@ -98,19 +98,19 @@
      type=${type}, search=${search}, searchType=${searchType})}">
   </a>
 </div>
-  <form th:action="@{/posts/board}" method="get">
-      <label for="searchOptions"></label>
-   <select id="searchOptions" th:field="*{searchType}" onchange="updateType()">
-     <option value=""></option>
-     <option th:each="option : ${searchOptions}" th:value="${option}" th:text="${option}"></option>
-   </select>
-    <input type="text" th:field="*{search}" placeholder="검색내용을 입력하세요"
-          th:value="${search}"/>
+<form th:action="@{/posts/board}" method="get" class="search-form">
+    <label for="searchOptions">검색:</label>
+    <select id="searchOptions" th:field="*{searchType}" onchange="updateType()">
+        <option value=""></option>
+        <option th:each="option : ${searchOptions}" th:value="${option}" th:text="${option}"></option>
+    </select>
+    <input type="text" th:field="*{search}" placeholder="검색내용을 입력하세요" th:value="${search}"/>
     <input type="hidden" id="searchType" name="searchType" th:value="${searchType}"/>
     <input type="hidden" name="page" th:value="1"/>
-   <button type="submit">검색</button>
- </form>
-  <script>
+    <button type="submit">검색</button>
+</form>
+
+<script>
     function updateType() {
       const selectedOption = document.getElementById('searchOptions').value;
       const typeInput = document.getElementById('searchType');
