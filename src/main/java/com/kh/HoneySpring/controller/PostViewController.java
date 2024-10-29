@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +37,6 @@ public class PostViewController {
         PostsVO post= dao.viewPost(postNo);
         List<LikesVO> lList = lDao.likeList((vo!=null)?vo.getUserID():"");
         int likeNo = lDao.likeList(postNo).size();
-        System.out.println(likeNo);
         String likeMark = lDao.likeMark(lList,postNo);
         List<CommentsVO> cList = cDao.commList(postNo);
         Collections.sort(cList);
@@ -53,6 +52,7 @@ public class PostViewController {
         model.addAttribute("likeMark",likeMark);
         model.addAttribute("cList", cList);
         model.addAttribute("categories", CATEGORIES);
+        model.addAttribute("name", (vo!=null)?vo.getNName():null);
         return "thymeleaf/viewPost";
     }
     @PostMapping("/view")
@@ -64,9 +64,8 @@ public class PostViewController {
     }
 
     @GetMapping("/update")
-    public String updatePost(@RequestParam("post") PostsVO vo, Model model) {
-        List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
-        model.addAttribute("categories", categories);
+    public String updatePost(@ModelAttribute("post") PostsVO vo, Model model) {
+        model.addAttribute("categories", CATEGORIES);
         model.addAttribute("post", vo);
         return "thymeleaf/updatePost";
     }
@@ -75,7 +74,7 @@ public class PostViewController {
     public String submitUpdatePost(@ModelAttribute("post") PostsVO vo, RedirectAttributes redirectAttributes) {
         boolean success = dao.updatePost(vo);
         redirectAttributes.addFlashAttribute("updateSuccess", success);
-        return "redirect:/posts/view";
+        return "redirect:/posts/view?postno="+vo.getPostno();
     }
 
     @PostMapping("/delete")
