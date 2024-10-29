@@ -75,11 +75,11 @@ public class PostListController {
                         if(post.getAuthor().contains(search)) board.add(post);
                         break;
                     case "type4":
-                        if(post.getContent().contains(value)) board.add(post);
+                        if(post.getContent().contains(search)) board.add(post);
                         break;
                     case "type5":
-                        if(post.getTitle().contains(value)
-                                || post.getContent().contains(value)) board.add(post);
+                        if(post.getTitle().contains(search)
+                                || post.getContent().contains(search)) board.add(post);
                     default:
                         System.out.println("코드 에러");
                         break;

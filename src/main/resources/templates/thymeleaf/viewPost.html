@@ -74,9 +74,10 @@
     </h2>
     <div class="content" th:text="${post.content}">게시글 내용</div>
     <div class="like">
-        <form th:action="@{/posts/view(postno=${post.postno})}" method="post">
+        <form th:if="${isUser}" th:action="@{/posts/view(postno=${post.postno})}" method="post">
             <button type="submit" class="like" th:text="${likeMark}">좋아요 <span th:text="${likeNo}">0</span></button>
         </form>
+        <p th:unless="${isUser}" class="like" th:text="${likeMark}">좋아요 <span th:text="${likeNo}">0</span></p>
     </div>
 </div>
 
@@ -85,8 +86,8 @@
         <span th:text="${comment.NName} ">작성자 </span>
         <span th:text="${#dates.format(comment.CDate, 'yyyy년 MM월 dd일')}">작성일</span>
     </h3>
-    <div class="button">
-        <a  th:href="@{/posts/comment/create(commType='type2')}">댓글 생성</a>
+    <div class="button" th:if="${isUser}">
+        <a th:href="@{/posts/comment/create(commType='type2')}">댓글 생성</a>
 
         <a  th:if="${name} == ${comment.NName}" th:href="@{/posts/comment/update(comment=${comment}, commNo = ${comment.commNo})}">댓글 수정</a>
 
@@ -97,9 +98,10 @@
     </div>
     <p th:text="${comment.content}">댓글 내용</p>
 
+</div >
+<div th:if="${isUser}">
+<a class="button"  th:href="@{/posts/comment/create(commType='type1')}">댓글 생성</a>
 </div>
-<a class="button" th:href="@{/posts/comment/create(commType='type1')}">댓글 생성</a>
-
 <div>
     <a th:if="${name} == ${post.author}" th:href="@{/posts/update(post=${post})}" class="button">글 수정</a>
 
