@@ -16,22 +16,30 @@ import java.util.List;
 public class PostMakeController {
     private final PostMakeDAO postMakeDAO;
 
-    public PostMakeController(PostMakeDAO postMakeDAO) { // 의존성 주입
+    public PostMakeController(PostMakeDAO postMakeDAO) {
         this.postMakeDAO = postMakeDAO;
     }
 
-    @GetMapping("/create")  // 카테고리를 보여주는 Mapping
-    public String showCreatePostForm(Model model) {  // http://localhost:8112/posts/create
-        List<String> categories = List.of("Health", "Travel", "Life", "Cook", "Q&A");
+    @GetMapping("/create")
+    public String showCreatePostForm(Model model) {
+        List<String> categories = List.of("Health", "Travel", "Life", "Cook", "QNA");
         model.addAttribute("categories", categories);
         model.addAttribute("post", new PostsVO());
         return "Thymeleaf/postMakeCreate";
     }
 
-    @PostMapping("/create") // 글 작성시 DB로 전달하는 PostMapping
+    @PostMapping("/create")
     public String submitPost(@ModelAttribute("post") PostsVO postsVO, Model model) {
         boolean isSubmitted = postMakeDAO.PostmakeCreate(postsVO);
+        if (!isSubmitted) {
+            model.addAttribute("error", "유효하지 않은 사용자 ID 또는 카테고리 입니다.");
+            List<String> categories = List.of("Health", "Travel", "Life", "Cook", "QNA");
+            model.addAttribute("categories", categories);
+            return "Thymeleaf/postMakeCreate";
+        }
         model.addAttribute("isSubmitted", isSubmitted);
-        return "Thymeleaf/postMakeResult";    //
+        return "Thymeleaf/postMakeResult";
     }
 }
+
+
