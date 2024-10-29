@@ -65,7 +65,7 @@ textarea {
 
 /* textarea에 대한 추가 스타일링 (높이 설정) */
 textarea {
-  height: 150px;  /* 텍스트 영역의 높이 설정 */
+  height: 100px;  /* 텍스트 영역의 높이 설정 */
   resize: vertical;  /* 사용자가 수직 방향으로만 크기 조정 가능하도록 설정 */
 }
 

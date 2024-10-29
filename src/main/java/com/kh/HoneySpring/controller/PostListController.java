@@ -30,12 +30,12 @@ public class PostListController {
         this.lDao = lDao;
     }
 // 현재는 검색을 DB로 수행하고 있지만 나중에 기능 추가로 페이지별로 따로 검색할 수 있게 만들기
-    @GetMapping("/board")    // http://localhost:8112/posts/list
+    @GetMapping("/board")    // http://localhost:8112/posts/board
     public String showBoard(@ModelAttribute("login") UsersVO vo,
                             @RequestParam(value = "type", defaultValue = "type1") String type,
                             @RequestParam(value = "page", defaultValue = "1") int page,
-                            @RequestParam(value = "search", required = false) String search,
-                            @RequestParam(value = "value", required = false) String value,
+                            @RequestParam(value = "search", defaultValue = "") String search,
+                            @RequestParam(value = "value", defaultValue = "") String value,
                             @RequestParam(value = "searchType", defaultValue = "type1") String searchType ,
                             Model model) {
         List<PostsVO> boardTemp = new ArrayList<>();
@@ -90,8 +90,8 @@ public class PostListController {
         }
         String id = vo.getUserID();
         List<LikesVO> like = lDao.likeList(id);
-        int boardNo = (int)Math.ceil((double) boardTemp.size()/MAXBOARD);
-        for (PostsVO post : boardTemp) post.setTitle(post.getTitle() + "[" + lDao.likeMark(like, post.getPostno()) + "]");
+        int boardNo = (int)Math.ceil((double) board.size()/MAXBOARD);
+        for (PostsVO post : board) post.setTitle(post.getTitle() + "[" + lDao.likeMark(like, post.getPostno()) + "]");
         model.addAttribute("categories", CATEGORIES);
         model.addAttribute("maxBoard",MAXBOARD);
         model.addAttribute("boardNo", boardNo);
