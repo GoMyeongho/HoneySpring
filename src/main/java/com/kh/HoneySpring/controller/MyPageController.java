@@ -4,11 +4,7 @@ import com.kh.HoneySpring.dao.MyPageDAO;
 import com.kh.HoneySpring.vo.UsersVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,14 +19,15 @@ public class MyPageController {
 
     // 사용자 목록 조회 페이지
     @GetMapping("/select")
-    public String selectViewUser(@ModelAttribute("login") UsersVO vo,Model model) { // http://localhost:8112/posts/select
-        model.addAttribute("user", vo);
+    public String selectViewUser(@SessionAttribute("login") UsersVO vo, Model model) { // http://localhost:8112/posts/select
+        UsersVO user = myPageDAO.findUserById(vo.getUserID());
+        model.addAttribute("user", user);
         return "thymeleaf/selectInfo";
     }
 
     // 사용자 업데이트 폼 (GET 요청)
     @GetMapping("/update")
-    public String updateUserForm(@RequestParam("userId") String userId, Model model) {
+    public String updateUserForm(@RequestParam("userId") String userId, Model model) { // http://localhost:8112/posts/update
         UsersVO userToUpdate = myPageDAO.findUserById(userId); // DAO를 통해 직접 조회
         model.addAttribute("user", userToUpdate);
         return "thymeleaf/updateInfo";
@@ -38,7 +35,7 @@ public class MyPageController {
 
     // 사용자 업데이트 처리 (POST 요청)
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute UsersVO user) {
+    public String updateUser(@SessionAttribute UsersVO user) { // http://localhost:8112/posts/submitUpdateInfo
         myPageDAO.usersUpdate(user);  // 업데이트 처리
         return "thymeleaf/submitUpdateInfo";
     }

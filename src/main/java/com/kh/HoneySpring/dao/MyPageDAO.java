@@ -34,7 +34,10 @@ public class MyPageDAO {
     }
 
     public UsersVO findUserById(String userId) {
-        return null;
+        String sql = "SELECT * From USERS WHERE USERID = ?";
+        List<UsersVO> vo;
+        vo = jdbcTemplate.query(sql,new Object[]{userId}, new UsersRowMapper());
+        return vo.get(0);
     }
 
     private static class UsersRowMapper implements RowMapper<UsersVO> {
