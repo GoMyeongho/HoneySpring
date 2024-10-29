@@ -27,17 +27,19 @@ public class MainController {
         return "Thymeleaf/signUp";
     }
     @PostMapping("/signUp")
-    public String validAndJoin(@ModelAttribute("signUp") UsersVO vo, @RequestParam("confirmPW") String confirmPW, Model model){
+    public String validAndJoin(@ModelAttribute("signUp") UsersVO vo, Model model){
         List<Boolean> validate = new ArrayList<>();
         List<String> validString = List.of("아이디가 잘 못 되었습니다", "비밀번호가 잘 못 되었습니다.", "비밀번호가 일치하지 않습니다.",
                 "닉네임이 잘 못 되었습니다.", "전화번호가 잘 못 되었습니다.", "제시문이 잘 못 되었습니다.", "제시어가 잘 못 되었습니다.");
         validate.add(usersDAO.validateUserID(vo.getUserID()));
         validate.add(usersDAO.validatePW(vo.getUserPW()));
-        validate.add(usersDAO.validateConfirmPW(vo.getUserPW(), confirmPW));
+        validate.add(usersDAO.validateConfirmPW(vo.getUserPW(), vo.getConfirmPW()));
         validate.add(usersDAO.validateNickname(vo.getNName()));
         validate.add(usersDAO.validatePhone(vo.getPhone()));
         validate.add(usersDAO.validatePwLOCK(vo.getPwLOCK()));
         validate.add(usersDAO.validatePwKey(vo.getPwKey()));
+        System.out.println(vo.getConfirmPW());
+        System.out.println(vo.getUserPW());
         boolean isValid = true;
         List<String> valid = new ArrayList<>();
         for (int i = 0; i < validate.size(); i++) {

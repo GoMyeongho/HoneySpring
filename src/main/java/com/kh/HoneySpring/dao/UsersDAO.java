@@ -49,7 +49,7 @@ public class UsersDAO {
     }
 
     public boolean validateConfirmPW(String userPW, String confirmPW) {
-        return Objects.equals(this.userPW, confirmPW);
+        return Objects.equals(userPW, confirmPW);
     }
 
     public boolean validateNickname(String nName) {
