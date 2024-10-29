@@ -1,6 +1,4 @@
-/* style.css */
 
-/* Reset and body styling */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -23,7 +21,6 @@ body {
   height: 100vh;
 }
 
-/* Form container styling */
 .form-container {
   background-color: #fff;
   border-radius: 8px;
@@ -46,7 +43,6 @@ label {
   text-align: left;
 }
 
-/* Input, select, and textarea styling */
 input[type="text"],
 textarea,
 select {
@@ -63,7 +59,6 @@ textarea {
   resize: vertical;
 }
 
-/* Button styling */
 button {
   width: 100%;
   padding: 10px;
