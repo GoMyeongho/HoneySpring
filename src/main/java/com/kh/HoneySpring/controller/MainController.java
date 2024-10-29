@@ -20,7 +20,7 @@ public class MainController {
     public MainController (UsersDAO usersDAO) {
         this.usersDAO = usersDAO;
     }
-    @GetMapping("/signUp") //  http://localhost:8112/users/login
+    @GetMapping("/signUp") //  http://localhost:8112/login/signUp
     public String signUp(Model model){
         model.addAttribute("signUp", new UsersVO());
         return "Thymeleaf/signUp";
