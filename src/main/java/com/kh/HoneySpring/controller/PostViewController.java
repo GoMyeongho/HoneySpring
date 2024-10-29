@@ -33,7 +33,7 @@ public class PostViewController {
     }
 
     @GetMapping("/view")    // http://localhost:8112/posts/list
-    public String viewPost(@ModelAttribute("login")UsersVO vo, @RequestParam("postno") int postNo, Model model) {
+    public String viewPost(@SessionAttribute("login")UsersVO vo, @RequestParam("postno") int postNo, Model model) {
         PostsVO post= dao.viewPost(postNo);
         List<LikesVO> lList = lDao.likeList(vo.getUserID());
         int likeNo = lDao.likeList(postNo).size();
@@ -54,7 +54,7 @@ public class PostViewController {
         return "thymeleaf/viewPost";
     }
     @PostMapping("/view")
-    public String like(@ModelAttribute("login") UsersVO vo, @RequestParam("postno") int postno, Model model){
+    public String like(@SessionAttribute("login") UsersVO vo, @RequestParam("postno") int postno, Model model){
         boolean success = lDao.addLike(postno, vo.getUserID());
         return "redirect:/posts/view?postno="+postno;
     }
@@ -82,7 +82,7 @@ public class PostViewController {
     }
 
     @GetMapping("/comment/create")
-    public String createComment(@ModelAttribute("login")UsersVO vo, @RequestParam("commType")String type, @RequestParam(value = "commNo", required = false) int commNo, Model model) {
+    public String createComment(@SessionAttribute("login") UsersVO vo, @RequestParam("commType")String type, @RequestParam(value = "commNo", required = false) int commNo, Model model) {
         CommentsVO comm = new CommentsVO();
         comm.setCommNo((type.equals("type1") ? 0 : commNo));
         comm.setNName(vo.getNName());

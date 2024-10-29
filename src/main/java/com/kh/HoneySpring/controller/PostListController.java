@@ -8,10 +8,7 @@ import com.kh.HoneySpring.vo.PostsVO;
 import com.kh.HoneySpring.vo.UsersVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -33,7 +30,7 @@ public class PostListController {
     }
 // 현재는 검색을 DB로 수행하고 있지만 나중에 기능 추가로 페이지별로 따로 검색할 수 있게 만들기
     @GetMapping("/board")    // http://localhost:8112/posts/board
-    public String showBoard(@ModelAttribute("login") UsersVO vo,
+    public String showBoard(@SessionAttribute(value = "login", required = false) UsersVO vo,
                             @RequestParam(value = "type", defaultValue = "type1") String type,
                             @RequestParam(value = "page", defaultValue = "1") int page,
                             @RequestParam(value = "search", defaultValue = "") String search,
@@ -89,12 +86,12 @@ public class PostListController {
                 }
             }
         }
-        String id = vo.getUserID();
+        String id = (vo != null)?vo.getUserID():null;
         List<LikesVO> like = lDao.likeList(id);
         int boardNo = (int)Math.ceil((double) board.size()/MAXBOARD);
         for (PostsVO post : board) post.setTitle(post.getTitle() + "[" + lDao.likeMark(like, post.getPostno()) + "]");
         model.addAttribute("user",vo);
-        model.addAttribute("isUser",  vo.getUserID() != null);
+        model.addAttribute("isUser",  vo != null);
         model.addAttribute("categories", CATEGORIES);
         model.addAttribute("maxBoard",MAXBOARD);
         model.addAttribute("boardNo", boardNo);
