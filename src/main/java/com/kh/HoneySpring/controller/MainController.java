@@ -35,8 +35,16 @@ public class MainController {
     @PostMapping("/signUp")
     public String validAndJoin(@ModelAttribute("signUp") UsersVO vo, Model model) {
         List<Boolean> validate = new ArrayList<>();
-        List<String> validString = List.of("아이디가 잘 못 되었습니다", "비밀번호가 잘 못 되었습니다.", "비밀번호가 일치하지 않습니다.",
-                "닉네임이 잘 못 되었습니다.", "전화번호가 잘 못 되었습니다.", "제시문이 잘 못 되었습니다.", "제시어가 잘 못 되었습니다.");
+        List<String> validString = List.of(
+                "아이디가 잘못되었습니다",
+                "비밀번호가 잘못되었습니다.",
+                "비밀번호가 일치하지 않습니다.",
+                "닉네임이 잘못되었습니다.",
+                "전화번호가 잘못되었습니다.",
+                "제시문이 잘못되었습니다.",
+                "제시어가 잘못되었습니다."
+        );
+
         validate.add(usersDAO.validateUserID(vo.getUserID()));
         validate.add(usersDAO.validatePW(vo.getUserPW()));
         validate.add(usersDAO.validateConfirmPW(vo.getUserPW(), vo.getConfirmPW()));
@@ -54,6 +62,18 @@ public class MainController {
         }
         boolean isJoin = false;
         if (isValid) {
+            if (usersDAO.isUserIDExists(vo.getUserID())) {
+                valid.add("이미 사용 중인 아이디입니다.");
+                isValid = false;
+            }
+            if (usersDAO.isNicknameExists(vo.getNName())) {
+                valid.add("이미 사용 중인 닉네임입니다.");
+                isValid = false;
+            }
+            if (usersDAO.isPhoneExists(vo.getPhone())) {
+                valid.add("이미 사용 중인 전화번호입니다.");
+                isValid = false;
+            }
             isJoin = usersDAO.joinMember(vo);
         }
         model.addAttribute("signUp", vo);
@@ -62,34 +82,6 @@ public class MainController {
         model.addAttribute("isJoin", isJoin);
         return "Thymeleaf/submitSignUp";
     }
-
-//    @GetMapping("/validateUserID")
-//    public String validateUserID(@RequestParam("userID") String userID, Model model) {
-//        boolean isValid = usersDAO.validateUserID(userID);
-//        model.addAttribute("userIDValid", isValid ? "사용 가능한 아이디입니다." : "이미 존재하는 아이디입니다.");
-//        return "validationResult";  // 결과 메시지를 표시할 템플릿
-//    }
-//
-//    @GetMapping("/validatePassword")
-//    public String validatePassword(@RequestParam("password") String password, Model model) {
-//        boolean isValid = usersDAO.validatePW(password);
-//        model.addAttribute("passwordValid", isValid ? "사용 가능한 비밀번호입니다." : "비밀번호 조건이 맞지 않습니다.");
-//        return "validationResult";
-//    }
-//
-//    @GetMapping("/validateNickname")
-//    public String validateNickname(@RequestParam("nickname") String nickname, Model model) {
-//        boolean isValid = usersDAO.validateNickname(nickname);
-//        model.addAttribute("nicknameValid", isValid ? "사용 가능한 닉네임입니다." : "이미 존재하는 닉네임입니다.");
-//        return "validationResult";
-//    }
-//
-//    @GetMapping("/validatePhone")
-//    public String validatePhone(@RequestParam("phone") String phone, Model model) {
-//        boolean isValid = usersDAO.validatePhone(phone);
-//        model.addAttribute("phoneValid", isValid ? "사용 가능한 전화번호입니다." : "이미 가입된 전화번호입니다.");
-//        return "validationResult";
-//    }
 
 
     // 아이디 찾기---------------------------------------------------------------------------------------------

@@ -87,4 +87,22 @@ public class UsersDAO {
             return false;
         }
     }
+
+    public boolean isUserIDExists(String userID) {
+        String sql = "SELECT COUNT(*) FROM users WHERE userID = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{userID}, Integer.class);
+        return count != null && count > 0; // 중복된 아이디가 있으면 true 반환
+    }
+
+    public boolean isNicknameExists(String nName) {
+        String sql = "SELECT COUNT(*) FROM users WHERE NName = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{nName}, Integer.class);
+        return count != null && count > 0; // 중복된 닉네임이 있으면 true 반환
+    }
+
+    public boolean isPhoneExists(String Phone) {
+        String sql = "SELECT COUNT(*) FROM users WHERE Phone = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, new Object[]{Phone}, Integer.class);
+        return count != null && count > 0; // 중복된 닉네임이 있으면 true 반환
+    }
 }

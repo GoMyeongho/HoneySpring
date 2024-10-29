@@ -11,6 +11,6 @@
 <p th:if="${result != null}">비밀번호: <span th:text="${result}"></span></p>
 <p th:if="${result == null}">제시어가 일치하지 않거나 아이디가 존재하지 않습니다.</p>
 
-<a href="/users/login">로그인 페이지로</a>
+<button onclick="location.href='/users/login';">로그인 페이지로</button>
 </body>
 </html>
