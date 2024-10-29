@@ -29,7 +29,7 @@
     </div>
 </div>
   <div id="posts">
-    <table class="boardTable">
+    <table class="board-table">
       <thead>
         <tr>
           <th>번호</th>
@@ -47,10 +47,10 @@
           <td th:text="${postStat.index + 1}"></td>
           <td th:text="${post.category}"></td>
           <td>
-            <a th:href="@{/posts/view(postno=${post.postno})}" th:text="${post.title}"></a>
+            <a class="button" th:href="@{/posts/view(postno=${post.postno})}" th:text="${post.title}"></a>
           </td>
           <td>
-            <a th:href="@{/posts/board(value=${post.author}, type='type2')}" th:text="${post.author}"></a>
+            <a class="button" th:href="@{/posts/board(value=${post.author}, type='type2')}" th:text="${post.author}"></a>
           </td>
           <td th:text="${post.date}"></td>
         </tr>

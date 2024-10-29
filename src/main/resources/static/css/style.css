@@ -62,7 +62,3 @@ button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-.icon {
-    width: 40px; /* 원하는 너비 */
-    height: auto; /* 비율 유지 */
-}
