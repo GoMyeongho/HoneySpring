@@ -1,9 +1,9 @@
 .button {
     display: inline-block; /* 버튼처럼 보이도록 inline-block 설정 */
-    padding: 10px 15px; /* 여백 */
+    padding: 5px 10px; /* 여백 */
     font-size: 16px; /* 글자 크기 */
-    color: white; /* 글자 색상 */
-    background-color: #007BFF; /* 배경 색상 */
+    color: #fff; /* 글자 색상 (흰색) */
+    background-color: #FFC107; /* 벌꿀 색상 (노란색) */
     border: none; /* 테두리 제거 */
     border-radius: 5px; /* 둥근 모서리 */
     text-decoration: none; /* 밑줄 제거 */
@@ -12,7 +12,7 @@
 }
 
 .button:hover {
-    background-color: #0056b3; /* 마우스 오버 시 배경 색상 변화 */
+    background-color: #FF9800; /* 마우스 오버 시 더 짙은 색상 (주황색) */
 }
 
 .category-container {
@@ -80,4 +80,9 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #0056b3;
+}
+
+.icon {
+    width: 40px; /* 원하는 너비 */
+    height: auto; /* 비율 유지 */
 }

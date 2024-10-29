@@ -29,19 +29,20 @@
 </script>
 
 <div class="head">
-    <a th:href="/main">
-        <img th:src="image/honey.png" alt = "메인" class="head">
+    <a th:href="@{/post/board}">
+        <img th:src="@{/image/honey.png}" alt = "메인" class="icon">
     </a>
+    <div>
+        <div th:each="category : ${categories}" style="display: inline-block; margin-right: 10px;">
+            <a th:href="@{/posts/board(value=${category}, type='type3')}" class="button">
+                <span th:text="${category}"></span>
+            </a>
+        </div>
+    </div>
 </div>
-<div th:each="category : ${categories}">
-    <a th:href="@{/board(category=${category})}"
-       class="button"
-       th:text="${category}"></a>
-</div>
-
 <div class="post">
     <h2>
-        <span th:text="${post.title}">게시글 제목</span>
+        <span class="postTitle" th:text="${post.title}">게시글 제목</span>
         <span class="category" th:text="' [' + ${post.category} + ']'">[카테고리]</span>
         <span class="author" th:text="'[작성자: ' + ${post.author} + ']'">작성자</span>
         <span class="date" th:text="${#dates.format(post.date, 'yyyy년 MM월 dd일')}">작성일</span>
@@ -74,8 +75,8 @@
 </div>
 <a class="button" th:href="@{/posts/comment/create(commType='type1')}">댓글 생성</a>
 
-<div class="button">
-    <a th:if="${name} == ${post.author}" th:href="@{/posts/update(post=${post})}">글 수정</a> <!-- GET 방식으로 수정 -->
+<div>
+    <a th:if="${name} == ${post.author}" th:href="@{/posts/update(post=${post})}" class="button">글 수정</a>
 
     <form th:if="${name} == ${post.author}" th:action="@{/posts/delete}" method="post" style="display:inline;">
         <input type="hidden" name="postId" th:value="${post}"/> <!-- 포스트 ID를 전송 -->

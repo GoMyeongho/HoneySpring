@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -51,8 +53,8 @@ public class PostListDAO {
                     "SELECT * From VM_POSTS_PAGE WHERE CATE = ?",
                     "SELECT * From VM_POSTS_PAGE WHERE POSTNO IN " +
                             "(SELECT POSTNO FROM LIKES WHERE NNAME = ?)",
-                    "SELECT POSTNO, TITLE, CATE, PDATE, NNAME FROM VM_POSTS_PAGE " +
-                            "WHERE POSTNO in (SELECT POSTNO FROM VM_COMM WHERE NNAME = ?)"
+                    "SELECT * FROM VM_POSTS_PAGE WHERE POSTNO in " +
+                            "(SELECT POSTNO FROM VM_COMM WHERE NNAME = ?)"
             };
 
 /*
@@ -67,6 +69,31 @@ public class PostListDAO {
                             "WHERE POSTNO in (SELECT POSTNO FROM VM_COMM WHERE NNAME = ?)"
             };
 */
+    public List<String> category(){
+        List<String> result = null;
+        String sql = "SELECT CATE FROM CATEGORY WHERE CATE != 'DELETE'";
+        try{
+            result = jdbcTemplate.query(sql, new RowMapper<String>() {
+                @Override
+                public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    return rs.getString("CATE");
+                }
+            });
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        Collections.sort(result, new Comparator<String>() {
+
+            @Override
+            public int compare(String o1, String o2) {
+                if(o1.equals("QNA")) return 1;
+                if(o2.equals("QNA")) return -1;
+                return o1.compareTo(o2);
+            }
+        });
+        return result;
+    }
+
 
     private static class PostListRowMapper implements RowMapper<PostsVO> {
 
@@ -79,7 +106,7 @@ public class PostListDAO {
                     rs.getString("NNAME"),
                     rs.getDate("PDATE"),
                     rs.getString("CATE"),
-                    null
+                    rs.getString("USERID")
             );
         }
     }

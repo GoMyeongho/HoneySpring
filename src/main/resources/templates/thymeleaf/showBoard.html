@@ -17,19 +17,17 @@
 </script>
 
   <div class="head">
-    <a href="/main">
-      <img th:src="@{image/honey.png}" alt = "메인" class="head">
+    <a th:href="@{/post/board}">
+      <img th:src="@{/image/honey.png}" alt = "메인" class="icon">
     </a>
   </div>
-  <div th:each="category : ${categories}">
-        <a>
-            <span th:href="@{/posts/board(value=${category}, type='type3')}"
-           class="button"
-           th:text="${category}">
-            </span>
+<div>
+    <div th:each="category : ${categories}" style="display: inline-block; margin-right: 10px;">
+        <a th:href="@{/posts/board(value=${category}, type='type3')}" class="button">
+            <span th:text="${category}"></span>
         </a>
-  </div>
-
+    </div>
+</div>
   <div id="posts">
     <table>
       <thead>
@@ -45,28 +43,32 @@
 
         <tr th:each="post, postStat : ${board}"
         th:if="${postStat.index < page * maxBoard
-        and postStat.index > (page - 1) * maxBoard}">
-          <td th:text="${postStat.index}"></td>
-          <td th:text="${post.title}"></td>
+        and postStat.index >= (page - 1) * maxBoard}">
+          <td th:text="${postStat.index + 1}"></td>
+          <td th:text="${post.category}"></td>
           <td>
-            <a th:href="@{posts/view(postno=${post.postno})}" th:text="${post.title}"></a>
+            <a th:href="@{/posts/view(postno=${post.postno})}" th:text="${post.title}"></a>
           </td>
           <td>
-            <a th:href="@{posts/board(value=${post.author}, type='type2')}" th:text="${post.author}"></a>
+            <a th:href="@{/posts/board(value=${post.author}, type='type2')}" th:text="${post.author}"></a>
           </td>
           <td th:text="${post.date}"></td>
         </tr>
       </tbody>
     </table>
+      <div th:if="${boardNo == 0}">
+          <p>게시물이 없습니다.</p>
+      </div>
   </div>
   <p>현재 페이지: <span th:text="${page}"></span></p>
-  <a th:each="number : ${#numbers.sequence(1, boardNo)}" th:text="${number}"
+<div th:if="${boardNo > 0}">
+  <a class="button" th:each="number : ${#numbers.sequence(1, boardNo)}" th:text="${number}"
      th:href="@{/posts/board(value=${value}, page=${number},
      type=${type}, search=${search}, searchType=${searchType})}">
   </a>
-
+</div>
   <form th:action="@{/posts/board}" method="get">
-   <label for="searchOptions"><img th:src="@{image/search.jpg}" alt = "검색"></label>
+      <label for="searchOptions"></label>
    <select id="searchOptions" th:field="*{searchType}" onchange="updateType()">
      <option value=""></option>
      <option th:each="option : ${searchOptions}" th:value="${option}" th:text="${option}"></option>
