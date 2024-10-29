@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -50,7 +52,30 @@ public class PostViewDAO {
         return result > 0;
     }
 
+    public List<String> category(){
+        List<String> result = null;
+        String sql = "SELECT CATE FROM CATEGORY WHERE CATE != 'DELETE'";
+        try{
+            result = jdbcTemplate.query(sql, new RowMapper<String>() {
+                @Override
+                public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    return rs.getString("CATE");
+                }
+            });
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        Collections.sort(result, new Comparator<String>() {
 
+            @Override
+            public int compare(String o1, String o2) {
+                if(o1.equals("QNA")) return 1;
+                if(o2.equals("QNA")) return -1;
+                return o1.compareTo(o2);
+            }
+        });
+        return result;
+    }
 
 
 

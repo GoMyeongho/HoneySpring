@@ -1,0 +1,55 @@
+.button {
+    display: inline-block; /* 버튼처럼 보이도록 inline-block 설정 */
+    padding: 10px 20px; /* 여백을 약간 늘림 */
+    font-size: 18px; /* 글자 크기 증가 */
+    color: #333; /* 어두운 색상으로 글자 색상 변경 */
+    background-color: #F9C74F; /* 덜 밝은 벌꿀 색상 */
+    border: 2px solid #F94144; /* 테두리를 추가하여 강조 */
+    border-radius: 5px; /* 둥근 모서리 */
+    text-decoration: none; /* 밑줄 제거 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    font-family: 'Arial', sans-serif; /* 폰트 변경 (예시: Arial) */
+    transition: background-color 0.3s, transform 0.3s; /* 배경 색상 전환 효과 추가 */
+}
+
+.button:hover {
+    background-color: #F94144; /* 마우스 오버 시 색상 변경 */
+    color: white; /* 마우스 오버 시 글자 색상 변경 */
+    transform: scale(1.05); /* 마우스 오버 시 크기 증가 효과 */
+}
+
+.board-table {
+    width: 100%; /* 테이블 폭을 100%로 설정 */
+    border-collapse: collapse; /* 테이블 경계선 겹치기 방지 */
+    margin-top: 20px; /* 위쪽 여백 */
+    font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
+}
+
+.board-table th, .board-table td {
+    padding: 10px; /* 셀 안 여백 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    border: 1px solid #F94144; /* 셀 테두리 색상 */
+}
+
+.board-table th {
+    background-color: #FFC107; /* 헤더 배경색 */
+    color: #333; /* 헤더 글자색 */
+}
+
+.board-table tr:nth-child(even) {
+    background-color: #FFE5B4; /* 짝수 행의 배경색 */
+}
+
+.board-table tr:hover {
+    background-color: #FF9800; /* 마우스 오버 시 행 색상 */
+    color: white; /* 마우스 오버 시 글자색 변경 */
+}
+
+.post-title {
+    color: #333; /* 제목 글자색 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.post-title:hover {
+    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
+}
