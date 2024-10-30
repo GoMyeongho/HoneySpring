@@ -78,7 +78,6 @@ public class MyPageController {
             redirectAttributes.addFlashAttribute("error", "세션이 만료되었습니다. 다시 로그인해주세요.");
             return "redirect:/users/login";
         }
-
         if(!verify.equals("verified")) {
             redirectAttributes.addFlashAttribute("error","인증되지 않았습니다. 인증을 먼저 해주십시오");
             return "redirect:/users/myPage";
@@ -92,6 +91,10 @@ public class MyPageController {
     public String updateUserForm(@SessionAttribute("login") UsersVO vo,
                                  @ModelAttribute(value = "verify") String verify,
                                  RedirectAttributes redirectAttributes, Model model) {
+        if(vo == null) {
+            redirectAttributes.addFlashAttribute("error", "세션이 만료되었습니다. 다시 로그인해주세요.");
+            return "redirect:/users/login";
+        }
         if(!verify.equals("verified")) {
             redirectAttributes.addFlashAttribute("error","인증되지 않았습니다. 인증을 먼저 해주십시오");
             return "redirect:/users/myPage";
