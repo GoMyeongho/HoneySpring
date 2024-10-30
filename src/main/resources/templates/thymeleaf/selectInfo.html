@@ -39,7 +39,7 @@
         <span id="pwKey" th:text="${user.pwKey}">Your answer</span>
     </div>
 
-    <button type="button" class="btn btn-secondary" onclick="location.href='/posts/board';">취소</button>
+    <button type="button" class="btn" style="background-color: orange; color: black;" onclick="location.href='/posts/board';">취소</button>
 
     <p th:if="${error}" th:text="${error}" class="text-danger mt-3"></p>
     <p th:if="${message}" th:text="${message}" class="text-success mt-3"></p>
