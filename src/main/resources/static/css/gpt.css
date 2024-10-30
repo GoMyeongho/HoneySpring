@@ -266,56 +266,43 @@ body {
     border-top: 1px solid #F94144;
 }
 
-/* 좋아요 버튼 스타일 */
 .like-section {
-    display: flex; /* Flexbox로 설정 */
-    justify-content: center; /* 수평 중앙 정렬 */
+    display: flex;
     align-items: center; /* 수직 중앙 정렬 */
-    margin-top: 10px;
+    justify-content: center; /* 수평 중앙 정렬 */
+    gap: 8px; /* 아이콘과 좋아요 개수 간 간격 */
+    padding: 5px; /* 섹션 내 여백 */
 }
 
-
-.like-section form {
-    margin-right: 5px; /* 버튼과 숫자 사이의 간격 조정 */
-}
-
-/* 클릭 상태 색상 */
-.liked, .not-liked, .like-text{
-    width: 40px; /* 버튼 크기 */
-    height: 40px; /* 버튼 크기 */
-    background-color: white; /* 기본 배경색을 투명하게 설정 */
+.icon-button {
+    width: 36px; /* 이미지 버튼 크기 조정 (약간 늘림) */
+    height: 36px; /* 이미지 버튼 크기 조정 (약간 늘림) */
+    background-color: transparent; /* 배경 투명 */
     border: none; /* 테두리 제거 */
-    color: transparent; /* 텍스트 색상을 투명하게 설정 */
-    cursor: pointer; /* 커서 포인터로 변경 */
-    display: flex; /* Flexbox로 정렬 */
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-    clip-path: path("M16 29.32C16 29.32 30.43 18.43 30.43 8.09C30.43 4.68 27.42 1.67 24 1.67C21.36 1.67 19.09 3.15 18 5.27C16.91 3.15 14.64 1.67 12 1.67C8.58 1.67 5.57 4.68 5.57 8.09C5.57 18.43 20 29.32 20 29.32Z");
-    transition: transform 0.3s, background-color 0.3s; /* 부드러운 전환 효과 */
-
-}
-.like-text{
-    background-color: #F94144;
-    cursor: default;
-}
-.liked{
-    background: #F94144;
+    padding: 0; /* 여백 제거 */
+    cursor: pointer; /* 커서 포인터 */
+    display: flex;
+    align-items: center; /* 버튼 내 이미지 중앙 정렬 */
+    justify-content: center;
+    transition: transform 0.2s ease; /* 크기 전환 효과 */
 }
 
-/* 호버 효과 */
-.liked:hover, .not-liked:hover {
-    transform: scale(1.2); /* 마우스 오버 시 크기 증가 효과 */
+/* 호버 시 크기만 커지게 */
+.icon-button:hover {
+    transform: scale(1.1); /* 살짝 크기 증가 */
 }
 
+.icon-button img {
+    width: 100%; /* 버튼 크기에 맞춰 이미지 크기 조정 */
+    height: 100%; /* 버튼 크기에 맞춰 이미지 크기 조정 */
+    object-fit: contain; /* 이미지를 비율에 맞춰 조정 */
+}
 
-/* 좋아요 개수 스타일 */
 .like-count {
-    font-size: 14px;
-    color: #333; /* 좋아요 개수 색상 */
-    margin-left: 8px; /* 하트와 간격 */
-    vertical-align: middle; /* 하트와 같은 줄에 위치 */
+    font-weight: bold; /* 좋아요 개수 글씨 두껍게 */
+    font-size: 1rem; /* 글자 크기 조정 */
+    margin-left: 5px; /* 버튼과 좋아요 개수 간 약간의 간격 */
 }
-
 .comments {
     background-color: #fff7d5; /* 댓글 배경색 */
     border: 1px solid #F94144; /* 테두리 색상 */

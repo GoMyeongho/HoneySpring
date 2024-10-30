@@ -44,7 +44,7 @@
           <thead th:class="mypage-head">
           <tr th:class="mypage-name">
               <!-- isUser가 true일 때는 닉네임 표시, false일 때는 "로그인이 안되어 있습니다" 메시지 표시 -->
-              <th th:if="${isUser}" th:text="${user.NName}"></th>
+              <th th:if="${isUser}" th:text="'닉네임 : '+${user.NName}"></th>
               <th th:unless="${isUser}" class="no-login">로그인이 안되어 있습니다</th>
           </tr>
           </thead>
@@ -52,8 +52,7 @@
           <tr th:class="mypage-select">
               <!-- isUser가 true일 때 마이페이지와 내정보수정 링크 표시 -->
               <td th:if="${isUser}" th:class="mypage-select">
-                  <a th:class="button" th:href="@{/users/select}">마이페이지</a>
-                  <a th:class="button" th:href="@{/users/update}">내정보수정</a>
+                  <a th:class="button" th:href="@{/users/myPage}">마이페이지</a>
                   <a th:class="button" th:href="@{/users/login}">로그아웃</a>
               </td>
               <!-- isUser가 false일 때 로그인과 회원가입 링크 표시 -->
@@ -92,11 +91,12 @@
     <tr>
         <td class="like-section">
             <form th:if="${isUser}" th:action="@{/posts/view(postno=${post.postno})}" method="post">
-                <button type="submit" th:class="(${likeMark} == '♥' ? 'liked' : 'not-liked')">
-                    <img th:src="${likeMark == '♥' ? '/path/to/filled-heart.png' : '/path/to/empty-heart.png'}" alt="좋아요 버튼" />
+                <button type="submit" th:class="icon-button">
+                    <img th:src="${likeMark == '♥' ? '/image/filledHeart.png' : '/image/emptyHeart.png'}" alt="좋아요 버튼" />
                 </button>
             </form>
-            <p th:unless="${isUser}" class="like-text">♡</p>
+            <img th:unless="${isUser}" style="width: 40px; height: 40px;"
+                 th:src="@{/image/filledHeart.png}"alt="좋아요 버튼" >
             <span th:text="${likeNo}">좋아요 개수</span>
         </td>
 
