@@ -60,11 +60,12 @@
     <table th:class="board-table">
       <thead>
         <tr>
-          <th>번호</th>
-          <th>카테고리</th>
-          <th>제목</th>
-          <th>닉네임</th>
-          <th>게시일</th>
+            <th>번호</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>닉네임</th>
+            <th>게시일</th>
+            <th th:if="${isUser}">좋아요</th>
         </tr>
       </thead>
       <tbody>
@@ -80,11 +81,16 @@
             <a th:class="button-cell" th:href="@{/posts/board(value=${post.author}, type='type2')}" th:text="${post.author}"></a>
           </td>
           <td th:class="cell" th:text="${post.date}"></td>
+          <td th:if="${isUser}" th:class="cell">
+              <img th:src="${post.content == '♥' ? '/image/filledHeart.png' : '/image/emptyHeart.png'}"
+                  th:class="icon"  alt="좋아요" />
+          </td>
         </tr>
         <tr th:if="${boardNo == 0}">
             <td></td>
             <td></td>
             <td th:class="cell">게시물이 없습니다.</td>
+            <td></td>
             <td></td>
         </tr>
       </tbody>

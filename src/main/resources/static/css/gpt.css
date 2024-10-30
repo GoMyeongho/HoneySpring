@@ -34,6 +34,14 @@
     border-bottom: 1px solid #F94144; /* 행 아래 경계선 */
 }
 
+.board-table .icon {
+    height: 30px;
+    width: auto;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+}
+
+
 .cell {
     background-color: #FFE5B4; /* 셀 기본 배경색 */
     justify-content: center; /* 가로 중앙 정렬 */

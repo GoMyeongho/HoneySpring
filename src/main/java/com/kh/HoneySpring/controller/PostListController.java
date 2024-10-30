@@ -95,7 +95,7 @@ public class PostListController {
         String id = (vo != null)?vo.getUserID():null;
         List<LikesVO> like = lDao.likeList(id);
         int boardNo = (int)Math.ceil((double) board.size()/MAXBOARD);
-        for (PostsVO post : board) post.setTitle(post.getTitle() + "[" + lDao.likeMark(like, post.getPostno()) + "]");
+        for (PostsVO post : board) post.setContent(lDao.likeMark(like, post.getPostno()));
         Collections.sort(board);
         model.addAttribute("user",vo);
         model.addAttribute("isUser",  vo != null);
