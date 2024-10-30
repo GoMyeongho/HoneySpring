@@ -23,7 +23,7 @@
       color: green;
       font-weight: bold;
     }
-    .failure {
+    .error {
       color: red;
       font-weight: bold;
     }
@@ -42,18 +42,14 @@
 <div class="container">
   <h1>글 등록 결과</h1>
 
-  <!-- Success Message -->
-  <div th:if="${isSubmitted}" class="success">
-    글 등록 성공
-  </div>
+  <div th:if="${isSubmitted}" class="success">글이 성공적으로 작성되었습니다.</div>
+  <div th:if="${!isSubmitted}" class="error">글 작성에 실패했습니다.</div>
 
-  <!-- Failure Message -->
-  <div th:if="${!isSubmitted}" class="failure">
-    글 등록 실패
-  </div>
+
 
   <a href="/posts/create">다른 글 작성</a>
   <a href="/posts/board">게시판으로 이동</a>
+
 </div>
 </body>
 </html>

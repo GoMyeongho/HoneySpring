@@ -19,7 +19,7 @@ public class PostMakeDAO {
         // 유저아이디를 확인
         String userCheckSql = "SELECT COUNT(*) FROM Users WHERE USERID = ?";
         Integer userExists = jdbcTemplate.queryForObject(userCheckSql, Integer.class, postsVO.getUserID());
-        // 카테고리 유혀성 검사
+        // 카테고리 유효성 검사
         String cateCheckSql = "SELECT COUNT(*) FROM category WHERE CATE = ?";
         Integer cateExists = jdbcTemplate.queryForObject(cateCheckSql, Integer.class, postsVO.getCategory());
         // 유저와 PostMake 확인
