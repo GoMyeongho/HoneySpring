@@ -40,21 +40,21 @@
 </head>
 <body>
 <div class="container">
-<h1>회원가입 결과</h1>
+  <h1>회원가입 결과</h1>
 
-<!-- Success Message -->
-<div th:if="${isJoin}" class="success">
-  회원가입 성공
-</div>
+  <!-- Success Message -->
+  <div th:if="${isJoin}" class="success">
+    회원가입 성공
+  </div>
 
-<!-- Failure Message -->
-<div th:if="${!isJoin}" class="failure">
-  회원가입 실패
-  <ul>
-    <li th:each="message : ${valid}" th:text="${message}"></li>
-  </ul>
-  <button onclick="location.href='/users/login';">로그인 페이지로</button>
-</div>
+  <!-- Failure Message -->
+  <div th:if="${!isJoin}" class="failure">
+    회원가입 실패
+    <ul>
+      <li th:each="message : ${valid}" th:text="${message}"></li>
+    </ul>
+    <button onclick="location.href='/users/login';">로그인 페이지로</button>
+  </div>
 </div>
 </body>
 </html>
