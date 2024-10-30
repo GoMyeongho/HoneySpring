@@ -9,10 +9,10 @@
 <div class="form-container">
 <h1>회원정보 수정</h1>
 
-<form action="/users/update" method="post">
+<form action="/users/update" method="post" th:object="${user}">
 
   <label for="userID">아이디</label>
-  <input type="text" id="userID" name="userID" th:value="${user.userID}" readonly><br>
+  <input type="text" id="userID" name="userID" th:field="${userID}" readonly><br>
 
   <label for="userPW">새 비밀번호</label>
   <input type="password" id="userPW" name="userPW"> <button type="button" onclick="checkPassword()">확인</button><br>
@@ -37,28 +37,25 @@
 
 <p th:if="${error}" th:text="${error}"></p>
 <p th:if="${message}" th:text="${message}"></p>
-
 <script>
-  function checkPassword() {
-  // 비밀번호 유효성 확인 로직을 추가하세요.
-  alert("비밀번호를 확인했습니다.");
-}
+    function checkPassword() { // 비밀번호 유효성 확인 로직을 추가하세요.
+        alert("비밀번호를 확인했습니다.");
+    }
 
-function checkPasswordMatch() {
-  // 비밀번호 일치 확인 로직을 추가하세요.
-  const password = document.getElementById("userPW").value;
-  const rePassword = document.getElementById("rePW").value;
-  if (password === rePassword) {
-    alert("비밀번호가 일치합니다.");
-  } else {
-    alert("비밀번호가 일치하지 않습니다.");
-  }
-}
+    function checkPasswordMatch() { // 비밀번호 일치 확인 로직을 추가하세요.
+        const password = document.getElementById("userPW").value;
+        const rePassword = document.getElementById("rePW").value;
+        if (password === rePassword) {
+        alert("비밀번호가 일치합니다.");
+        } else {
+        alert("비밀번호가 일치하지 않습니다.");
+        }
+    }
 
-function checkNickname() {
-  // 닉네임 중복 확인 로직을 추가하세요.
-  alert("닉네임 중복 확인을 완료했습니다.");
-}
+    function checkNickname() { // 닉네임 중복 확인 로직을 추가하세요.
+
+        alert("닉네임 중복 확인을 완료했습니다.");
+    }
 </script>
 </div>
 </body>
