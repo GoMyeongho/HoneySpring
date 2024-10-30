@@ -5,6 +5,7 @@ import com.kh.HoneySpring.vo.UsersVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -35,8 +36,13 @@ public class MyPageController {
 
     // 사용자 업데이트 처리 (POST 요청)
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute UsersVO vo) { // http://localhost:8112/posts/submitUpdateInfo
-        myPageDAO.usersUpdate(vo);  // 업데이트 처리
-        return "thymeleaf/submitUpdateInfo";
+    public String updateUser(@ModelAttribute UsersVO vo, RedirectAttributes redirectAttributes) {
+        try {
+            myPageDAO.usersUpdate(vo);  // 업데이트 처리
+            redirectAttributes.addFlashAttribute("message", "사용자 정보가 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "사용자 정보 업데이트에 실패했습니다.");
+        }
+        return "redirect:/users/select"; // 업데이트 완료
     }
 }
