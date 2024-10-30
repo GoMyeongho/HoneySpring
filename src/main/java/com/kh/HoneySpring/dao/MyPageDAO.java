@@ -25,14 +25,18 @@ public class MyPageDAO {
 
     public boolean usersUpdate(UsersVO vo) { // 업데이트는 반환값이 필요 없으므로 void 사용
         String sql = "UPDATE USERS SET USERPW = ?, NNAME=?, PHONE=?, PWLOCK=?, PWKey=? WHERE USERID = ?";
-        int isUpdate = jdbcTemplate.update(sql,
+        int isUpdate = 0;
+        try{
+        isUpdate = jdbcTemplate.update(sql,
                 vo.getUserPW(),
                 vo.getNName(),
                 vo.getPhone(),
                 vo.getPwLOCK(),
                 vo.getPwKey(),
-                vo.getUserID()
-        );
+                vo.getUserID());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return isUpdate > 0;
     }
 
