@@ -2,7 +2,8 @@
     width: 100%; /* 테이블 폭을 100%로 설정 */
     margin-top: 20px; /* 위쪽 여백 */
     font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
-    background-color: #FFEBB2; /* 테이블의 배경색을 헤더보다 약간 연하게 설정 */
+    color: #212529;
+    background-color: #FFE5B4; /* 테이블의 배경색을 헤더보다 약간 연하게 설정 */
     border: 2px solid #F94144; /* 테두리 */
     border-radius: 5px; /* 둥근 모서리 */
     border-collapse: collapse;
@@ -12,6 +13,7 @@
 .board-table th, .button-cell {
     padding: 10px; /* 셀 안 여백 */
     text-align: center; /* 텍스트 가운데 정렬 */
+    font-weight: bold;
     border: none; /* 셀 테두리 제거 */
     cursor: pointer; /* 커서를 포인터로 변경 */
     transition: background-color 0.3s; /* 배경색 전환 효과 */
@@ -25,7 +27,6 @@
 
 .board-table th {
     background-color: #FFC107; /* 헤더 배경색 */
-    color: #333; /* 헤더 글자색 */
     border-bottom: 1px solid #F94144; /* 상단 가로 경계선 */
 }
 
@@ -50,6 +51,7 @@
 
 .button-cell {
     background-color: #FFE5B4; /* 셀 기본 배경색 */
+    color: #212529;
     display: flex; /* Flexbox로 셀 내용 정렬 */
     justify-content: center; /* 가로 중앙 정렬 */
     align-items: center; /* 세로 중앙 정렬 */
@@ -61,7 +63,7 @@
 }
 
 .post-title {
-    color: #333; /* 제목 글자색 */
+    color: #212529;
     text-decoration: none; /* 밑줄 제거 */
 }
 
@@ -70,7 +72,7 @@
 }
 
 .post-title {
-    color: #333; /* 제목 글자색 */
+    color: #212529; /* 제목 글자색 */
     text-decoration: none; /* 밑줄 제거 */
 }
 
@@ -80,9 +82,10 @@
 
 .button {
     display: inline-block; /* 버튼처럼 보이도록 inline-block 설정 */
+    margin-left: 5px;
     padding: 5px 10px; /* 여백 */
     font-size: 14px; /* 글자 크기 */
-    color: #1976D2; /* 글자 색상 */
+    color: #212529; /* 글자 색상 */
     background-color: #FFC107; /* 벌꿀 색상 */
     border: 2px solid #F94144; /* 테두리 */
     border-radius: 5px; /* 둥근 모서리 */
@@ -100,7 +103,7 @@
     padding: 5px 10px; /* 여백 */
     font-size: 20px; /* 글자 크기 */
     font-weight: bold;
-    color: #1976D2; /* 글자 색상 */
+    color: #212529; /* 글자 색상 */
     background-color: #FFC107; /* 벌꿀 색상 */
     border: 2px solid #F94144; /* 테두리 */
     border-radius: 5px; /* 둥근 모서리 */
@@ -142,13 +145,13 @@
 
 .no-login {
     text-align: center; /* "로그인이 안되어 있습니다"를 중앙 정렬 */
-    color: #666; /* 색상 변경 (선택 사항) */
+    color: #212529; /* 색상 변경 (선택 사항) */
 }
 
 .mypage-select a {
     margin: 0 10px; /* 링크 간 간격 */
     text-decoration: none;
-    color: #007BFF; /* 링크 색상 */
+    color: #212529; /* 링크 색상 */
 }
 
 .mypage-select td {
@@ -170,7 +173,7 @@
 .search-form label {
     margin-right: 10px; /* 레이블과 select 사이 여백 */
     font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
-    color: #333; /* 글자 색상 */
+    color: #212529; /* 글자 색상 */
 }
 
 /* 선택 박스 스타일 */
@@ -178,7 +181,7 @@
     padding: 10px; /* 안쪽 여백 */
     border: 1px solid #F94144; /* 테두리 */
     border-radius: 5px; /* 둥근 모서리 */
-    background-color: #fff; /* 배경색 */
+    background-color: #FFF1D1; /* 배경색 */
     font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
     cursor: pointer; /* 커서 포인터로 변경 */
     transition: border-color 0.3s; /* 테두리 색상 전환 효과 */
@@ -194,6 +197,7 @@
 .search-form input[type="text"] {
     padding: 10px; /* 안쪽 여백 */
     border: 1px solid #F94144; /* 테두리 */
+    background-color: #FFF1D1;
     border-radius: 5px; /* 둥근 모서리 */
     margin-left: 10px; /* 왼쪽 여백 */
     flex-grow: 1; /* 남은 공간 차지 */
@@ -208,6 +212,7 @@
 
 /* 검색 버튼 스타일 */
 .search-form button {
+    margin-left: 5px;
     padding: 10px 15px; /* 안쪽 여백 */
     border: none; /* 테두리 제거 */
     border-radius: 5px; /* 둥근 모서리 */
@@ -246,11 +251,11 @@ body {
     background-color: #FFEBB2;
     padding: 15px;
     font-size: 18px;
-    color: #333;
+    color: #212529;
 }
 
 .postTitle {
-    color: #333; /* 검은색에 가까운 회색 */
+    color: #212529; /* 검은색에 가까운 회색 */
     font-weight: bold;
 }
 
@@ -260,7 +265,7 @@ body {
 
 .author, .date {
     font-size: 14px;
-    color: #666;
+    color: #343a40;
     font-style: italic;
 }
 
@@ -268,7 +273,7 @@ body {
 .content {
     padding: 20px;
     font-size: 18px;
-    color: #333;
+    color: #212529;
     line-height: 1.6;
     background-color: #FFE5B4;
     border-top: 1px solid #F94144;
@@ -322,18 +327,18 @@ body {
 .comments h3 {
     margin: 0; /* 제목의 기본 여백 제거 */
     font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
-    color: #333; /* 제목 글자색 */
+    color: #212529; /* 제목 글자색 */
 }
 
 .comments p {
     margin: 5px 0; /* 댓글 내용의 여백 설정 */
     font-family: 'Montserrat', sans-serif; /* 폰트 설정 */
-    color: #555; /* 댓글 내용 글자색 */
+    color: #343a40; /* 댓글 내용 글자색 */
 }
 
 .comments .button {
     background-color: #FFC107; /* 버튼 배경색 */
-    color: #1976D2; /* 버튼 글자색 */
+    color: #212529; /* 버튼 글자색 */
     padding: 5px 10px; /* 버튼 안쪽 여백 */
     border: 2px solid #F94144; /* 버튼 테두리 */
     border-radius: 5px; /* 버튼 둥근 모서리 */
