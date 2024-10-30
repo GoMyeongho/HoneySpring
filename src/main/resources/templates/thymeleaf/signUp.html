@@ -11,7 +11,7 @@
   <h2>회원가입</h2>
   <form th:action="@{/login/signUp}" th:object="${signUp}" method="post">
     <div class="form-group">
-      <label for="userID">아이디:</label>
+      <label for="userID">아이디</label>
       <input type="text" id="userID" th:field="*{userID}" class="form-control" placeholder="아이디 입력">
       <span th:text="${validUserID}" class="text-danger"></span>
     </div>
