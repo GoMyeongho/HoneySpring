@@ -25,6 +25,9 @@
 
     <label for="pwKey">비밀번호 찾기 답변:</label>
     <span id="pwKey" th:text="${user.pwKey}">Your answer</span><br>
+
+    <br><br>
+    <button type="button" class="btn btn-secondary" onclick="location.href='/posts/board';">취소</button>
 </div>
 
 <p th:if="${error}" th:text="${error}"></p>
