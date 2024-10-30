@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>마이페이지</title>
+</head>
+<body>
+<h2>마이페이지</h2>
+<p th:text="'사용자 이름: ' + ${user.username}"></p>
+<!-- 추가 사용자 정보 표시 -->
+<a href="/users/select">내정보보기</a>
+</body>
+</html>

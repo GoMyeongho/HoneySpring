@@ -22,7 +22,7 @@ public class MyPageDAO {
         return jdbcTemplate.query(sql, new UsersRowMapper());
     }
 
-    public void usersUpdate(UsersVO vo) { // 업데이트는 반환값이 필요 없으므로 void 사용
+    public boolean usersUpdate(UsersVO vo) { // 업데이트는 반환값이 필요 없으므로 void 사용
         String sql = "UPDATE USERS SET USERPW = ?, NNAME=?, PHONE=?, PWLOCK=?, PWKey=? WHERE USERID = ?";
         jdbcTemplate.update(sql,
                 vo.getUserPW(),
@@ -32,6 +32,7 @@ public class MyPageDAO {
                 vo.getPwKey(),
                 vo.getUserID()
         );
+        return false;
     }
 
     public UsersVO findUserById(String userId) {
@@ -39,6 +40,18 @@ public class MyPageDAO {
         List<UsersVO> vo = jdbcTemplate.query(sql, new Object[]{userId}, new UsersRowMapper());
         return vo.isEmpty() ? null : vo.get(0);
     }
+
+    public boolean checkPassword(String userID, String password) {
+        // 사용자 정보를 데이터베이스에서 조회
+        UsersVO user = findUserById(userID);
+
+        // 사용자가 존재하지 않으면 false 반환
+        if (user == null) {
+            return false;
+        }
+        return false;
+    }
+
 
     private static class UsersRowMapper implements RowMapper<UsersVO> {
         @Override
