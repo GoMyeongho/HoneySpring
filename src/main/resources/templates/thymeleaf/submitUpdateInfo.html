@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>회원정보 수정 완료</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/result.css}">
 </head>
 <body>
 <div class="container">
@@ -12,7 +12,7 @@
     <!-- Success Message -->
     <div th:if="${isJoin}" class="success">
         회원 수정 성공
-        <button onclick="location.href='/posts/board';">마이페이지로</button>
+        <button onclick="location.href='/posts/board';">게시글보기</button>
     </div>
 
     <!-- Failure Message -->

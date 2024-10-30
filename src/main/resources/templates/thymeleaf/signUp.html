@@ -13,43 +13,43 @@
     <div class="form-group">
       <label for="userID">아이디</label>
       <input type="text" id="userID" th:field="*{userID}" class="form-control" placeholder="아이디 입력">
-      <span th:text="${validUserID}" class="text-danger"></span>
+      <p th:text="${validUserID}" class="text-danger"></p>
     </div>
 
     <div class="form-group">
       <label for="userPW">비밀번호</label>
       <input type="password" id="userPW" th:field="*{userPW}" class="form-control" placeholder="비밀번호 입력">
-      <span th:text="${validPW}" class="text-danger"></span>
+      <p th:text="${validPW}" class="text-danger"></p>
     </div>
 
     <div class="form-group">
       <label for="confirmPW">비밀번호 확인</label>
       <input type="password" id="confirmPW" th:field="*{confirmPW}" class="form-control" placeholder="비밀번호 확인 입력">
-      <span th:text="${validConfirmPW}" class="text-danger"></span>
+      <p th:text="${validConfirmPW}" class="text-danger"></p>
     </div>
 
     <div class="form-group">
       <label for="nName">닉네임</label>
       <input type="text" id="nName" th:field="*{nName}" class="form-control" placeholder="닉네임 입력">
-      <span th:text="${validNickname}" class="text-danger"></span>
+      <p th:text="${validNickname}" class="text-danger"></p>
     </div>
 
     <div class="form-group">
       <label for="phone">전화번호</label>
       <input type="text" id="phone" th:field="*{phone}" class="form-control" placeholder="전화번호 입력 (예: 010-0000-0000)">
-      <span th:text="${validPhone}" class="text-danger"></span>
+      <p th:text="${validPhone}" class="text-danger"></p>
     </div>
 
     <div class="form-group">
       <label for="pwLOCK">제시문</label>
       <input type="text" id="pwLOCK" th:field="*{pwLOCK}" class="form-control" placeholder="제시문 입력">
-      <span th:text="${validPwLOCK}" class="text-danger"></span>
+      <p th:text="${validPwLOCK}" class="text-danger"></p>
     </div>
 
     <div class="form-group">
       <label for="pwKey">제시어</label>
       <input type="text" id="pwKey" th:field="*{pwKey}" class="form-control" placeholder="제시어 입력">
-      <span th:text="${validPwKey}" class="text-danger"></span>
+      <p th:text="${validPwKey}" class="text-danger"></p>
     </div>
 
     <button type="submit" class="btn btn-primary">가입하기</button>

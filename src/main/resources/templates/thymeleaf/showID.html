@@ -9,7 +9,7 @@
 <div class="container">
   <h1>아이디 찾기 결과</h1>
   <div>
-    <p th:if="${result != null}" class="success">아이디: <span th:text="${result}"></span></p>
+    <p th:if="${result != null}" class="success">아이디 <span th:text="${result}"></span></p>
     <p th:if="${result == null}" class="failure">해당 전화번호로 가입된 아이디가 없습니다.</p>
   </div>
   <div>
