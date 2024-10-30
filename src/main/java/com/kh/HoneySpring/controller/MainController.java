@@ -66,16 +66,17 @@ public class MainController {
                 valid.add("이미 사용 중인 아이디입니다.");
                 isValid = false;
             }
-            else if (usersDAO.isNicknameExists(vo.getNName())) {
+            if (usersDAO.isNicknameExists(vo.getNName())) {
                 valid.add("이미 사용 중인 닉네임입니다.");
                 isValid = false;
             }
-            else if (usersDAO.isPhoneExists(vo.getPhone())) {
+            if (usersDAO.isPhoneExists(vo.getPhone())) {
                 valid.add("이미 사용 중인 전화번호입니다.");
                 isValid = false;
             }
-            else isJoin = usersDAO.joinMember(vo);
+
         }
+        if(isValid) isJoin = usersDAO.joinMember(vo);
         model.addAttribute("signUp", vo);
         model.addAttribute("valid", valid);
         model.addAttribute("isValid", isValid);
