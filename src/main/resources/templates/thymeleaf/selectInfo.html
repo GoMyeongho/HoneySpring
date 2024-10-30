@@ -3,46 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>회원정보 보기</title>
+    <link rel="stylesheet" th:href="@{/css/userInterface.css}"> <!-- CSS 파일 링크 추가 -->
 </head>
 <body>
-<h1>회원정보 보기</h1>
+<div class="form-container">
+    <h1>회원정보 보기</h1>
 
-<div>
-    <label for="userID">아이디:</label>
-    <span id="userID" th:text="${user.userID}">sampleUserID</span><br>
+    <div class="form-group">
+        <label for="userID">아이디</label>
+        <span id="userID" th:text="${user.userID}">sampleUserID</span>
+    </div>
 
-    <label for="userPW">비밀번호:</label>
-    <span id="userPW" th:text="${user.userPW.replaceAll('.', '*')}">******</span><br>
+    <div class="form-group">
+        <label for="userPW">비밀번호</label>
+        <span id="userPW" th:text="${user.userPW.replaceAll('.', '*')}">******</span>
+    </div>
 
-    <label for="nName">닉네임:</label>
-    <span id="nName" th:text="${user.nName}">sampleNickname</span><br>
+    <div class="form-group">
+        <label for="nName">닉네임</label>
+        <span id="nName" th:text="${user.nName}">sampleNickname</span>
+    </div>
 
-    <label for="phone">전화번호:</label>
-    <span id="phone" th:text="${user.phone}">010-0000-0000</span><br>
+    <div class="form-group">
+        <label for="phone">전화번호</label>
+        <span id="phone" th:text="${user.phone}">010-0000-0000</span>
+    </div>
 
-    <label for="pwLOCK">비밀번호 찾기 질문:</label>
-    <span id="pwLOCK" th:text="${user.pwLOCK}">Your security question</span><br>
+    <div class="form-group">
+        <label for="pwLOCK">비밀번호 찾기 질문</label>
+        <span id="pwLOCK" th:text="${user.pwLOCK}">Your security question</span>
+    </div>
 
-    <label for="pwKey">비밀번호 찾기 답변:</label>
-    <span id="pwKey" th:text="${user.pwKey}">Your answer</span><br>
+    <div class="form-group">
+        <label for="pwKey">비밀번호 찾기 답변</label>
+        <span id="pwKey" th:text="${user.pwKey}">Your answer</span>
+    </div>
+
+    <div class="links">
+        <a th:href="@{/users/myPage}">마이페이지로</a>
+    </div>
+
+    <p th:if="${error}" th:text="${error}" class="text-danger mt-3"></p>
+    <p th:if="${message}" th:text="${message}" class="text-success mt-3"></p>
 </div>
-
-<p th:if="${error}" th:text="${error}"></p>
-<p th:if="${message}" th:text="${message}"></p>
-
-<p th:if="${error}" th:text="${error}" class="text-danger mt-3"></p>
-<p th:if="${message}" th:text="${message}" class="text-success mt-3"></p>
-</div>
-
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
-
-<div>
-    <a th:href="@{/users/myPage}">마이페이지로</a>
-</div>
-
 </body>
 </html>

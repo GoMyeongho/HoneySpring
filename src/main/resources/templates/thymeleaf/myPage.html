@@ -3,18 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <title>마이페이지</title>
+  <link rel="stylesheet" th:href="@{/css/userInterface.css}"> <!-- CSS 파일 링크 추가 -->
 </head>
 <body>
+<div class="form-container">
 <h2>마이페이지</h2>
-<p th:text="'사용자 이름: ' + ${user.NName}"></p>
+<div class="form-group">
+  <div class="form-group">
+    <label for="nName">닉네임</label>
+    <span id="nName" th:text="${user.nName}">sampleNickname</span>
+  </div>
 <!-- 추가 사용자 정보 표시 -->
-
-<div>
-  <a th:href="@{/users/verify(type='type1')}">내정보 보기</a>
-  <a th:href="@{/users/verify(type='type2')}">내정보 수정</a>
-  <a th:href="@{/posts/board(type='type4', value=${user.NName})}">좋아요 한 글 보기</a>
-  <a th:href="@{/posts/board(type='type5',value=${user.NName})}">댓글 쓴 글 보기</a>
 </div>
+  <div class="links">
+  <a th:href="@{/users/verify(type='type1')}">내정보 보기</a>
+  <a th:href="@{/users/verify(type='type2')}"> /내정보 수정</a>
+  </div>
+  <div class="links">
+  <a th:href="@{/posts/board(type='type4', value=${user.NName})}">좋아요 한 글 보기</a>
+  <a th:href="@{/posts/board(type='type5',value=${user.NName})}"> /댓글 쓴 글 보기</a>
+  </div>
 <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+</div>
 </body>
 </html>
