@@ -33,7 +33,9 @@ public class PostViewController {
 
     @GetMapping("/view")    // http://localhost:8112/posts/list
     public String viewPost(@SessionAttribute(value="login", required = false)UsersVO vo,
-                           @RequestParam("postno") int postNo, Model model) {
+                           @RequestParam("postno") int postNo, @RequestParam(value = "commNo",defaultValue = "0")int commNo,
+                           @RequestParam(value = "subNo", defaultValue = "0")int subNo, @RequestParam(value = "isComment",defaultValue = "false") boolean isComment,
+                           @RequestParam(value = "content", defaultValue = "")String content ,Model model) {
         PostsVO post= dao.viewPost(postNo);
         List<LikesVO> lList = lDao.likeList((vo!=null)?vo.getUserID():"");
         int likeNo = lDao.likeList(postNo).size();
@@ -45,6 +47,19 @@ public class PostViewController {
                 cList.get(i).setContent("->" + cList.get(i).getContent());
             }
         }
+        if(content.startsWith("->"))content = content.substring(2);
+        CommentsVO comment = null;
+        if(vo!=null){
+            comment = new CommentsVO();
+            comment.setPostNo(postNo);
+            comment.setNName(vo.getNName());
+            comment.setUserId(vo.getUserID());
+            comment.setCommNo(commNo);
+            comment.setSubNo(subNo);
+            comment.setContent(content);
+        }
+        model.addAttribute("isComment", isComment);
+        model.addAttribute("comment", comment);
         model.addAttribute("post", post);
         model.addAttribute("user",vo);
         model.addAttribute("isUser",vo!=null);
@@ -55,12 +70,30 @@ public class PostViewController {
         model.addAttribute("name", (vo!=null)?vo.getNName():null);
         return "thymeleaf/viewPost";
     }
-    @PostMapping("/view")
+    @PostMapping(value = "/view/like")
     public String like(@SessionAttribute("login") UsersVO vo, @RequestParam("postno") int postno, RedirectAttributes redirectAttributes) {
         List<LikesVO> lList = lDao.likeList(postno);
         boolean success =(lDao.isLike(lList,vo.getNName()))?lDao.cancelLike(postno, vo.getUserID()):lDao.addLike(postno, vo.getUserID());
         redirectAttributes.addFlashAttribute("likeSuccess", (success)?1:2);
         return "redirect:/posts/view?postno="+postno;
+    }
+
+    @PostMapping(value="/view")
+    public String submitComment(@ModelAttribute("comment") CommentsVO comment, RedirectAttributes redirectAttributes) {
+        boolean isSuccess;
+        if(comment.getCommNo() == 0){
+            isSuccess = cDao.addComment(comment);
+        }
+        else if (comment.getSubNo() == 0){
+            isSuccess = cDao.addComment(comment,comment.getCommNo());
+        }
+        else{
+            isSuccess = cDao.updateComment(comment);
+            redirectAttributes.addFlashAttribute("updateSuccess", !isSuccess);
+            return "redirect:/posts/view?postno="+comment.getPostNo();
+        }
+        redirectAttributes.addFlashAttribute("createCommSuccess", !isSuccess);
+        return "redirect:/posts/view?postno="+comment.getPostNo();
     }
 
     @GetMapping("/update")
@@ -85,7 +118,7 @@ public class PostViewController {
         redirectAttributes.addFlashAttribute("deleteSuccess", (success)?1:2);
         return "redirect:/posts/board";
     }
-
+/*
     @GetMapping("/comment/create")
     public String createComment(@SessionAttribute("login") UsersVO vo, @RequestParam("commType")String type,
                                 @RequestParam(value = "commNo", required = false) Integer commNo,
@@ -121,7 +154,7 @@ public class PostViewController {
         redirectAttributes.addFlashAttribute("updateCommSuccess", (success)?1:2);
         return "redirect:/posts/view?postno="+vo.getPostNo();
     }
-
+*/
     @PostMapping("/comment/delete")
     public String submitDeleteComment(@RequestParam("subNo") int subNo, RedirectAttributes redirectAttributes) {
         CommentsVO vo = cDao.getComment(subNo);

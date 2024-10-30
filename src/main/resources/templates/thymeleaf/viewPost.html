@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <title th:text="${post.title}">게시글</title>
     <link rel="stylesheet" th:href="@{/css/gpt.css}">
+    <style>
+        /* 숨김 처리된 요소 스타일 */
+        #hiddenContent {
+            display: none; /* 처음에는 숨김 상태 */
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body class="container">
 
@@ -34,6 +44,7 @@
             else alert('좋아요 수정에 실패하였습니다')
         }
 </script>
+
 
 <div th:class="head">
     <a th:href="@{/posts/board}">
@@ -90,13 +101,14 @@
     </tr>
     <tr>
         <td class="like-section">
-            <form th:if="${isUser}" th:action="@{/posts/view(postno=${post.postno})}" method="post">
+            <form th:if="${isUser}" th:action="@{/posts/view/like}" method="post">
+                <input  type="hidden" name="postno" th:value="${post.postno}">
                 <button type="submit" th:class="icon-button">
                     <img th:src="${likeMark == '♥' ? '/image/filledHeart.png' : '/image/emptyHeart.png'}" alt="좋아요 버튼" />
                 </button>
             </form>
             <img th:unless="${isUser}" style="width: 40px; height: 40px;"
-                 th:src="@{/image/filledHeart.png}"alt="좋아요 버튼" >
+                 th:src="@{/image/filledHeart.png} "alt="좋아요 버튼" >
             <span th:text="${likeNo}">좋아요 개수</span>
         </td>
 
@@ -104,41 +116,71 @@
     </tbody>
 </table>
 
-<div class="comments" th:each="comment : ${cList}">
+<div class="comments" th:each="comm : ${cList}">
     <h3>
-        <span th:text="${comment.NName} ">작성자 </span>
-        <span th:text="${#dates.format(comment.CDate, 'yyyy년 MM월 dd일')}">작성일</span>
+        <span th:text="${comm.NName}">작성자 </span>
+        <span th:text="${#dates.format(comm.CDate, 'yyyy년 MM월 dd일')}">작성일</span>
     </h3>
-    <p th:text="${comment.content}">댓글 내용</p>
+    <p th:text="${comm.content}">댓글 내용</p>
     <div th:if="${isUser}">
+        <form  style="display: inline-block; margin-right: 10px;"
+               th:action="@{/posts/view(postno=${post.postno})}" method="get">
+            <input type="hidden" name="commNo" th:value="${comm.commNo}">
+            <input  type="hidden" name="postno" th:value="${post.postno}">
+            <input  type="hidden" name="isComment" th:value="true">
+            <button class="button" type="submit" >대댓글</button>
+            </form>
+
+        <form  style="display: inline-block; margin-right: 10px;"
+               th:if="${name == comm.NName}" th:action="@{/posts/view(postno=${post.postno})}" method="get">
+            <input type="hidden" name="subNo" th:value="${comm.subNo}">
+            <input type="hidden" name="content" th:value="${comm.content}">
+            <input type="hidden" name="commNo" th:value="${comm.commNo}">
+            <input  type="hidden" name="postno" th:value="${post.postno}">
+            <input  type="hidden" name="isComment" th:value="true">
+            <button class="button" type="submit" >댓글 수정</button>
+        </form>
+
+        </form>
         <div style="display: inline-block; margin-right: 10px;">
-        <a  class="button"  th:href="@{/posts/comment/create(commType='type2', postno =${post.postno}, commNo=${comment.commNo})}">대댓글</a>
-        </div>
-        <div style="display: inline-block; margin-right: 10px;">
-        <a  class="button"  th:if="${name} == ${comment.NName}" th:href="@{/posts/comment/update(subNo = ${comment.subNo})}">댓글 수정</a>
-        </div>
-        <div style="display: inline-block; margin-right: 10px;">
-        <form th:if="${name} == ${comment.NName}" th:action="@{/posts/comment/delete}" method="post" style="display:inline;">
-            <input type="hidden" name="subNo" th:value="${comment.subNo}"/> <!-- 댓글 ID를 전송 -->
+        <form th:if="${name == comm.NName}" th:action="@{/posts/comment/delete}" method="post" style="display:inline;">
+            <input type="hidden" name="subNo" th:value="${comm.subNo}"/> <!-- 댓글 ID를 전송 -->
             <button  class="button"  type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">댓글 삭제</button>
         </form> <!-- POST 방식으로 삭제 -->
         </div>
     </div>
 </div >
-<div class="post-actions" th:if="${isUser}">
-    <a class="button" th:href="@{/posts/comment/create(commType='type1', postno=${post.postno})}">댓글 생성</a>
+<div th:if="${isUser}">
+    <form  style="display: inline-block; margin-right: 10px;"
+           th:action="@{/posts/view(postno=${post.postno})}" method="get">
+        <input  type="hidden" name="postno" th:value="${post.postno}">
+        <input  type="hidden" name="isComment" th:value="true">
+        <button class="button" type="submit" >댓글 수정</button>
+    </form>
 </div>
-
 <div class="post-actions" style="margin-top: 10px;">
-    <a th:if="${name} == ${post.author}" th:href="@{/posts/update(postno=${post.postno})}" class="button">글 수정</a>
+    <a th:if="${name==post.author}" th:href="@{/posts/update(postno=${post.postno})}" class="button">글 수정</a>
 
-    <form th:if="${name} == ${post.author}" th:action="@{/posts/delete}" method="post" style="display:inline;">
+    <form th:if="${name==post.author}" th:action="@{/posts/delete}" method="post" style="display:inline;">
         <input type="hidden" name="postno" th:value="${post.postno}"/> <!-- 포스트 ID를 전송 -->
         <button class="button" type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">글 삭제</button>
     </form> <!-- POST 방식으로 삭제 -->
 </div>
 
-
+<div class="comment-input" th:if="${isComment}">
+    <form th:action="@{/posts/view}" th:object="${comment}" method="post">
+        <input type="hidden" th:field="*{userId}">
+        <input type="hidden" th:field="*{NName}">
+        <input type="hidden" th:field="*{postNo}">
+        <input type="hidden" th:field="*{commNo}">
+        <input type="hidden" th:field="*{subNo}">
+        <div>
+            <label for="content">댓글 내용 입력</label>
+            <textarea id="content" maxlength="200" placeholder="내용을 입력 해 주세요(최대 200자)" th:field="*{content}"></textarea>
+            <button class="button" type="submit">입력</button>
+    </div>
+    </form>
+</div>
 
 </body>
 </html>
