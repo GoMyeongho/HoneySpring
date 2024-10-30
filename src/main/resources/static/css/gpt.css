@@ -277,7 +277,7 @@ body {
     line-height: 1.6;
     background-color: #FFE5B4;
     border-top: 1px solid #F94144;
-    white-space: normal;
+    white-space: pre-wrap;
 }
 
 .like-section {
