@@ -26,7 +26,7 @@
           <thead th:class="mypage-head">
           <tr th:class="mypage-name">
               <!-- isUser가 true일 때는 닉네임 표시, false일 때는 "로그인이 안되어 있습니다" 메시지 표시 -->
-              <th th:if="${isUser}" th:text="${user.NName}"></th>
+              <th th:if="${isUser}" th:text="'닉네임 : '+${user.NName}"></th>
               <th th:unless="${isUser}" class="no-login">로그인이 안되어 있습니다</th>
           </tr>
           </thead>
@@ -34,8 +34,7 @@
           <tr th:class="mypage-select">
               <!-- isUser가 true일 때 마이페이지와 내정보수정 링크 표시 -->
               <td th:if="${isUser}" th:class="mypage-select">
-                  <a th:class="button" th:href="@{/users/select}">마이페이지</a>
-                  <a th:class="button" th:href="@{/users/update}">내정보수정</a>
+                  <a th:class="button" th:href="@{/users/myPage}">마이페이지</a>
                   <a th:class="button" th:href="@{/users/login}">로그아웃</a>
               </td>
               <!-- isUser가 false일 때 로그인과 회원가입 링크 표시 -->
@@ -61,11 +60,12 @@
     <table th:class="board-table">
       <thead>
         <tr>
-          <th>번호</th>
-          <th>카테고리</th>
-          <th>제목</th>
-          <th>닉네임</th>
-          <th>게시일</th>
+            <th>번호</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>닉네임</th>
+            <th>게시일</th>
+            <th th:if="${isUser}">좋아요</th>
         </tr>
       </thead>
       <tbody>
@@ -81,11 +81,16 @@
             <a th:class="button-cell" th:href="@{/posts/board(value=${post.author}, type='type2')}" th:text="${post.author}"></a>
           </td>
           <td th:class="cell" th:text="${post.date}"></td>
+          <td th:if="${isUser}" th:class="cell">
+              <img th:src="${post.content == '♥' ? '/image/filledHeart.png' : '/image/emptyHeart.png'}"
+                  th:class="icon"  alt="좋아요" />
+          </td>
         </tr>
         <tr th:if="${boardNo == 0}">
             <td></td>
             <td></td>
             <td th:class="cell">게시물이 없습니다.</td>
+            <td></td>
             <td></td>
         </tr>
       </tbody>
