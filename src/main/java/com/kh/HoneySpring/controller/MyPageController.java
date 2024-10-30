@@ -141,15 +141,16 @@ public class MyPageController {
         boolean isUpdate = false;
         if (isValid) {
             user = myPageDAO.findUserById(vo.getUserID());
+
             if (usersDAO.isNicknameExists(vo.getNName()) && !user.getNName().equals(vo.getNName())) {
                 valid.add("이미 사용 중인 닉네임입니다.");
                 isValid = false;
             }
-            if (usersDAO.isPhoneExists(vo.getPhone()) && !user.getPhone().equals(vo.getPhone())) {
+            else if (usersDAO.isPhoneExists(vo.getPhone()) && !user.getPhone().equals(vo.getPhone())) {
                 valid.add("이미 사용 중인 전화번호입니다.");
                 isValid = false;
             }
-            isUpdate = myPageDAO.usersUpdate(vo);
+            else isUpdate = myPageDAO.usersUpdate(vo);
         }
         model.addAttribute("signUp", vo);
         model.addAttribute("valid", valid);
