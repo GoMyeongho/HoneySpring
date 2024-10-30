@@ -76,11 +76,12 @@ public class PostListController {
                         if(post.getAuthor().contains(search)) board.add(post);
                         break;
                     case "type4":
-                        if(post.getContent().contains(search)) board.add(post);
+                        if(dao.getContent(post.getPostno()).contains(search)) board.add(post);
                         break;
                     case "type5":
                         if(post.getTitle().contains(search)
-                                || post.getContent().contains(search)) board.add(post);
+                                || dao.getContent(post.getPostno()).contains(search)) board.add(post);
+                        break;
                     default:
                         System.out.println("코드 에러");
                         break;
@@ -99,7 +100,7 @@ public class PostListController {
         model.addAttribute("maxBoard",MAXBOARD);
         model.addAttribute("boardNo", boardNo);
         model.addAttribute("searchOptions", SEARCHOPTIONS);
-        model.addAttribute("board", boardTemp);
+        model.addAttribute("board", board);
         model.addAttribute("search",search);
         model.addAttribute("searchType", searchType);
         model.addAttribute("value", value);

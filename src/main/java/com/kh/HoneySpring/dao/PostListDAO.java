@@ -93,6 +93,22 @@ public class PostListDAO {
         });
         return result;
     }
+    public String getContent(int postNo){
+        String sql = "SELECT PCONTENT FROM VM_POST WHERE POSTNO = ?";
+        List<String> result = null;
+        try{
+            result = jdbcTemplate.query(sql, new Object[]{postNo}, new RowMapper<String>() {
+                @Override
+                public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    return rs.getString("PCONTENT");
+                }
+            });
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return result != null ? result.get(0) : null;
+    }
+
 
 
     private static class PostListRowMapper implements RowMapper<PostsVO> {

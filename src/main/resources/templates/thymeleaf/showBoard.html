@@ -35,7 +35,8 @@
               <!-- isUser가 true일 때 마이페이지와 내정보수정 링크 표시 -->
               <td th:if="${isUser}" th:class="mypage-select">
                   <a th:href="@{/users/select}">마이페이지</a>
-                  <a th:href="@{/users/login}"></a>
+                  <a th:href="@{/users/update}">내정보수정</a>
+                  <a th:href="@{/users/login}">로그아웃</a>
               </td>
               <!-- isUser가 false일 때 로그인과 회원가입 링크 표시 -->
               <td th:unless="${isUser}" th:class="mypage-select">
@@ -105,7 +106,7 @@
         <option value=""></option>
         <option th:each="option : ${searchOptions}" th:value="${option}" th:text="${option}"></option>
     </select>
-    <input type="text" th:field="*{search}" placeholder="검색내용을 입력하세요" th:value="${search}"/>
+    <input type="text" id="search" name="search" placeholder="검색내용을 입력하세요" th:value="${search}" />
     <input type="hidden" id="searchType" name="searchType" th:value="${searchType}"/>
     <input type="hidden" name="page" th:value="1"/>
     <button type="submit">검색</button>
