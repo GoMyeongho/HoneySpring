@@ -2,61 +2,68 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>회원정보 수정</title>
+  <title>내정보 수정</title>
   <link rel="stylesheet" th:href="@{/css/userInterface.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <div class="form-container">
-<h1>회원정보 수정</h1>
+  <h2>내정보 수정</h2>
+  <form th:action="@{/users/update}" th:object="${user}" method="post">
 
-<form action="/users/update" method="post" th:object="${user}">
+    <div class="form-group">
+      <label for="userID">아이디</label>
+      <input type="text" id="userID" th:field="*{userID}" class="form-control" readonly>
+    </div>
 
-  <label for="userID">아이디</label>
-  <input type="text" id="userID" name="userID" th:field="${userID}" readonly><br>
+    <div class="form-group">
+      <label for="userPW">새 비밀번호</label>
+      <input type="password" id="userPW" th:field="*{userPW}" class="form-control" placeholder="비밀번호 입력">
+      <span th:text="${validPW}" class="text-danger"></span>
+    </div>
 
-  <label for="userPW">새 비밀번호</label>
-  <input type="password" id="userPW" name="userPW"> <button type="button" onclick="checkPassword()">확인</button><br>
+    <div class="form-group">
+      <label for="confirmPW">비밀번호 확인</label>
+      <input type="password" id="confirmPW" th:field="*{confirmPW}" class="form-control" placeholder="비밀번호 확인 입력">
+      <span th:text="${validConfirmPW}" class="text-danger"></span>
+    </div>
 
-  <label for="rePW">비밀번호 확인</label>
-  <input type="password" id="rePW" name="rePW"> <button type="button" onclick="checkPasswordMatch()">확인</button><br>
+    <div class="form-group">
+      <label for="nName">닉네임</label>
+      <input type="text" id="nName" th:field="*{nName}" class="form-control" placeholder="닉네임 입력">
+      <span th:text="${validNickname}" class="text-danger"></span>
+    </div>
 
-  <label for="nName">닉네임</label>
-  <input type="text" id="nName" name="nName" th:value="${user.nName}" required> <button type="button" onclick="checkNickname()">중복 확인</button><br>
+    <div class="form-group">
+      <label for="phone">전화번호</label>
+      <input type="text" id="phone" th:field="*{phone}" class="form-control" placeholder="전화번호 입력 (예: 010-0000-0000)">
+      <span th:text="${validPhone}" class="text-danger"></span>
+    </div>
 
-  <label for="phone">전화번호</label>
-  <input type="text" id="phone" name="phone" placeholder="010-0000-0000" th:value="${user.phone}" required><br>
+    <div class="form-group">
+      <label for="pwLOCK">제시문</label>
+      <input type="text" id="pwLOCK" th:field="*{pwLOCK}" class="form-control" placeholder="제시문 입력">
+      <span th:text="${validPwLOCK}" class="text-danger"></span>
+    </div>
 
-  <label for="pwLOCK">비밀번호 찾기 질문</label>
-  <input type="text" id="pwLOCK" name="pwLOCK" th:value="${user.pwLOCK}" required><br>
+    <div class="form-group">
+      <label for="pwKey">제시어</label>
+      <input type="text" id="pwKey" th:field="*{pwKey}" class="form-control" placeholder="제시어 입력">
+      <span th:text="${validPwKey}" class="text-danger"></span>
+    </div>
 
-  <label for="pwKey">비밀번호 찾기 답변</label>
-  <input type="text" id="pwKey" name="pwKey" th:value="${user.pwKey}" required><br>
+    <button type="submit" class="btn btn-primary">회원정보 수정</button>
+    <br><br>
+    <button type="button" class="btn btn-secondary" onclick="location.href='/users/select';">취소</button>
 
-  <button type="submit">회원정보 수정</button>
-</form>
+  </form>
 
-<p th:if="${error}" th:text="${error}"></p>
-<p th:if="${message}" th:text="${message}"></p>
-<script>
-    function checkPassword() { // 비밀번호 유효성 확인 로직을 추가하세요.
-        alert("비밀번호를 확인했습니다.");
-    }
-
-    function checkPasswordMatch() { // 비밀번호 일치 확인 로직을 추가하세요.
-        const password = document.getElementById("userPW").value;
-        const rePassword = document.getElementById("rePW").value;
-        if (password === rePassword) {
-        alert("비밀번호가 일치합니다.");
-        } else {
-        alert("비밀번호가 일치하지 않습니다.");
-        }
-    }
-
-    function checkNickname() { // 닉네임 중복 확인 로직을 추가하세요.
-
-        alert("닉네임 중복 확인을 완료했습니다.");
-    }
-</script>
+  <p th:if="${error}" th:text="${error}" class="text-danger"></p>
+  <p th:if="${message}" th:text="${message}" class="text-success"></p>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
