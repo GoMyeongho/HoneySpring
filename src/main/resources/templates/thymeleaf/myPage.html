@@ -14,6 +14,7 @@
   <a th:href="@{/users/verify(type='type2')}">내정보 수정</a>
   <a th:href="@{/posts/board(type='type4', value=${user.NName})}">좋아요 한 글 보기</a>
   <a th:href="@{/posts/board(type='type5',value=${user.NName})}">댓글 쓴 글 보기</a>
+  <button type="button" class="btn" style="background-color: white; color: black;" onclick="location.href='/posts/board';">나가기</button>
 </div>
 <div th:if="${error}" th:text="${error}" style="color: red;"></div>
 </body>
