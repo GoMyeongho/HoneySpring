@@ -50,12 +50,10 @@ public class MyPageDAO {
         if (user == null) {
             return false;
         }
-
-        // 데이터베이스에 저장된 비밀번호와 입력된 비밀번호 비교
-        // passwordEncoder의 matches 메서드를 사용하여 비교
-        Matcher passwordEncoder = null;
-        return passwordEncoder.matches();
+        return user.getUserPW().equals(password);
     }
+
+
 
     private static class UsersRowMapper implements RowMapper<UsersVO> {
         @Override
@@ -71,6 +69,9 @@ public class MyPageDAO {
             );
         }
     }
+
+
+
     public void usersSelectResult(List<UsersVO> list) {
         System.out.println("----------------------------------------------");
         System.out.println("             회원 정보");

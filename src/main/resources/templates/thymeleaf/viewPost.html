@@ -52,13 +52,14 @@
           <tr th:class="mypage-select">
               <!-- isUser가 true일 때 마이페이지와 내정보수정 링크 표시 -->
               <td th:if="${isUser}" th:class="mypage-select">
-                  <a th:href="@{/users/select}">마이페이지</a>
-                  <a th:href="@{/users/login}">로그아웃</a>
+                  <a th:class="button" th:href="@{/users/select}">마이페이지</a>
+                  <a th:class="button" th:href="@{/users/update}">내정보수정</a>
+                  <a th:class="button" th:href="@{/users/login}">로그아웃</a>
               </td>
               <!-- isUser가 false일 때 로그인과 회원가입 링크 표시 -->
               <td th:unless="${isUser}" th:class="mypage-select">
-                  <a th:href="@{/users/login}">로그인하기</a>
-                  <a th:href="@{/login/signUp}">회원가입</a>
+                  <a th:class="button" th:href="@{/users/login}">로그인하기</a>
+                  <a th:class="button" th:href="@{/login/signUp}">회원가입</a>
               </td>
           </tr>
           </tbody>
@@ -67,26 +68,41 @@
 </div>
     <div>
         <div th:each="category : ${categories}" style="display: inline-block; margin-right: 10px;">
-            <a th:href="@{/posts/board(value=${category}, type='type3')}" class="button">
+            <a th:href="@{/posts/board(value=${category}, type='type3')}" class="button-big">
                 <span th:text="${category}"></span>
             </a>
         </div>
     </div>
-<div class="post">
-    <h2>
-        <span class="postTitle" th:text="${post.title}">게시글 제목</span>
-        <span class="category" th:text="' [' + ${post.category} + ']'">[카테고리]</span>
-        <span class="author" th:text="'[작성자: ' + ${post.author} + ']'">작성자</span>
-        <span class="date" th:text="${#dates.format(post.date, 'yyyy년 MM월 dd일')}">작성일</span>
-    </h2>
-    <div class="content" th:text="${post.content}">게시글 내용</div>
-    <div class="like">
-        <form th:if="${isUser}" th:action="@{/posts/view(postno=${post.postno})}" method="post">
-            <button type="submit" class="like" th:text="${likeMark}">좋아요 <span th:text="${likeNo}">0</span></button>
-        </form>
-        <p th:unless="${isUser}" class="like" th:text="${likeMark}">좋아요 <span th:text="${likeNo}">0</span></p>
-    </div>
-</div>
+
+<table class="post">
+    <thead>
+    <tr>
+        <th colspan="2" class="post-header">
+            <span class="postTitle" th:text="${post.title}">게시글 제목</span>
+            <span class="category" th:text="' [' + ${post.category} + ']'">[카테고리]</span>
+            <span class="author" th:text="'[작성자: ' + ${post.author} + ']'">작성자</span>
+            <span class="date" th:text="${#dates.format(post.date, 'yyyy년 MM월 dd일')}">작성일</span>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td colspan="2" class="content" th:text="${post.content}">게시글 내용</td>
+    </tr>
+    <tr>
+        <td class="like-section">
+            <form th:if="${isUser}" th:action="@{/posts/view(postno=${post.postno})}" method="post">
+                <button type="submit" th:class="(${likeMark} == '♥' ? 'liked' : 'not-liked')">
+                    <img th:src="${likeMark == '♥' ? '/path/to/filled-heart.png' : '/path/to/empty-heart.png'}" alt="좋아요 버튼" />
+                </button>
+            </form>
+            <p th:unless="${isUser}" class="like-text">♡</p>
+            <span th:text="${likeNo}">좋아요 개수</span>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
 
 <div class="comments" th:each="comment : ${cList}">
     <h3>
@@ -96,7 +112,7 @@
     <p th:text="${comment.content}">댓글 내용</p>
     <div th:if="${isUser}">
         <div style="display: inline-block; margin-right: 10px;">
-        <a  class="button"  th:href="@{/posts/comment/create(commType='type2', postno =${post.postno}, commNo=${comment.commNo})}">댓글 생성</a>
+        <a  class="button"  th:href="@{/posts/comment/create(commType='type2', postno =${post.postno}, commNo=${comment.commNo})}">대댓글</a>
         </div>
         <div style="display: inline-block; margin-right: 10px;">
         <a  class="button"  th:if="${name} == ${comment.NName}" th:href="@{/posts/comment/update(subNo = ${comment.subNo})}">댓글 수정</a>
@@ -109,17 +125,19 @@
         </div>
     </div>
 </div >
-<div th:if="${isUser}">
-<a class="button"  th:href="@{/posts/comment/create(commType='type1', postno=${post.postno})}">댓글 생성</a>
+<div class="post-actions" th:if="${isUser}">
+    <a class="button" th:href="@{/posts/comment/create(commType='type1', postno=${post.postno})}">댓글 생성</a>
 </div>
-<div>
-    <a  th:if="${name} == ${post.author}" th:href="@{/posts/update(postno=${post.postno})}" class="button" style="display:inline;">글 수정</a>
+
+<div class="post-actions" style="margin-top: 10px;">
+    <a th:if="${name} == ${post.author}" th:href="@{/posts/update(postno=${post.postno})}" class="button">글 수정</a>
 
     <form th:if="${name} == ${post.author}" th:action="@{/posts/delete}" method="post" style="display:inline;">
         <input type="hidden" name="postno" th:value="${post.postno}"/> <!-- 포스트 ID를 전송 -->
-        <button  class="button"  type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">글 삭제</button>
+        <button class="button" type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">글 삭제</button>
     </form> <!-- POST 방식으로 삭제 -->
 </div>
+
 
 
 </body>

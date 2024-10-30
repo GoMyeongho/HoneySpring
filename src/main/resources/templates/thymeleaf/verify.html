@@ -2,14 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>마이페이지 비밀번호 확인</title>
+  <title>비밀번호 확인</title>
 </head>
 <body>
-<h2>마이페이지 접근을 위한 비밀번호 확인</h2>
-<form th:action="@{/users/verifyMypagePassword}" method="post">
+<h2>접근을 위한 비밀번호 확인</h2>
+<form th:action="@{/users/verify}" method="post">
   <label for="password">비밀번호:</label>
   <input type="password" id="password" name="password" required>
   <button type="submit">확인</button>
+  <input type="hidden" id="type" name="type" th:value="${type}">
 </form>
 <div th:if="${error}" th:text="${error}" style="color: red;"></div>
 </body>

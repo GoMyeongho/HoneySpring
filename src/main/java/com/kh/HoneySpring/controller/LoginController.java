@@ -26,7 +26,6 @@ public class LoginController {
 
     @PostMapping("/login")  // http://localhost:8112/users/login
     public String login(@ModelAttribute("login") UsersVO usersVO, Model model, HttpSession session) {
-        session.removeAttribute("login");
         UsersVO dbBasedUser = loginDAO.FindByUserID(usersVO.getUserID());
         if (dbBasedUser != null && usersVO.getUserPW().equals(dbBasedUser.getUserPW())) {
             dbBasedUser.setUserPW(null);    // 비밀번호 가리기
@@ -45,7 +44,8 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login(Model model, HttpSession session) {
+        session.removeAttribute("login");
         model.addAttribute("login", new UsersVO());
         return "Thymeleaf/login";
     }

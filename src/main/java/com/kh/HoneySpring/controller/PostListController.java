@@ -2,6 +2,7 @@ package com.kh.HoneySpring.controller;
 
 
 import com.kh.HoneySpring.dao.LikesDAO;
+import com.kh.HoneySpring.dao.MyPageDAO;
 import com.kh.HoneySpring.dao.PostListDAO;
 import com.kh.HoneySpring.vo.LikesVO;
 import com.kh.HoneySpring.vo.PostsVO;
@@ -23,11 +24,13 @@ public class PostListController {
     private final static List<String> SEARCHOPTIONS = List.of("제목", "작성자", "내용", "제목 + 내용");
     private final List<String> CATEGORIES;
     private final static int MAXBOARD = 10;
+    private final MyPageDAO myPageDAO;
 
-    public PostListController(PostListDAO dao, LikesDAO lDao) {
+    public PostListController(PostListDAO dao, LikesDAO lDao, MyPageDAO myPageDAO) {
         this.dao = dao;
         this.lDao = lDao;
         CATEGORIES = dao.category();
+        this.myPageDAO = myPageDAO;
     }
 // 현재는 검색을 DB로 수행하고 있지만 나중에 기능 추가로 페이지별로 따로 검색할 수 있게 만들기
     @GetMapping("/board")    // http://localhost:8112/posts/board
@@ -108,6 +111,12 @@ public class PostListController {
         model.addAttribute("type", type);
         return "thymeleaf/showBoard";
     }
+
+
+
+
+
+
         /*
         @GetMapping("/board")    // http://localhost:8112/posts/list
     public String showBoard(@ModelAttribute("login") UsersVO vo, @RequestParam(value = "type", defaultValue = "type1") String type,
@@ -252,5 +261,6 @@ public class PostListController {
         return "thymeleaf/showBoard";
     }
      */
+
 
 }

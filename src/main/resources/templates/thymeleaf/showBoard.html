@@ -34,14 +34,14 @@
           <tr th:class="mypage-select">
               <!-- isUser가 true일 때 마이페이지와 내정보수정 링크 표시 -->
               <td th:if="${isUser}" th:class="mypage-select">
-                  <a th:href="@{/users/select}">마이페이지</a>
-                  <a th:href="@{/users/update}">내정보수정</a>
-                  <a th:href="@{/users/login}">로그아웃</a>
+                  <a th:class="button" th:href="@{/users/select}">마이페이지</a>
+                  <a th:class="button" th:href="@{/users/update}">내정보수정</a>
+                  <a th:class="button" th:href="@{/users/login}">로그아웃</a>
               </td>
               <!-- isUser가 false일 때 로그인과 회원가입 링크 표시 -->
               <td th:unless="${isUser}" th:class="mypage-select">
-                  <a th:href="@{/users/login}">로그인하기</a>
-                  <a th:href="@{/login/signUp}">회원가입</a>
+                  <a th:class="button" th:href="@{/users/login}">로그인하기</a>
+                  <a th:class="button" th:href="@{/login/signUp}">회원가입</a>
               </td>
           </tr>
           </tbody>
@@ -52,7 +52,7 @@
 
 <div>
     <div th:each="category : ${categories}" style="display: inline-block; margin-right: 10px;">
-        <a th:href="@{/posts/board(value=${category}, type='type3')}" class="button">
+        <a th:href="@{/posts/board(value=${category}, type='type3')}" class="button-big">
             <span th:text="${category}"></span>
         </a>
     </div>
