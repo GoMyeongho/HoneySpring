@@ -3,31 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>회원정보 수정</title>
+  <link rel="stylesheet" th:href="@{/css/userInterface.css}">
 </head>
 <body>
+<div class="form-container">
 <h1>회원정보 수정</h1>
 
 <form action="/users/update" method="post">
 
-  <label for="userID">아이디:</label>
+  <label for="userID">아이디</label>
   <input type="text" id="userID" name="userID" th:value="${user.userID}" readonly><br>
 
-  <label for="userPW">새 비밀번호:</label>
+  <label for="userPW">새 비밀번호</label>
   <input type="password" id="userPW" name="userPW"> <button type="button" onclick="checkPassword()">확인</button><br>
 
-  <label for="rePW">비밀번호 확인:</label>
+  <label for="rePW">비밀번호 확인</label>
   <input type="password" id="rePW" name="rePW"> <button type="button" onclick="checkPasswordMatch()">확인</button><br>
 
-  <label for="nName">닉네임:</label>
+  <label for="nName">닉네임</label>
   <input type="text" id="nName" name="nName" th:value="${user.nName}" required> <button type="button" onclick="checkNickname()">중복 확인</button><br>
 
-  <label for="phone">전화번호:</label>
+  <label for="phone">전화번호</label>
   <input type="text" id="phone" name="phone" placeholder="010-0000-0000" th:value="${user.phone}" required><br>
 
-  <label for="pwLOCK">비밀번호 찾기 질문:</label>
+  <label for="pwLOCK">비밀번호 찾기 질문</label>
   <input type="text" id="pwLOCK" name="pwLOCK" th:value="${user.pwLOCK}" required><br>
 
-  <label for="pwKey">비밀번호 찾기 답변:</label>
+  <label for="pwKey">비밀번호 찾기 답변</label>
   <input type="text" id="pwKey" name="pwKey" th:value="${user.pwKey}" required><br>
 
   <button type="submit">회원정보 수정</button>
@@ -58,5 +60,6 @@ function checkNickname() {
   alert("닉네임 중복 확인을 완료했습니다.");
 }
 </script>
+</div>
 </body>
 </html>
