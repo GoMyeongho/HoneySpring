@@ -18,8 +18,10 @@ public class LoginDAO {
     }
 
     public UsersVO FindByUserID(String userID) {
+        // 아이디를 이용해 유저를 찾는 쿼리문
         String sql = "SELECT * FROM USERS WHERE USERID = ?";
 
+        // RowMapper 로
         RowMapper<UsersVO> rowMapper = new RowMapper<UsersVO>() {
             @Override
             public UsersVO mapRow(ResultSet rs, int rowNum) throws SQLException {
