@@ -22,6 +22,9 @@
   <a th:href="@{/posts/board(type='type4', value=${user.NName})}">좋아요 한 글 보기</a>
   <a th:href="@{/posts/board(type='type5',value=${user.NName})}"> / 댓글 쓴 글 보기</a>
   </div>
+  <div class="links">
+    <a th:href="@{/posts/board(type='type2', value=${user.NName})}">내 작성글 보기</a>
+  </div>
 
 <div th:if="${error}" th:text="${error}" style="color: red;"></div>
 </div>

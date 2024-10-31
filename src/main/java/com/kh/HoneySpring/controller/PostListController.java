@@ -65,7 +65,6 @@ public class PostListController {
                 System.out.println("코드 에러");
                 break;
         }
-        System.out.println(boardTemp);
         List<PostsVO> board = new ArrayList<>();
         if(searchType.equals("type1")) board = boardTemp;
         else{
