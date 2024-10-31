@@ -24,13 +24,11 @@ public class PostListController {
     private final static List<String> SEARCHOPTIONS = List.of("제목", "작성자", "내용", "제목 + 내용");
     private final List<String> CATEGORIES;
     private final static int MAXBOARD = 10;
-    private final MyPageDAO myPageDAO;
 
     public PostListController(PostListDAO dao, LikesDAO lDao, MyPageDAO myPageDAO) {
         this.dao = dao;
         this.lDao = lDao;
         CATEGORIES = dao.category();
-        this.myPageDAO = myPageDAO;
     }
 // 현재는 검색을 DB로 수행하고 있지만 나중에 기능 추가로 페이지별로 따로 검색할 수 있게 만들기
     @GetMapping("/board")    // http://localhost:8112/posts/board
@@ -67,6 +65,7 @@ public class PostListController {
                 System.out.println("코드 에러");
                 break;
         }
+        System.out.println(boardTemp);
         List<PostsVO> board = new ArrayList<>();
         if(searchType.equals("type1")) board = boardTemp;
         else{

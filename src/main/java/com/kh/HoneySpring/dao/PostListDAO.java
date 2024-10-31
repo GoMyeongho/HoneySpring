@@ -52,7 +52,7 @@ public class PostListDAO {
             {"SELECT * From VM_POSTS_PAGE WHERE NNAME = ?",
                     "SELECT * From VM_POSTS_PAGE WHERE CATE = ?",
                     "SELECT * From VM_POSTS_PAGE WHERE POSTNO IN " +
-                            "(SELECT POSTNO FROM LIKES WHERE NNAME = ?)",
+                            "(SELECT POSTNO FROM VM_LIKE WHERE NNAME = ?)",
                     "SELECT * FROM VM_POSTS_PAGE WHERE POSTNO in " +
                             "(SELECT POSTNO FROM VM_COMM WHERE NNAME = ?)"
             };
