@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class MainController {
     public String signUp(Model model) {
         model.addAttribute("signUp", new UsersVO());
         model.addAttribute("confirmPW", "");
-        return "Thymeleaf/signUp";
+        return "thymeleaf/signUp";
     }
 
     @PostMapping("/signUp")
@@ -81,19 +81,19 @@ public class MainController {
         model.addAttribute("valid", valid);
         model.addAttribute("isValid", isValid);
         model.addAttribute("isJoin", isJoin);
-        return "Thymeleaf/submitSignUp";
+        return "thymeleaf/submitSignup";
     }
 
 
 // 아이디 찾기---------------------------------------------------------------------------------------------
     @GetMapping("/findID")
     public String findID() {
-        return "Thymeleaf/findID";
+        return "thymeleaf/findID";
     }
 
     // 아이디 찾기 처리
     @PostMapping("/findID")
-    public String findID(String phone, Model model) throws SQLException {
+    public String findID(String phone, Model model){
         String userID = findIDDAO.findID(phone);
         if (userID != null) {
             String maskedID = maskUserID(userID);
@@ -101,12 +101,12 @@ public class MainController {
         } else {
             model.addAttribute("error", "해당 전화번호로 가입된 아이디가 없습니다.");
         }
-        return "Thymeleaf/showID";
+        return "thymeleaf/showID";
     }
 
 // 아이디 마스킹------------------------------------------------------------------------------------
     private String maskUserID(String userID) {
-        if (userID == null || userID.length() == 0) {
+        if (userID == null || userID.isEmpty()) {
             throw new IllegalArgumentException("사용자 ID는 비어있을 수 없습니다.");
         }
         if (userID.length() < 4) {
@@ -120,7 +120,7 @@ public class MainController {
 // 비밀번호 찾기----------------------------------------------------------------------------
     @GetMapping("/findPW")
     public String findPW() {
-        return "Thymeleaf/findPW";
+        return "thymeleaf/findPW";
     }
 
     @PostMapping("/findPW")
@@ -129,11 +129,11 @@ public class MainController {
         if (pwLOCK != null) {
             model.addAttribute("userID", userID); // 사용자 ID를 모델에 추가
             model.addAttribute("pwLOCK", pwLOCK); // 제시문을 모델에 추가
-            return "Thymeleaf/inputPwKey"; // 제시어 입력 페이지로 이동
+            return "thymeleaf/inputPWKey"; // 제시어 입력 페이지로 이동
         } else {
             // 아이디가 존재하지 않을 경우
             model.addAttribute("error", "해당 아이디로 가입된 계정이 없습니다.");
-            return "Thymeleaf/showPW"; // 결과 페이지로 이동
+            return "thymeleaf/showPW"; // 결과 페이지로 이동
         }
     }
 
@@ -141,6 +141,6 @@ public class MainController {
     public String submitPwKey(String userID, String pwKey, Model model) {
         String result = findPWDAO.findPW(userID, pwKey); // 비밀번호 찾기 처리
         model.addAttribute("result", result); // 결과를 모델에 추가
-        return "Thymeleaf/showPW"; // 결과 페이지로 이동
+        return "thymeleaf/showPW"; // 결과 페이지로 이동
     }
 }

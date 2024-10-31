@@ -101,3 +101,9 @@ button:hover {
 .links a:hover {
   text-decoration: underline;
 }
+
+.icon {
+  width: 50px;
+  height: auto;
+  margin-right: 15px;
+}

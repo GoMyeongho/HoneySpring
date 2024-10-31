@@ -6,7 +6,14 @@
   <link rel="stylesheet" th:href="@{/css/posting.css}">
 </head>
 <body class="container">
+
+
 <div class="form-container">
+
+  <a th:href="@{/posts/board}">
+    <img th:src="@{/image/honey.png}" alt="메인" class="icon">
+  </a>
+
   <h1>새 글 작성</h1>
   <form th:action="@{/posts/create}" th:object="${post}" method="post">
     <input type="hidden" th:field="*{author}">

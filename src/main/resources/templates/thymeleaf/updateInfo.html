@@ -7,7 +7,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+
 <div class="form-container">
+
+  <a th:href="@{/posts/board}">
+    <img th:src="@{/image/honey.png}" alt="메인" class="icon">
+  </a>
+
   <h2>내정보 수정</h2>
   <form th:action="@{/users/update}" th:object="${user}" method="post">
 
@@ -30,7 +36,7 @@
 
     <div class="form-group">
       <label for="nName">닉네임</label>
-      <input type="text" id="nName" th:field="*{nName}" class="form-control" placeholder="닉네임 입력">
+      <input type="text" id="nName" th:field="*{NName}" class="form-control" placeholder="닉네임 입력">
       <p th:text="${validNickname}" class="text-danger"></p>
     </div>
 

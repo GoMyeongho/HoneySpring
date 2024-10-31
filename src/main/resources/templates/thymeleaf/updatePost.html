@@ -6,7 +6,13 @@
     <link rel="stylesheet" th:href="@{/css/posting.css}">
 </head>
 <body class="container">
+
 <div class="form-container">
+
+    <a th:href="@{/posts/board}">
+        <img th:src="@{/image/honey.png}" alt="메인" class="icon">
+    </a>
+
     <h1>글 수정</h1>
     <form th:action="@{/posts/update}" th:object="${post}" method="post">
         <input type="hidden" th:field="*{postno}">

@@ -6,7 +6,13 @@
   <link rel="stylesheet" th:href="@{/css/result.css}"> <!-- CSS 파일 링크 추가 -->
 </head>
 <body>
+
 <div class="container">
+
+  <a th:href="@{/posts/board}">
+    <img th:src="@{/image/honey.png}" alt="메인" class="icon">
+  </a>
+
   <h1>아이디 찾기 결과</h1>
   <div>
     <p th:if="${result != null}" class="success">아이디 <span th:text="${result}"></span></p>

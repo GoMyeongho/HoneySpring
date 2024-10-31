@@ -34,3 +34,9 @@
     a:hover {
       text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
     }
+
+    .icon {
+        width: 50px;
+        height: auto;
+        margin-right: 15px;
+    }

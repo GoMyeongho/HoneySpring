@@ -6,7 +6,13 @@
   <link rel="stylesheet" th:href="@{/css/userInterface.css}"> <!-- CSS 파일 링크 -->
 </head>
 <body>
+
 <div class="form-container">
+
+  <a th:href="@{/posts/board}">
+    <img th:src="@{/image/honey.png}" alt="메인" class="icon">
+  </a>
+
 <h1>아이디 찾기</h1>
 <form action="#" th:action="@{/login/findID}" method="post" class="search-form">
   <label for="phone">전화번호</label>

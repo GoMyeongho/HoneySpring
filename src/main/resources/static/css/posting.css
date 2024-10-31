@@ -73,3 +73,9 @@ button {
 button:hover {
   background-color: #45a049;
 }
+
+.icon {
+  width: 50px;
+  height: auto;
+  margin-right: 15px;
+}
