@@ -4,7 +4,6 @@ import com.kh.HoneySpring.vo.LikesVO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -75,7 +74,6 @@ public class LikesDAO {
         }
         return result > 0;
     }
-
 
     private static class LikesRowMapper implements RowMapper<LikesVO> {
 

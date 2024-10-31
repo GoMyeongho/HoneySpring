@@ -1,7 +1,6 @@
 package com.kh.HoneySpring.dao;
 
 import com.kh.HoneySpring.vo.CommentsVO;
-import com.kh.HoneySpring.vo.CommentsVO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -33,7 +32,6 @@ public class CommentsDAO {
         String sql = "INSERT INTO COMMENTS (COMMNO, SUBNO, POSTNO, USERID, CCONTENT, CDATE) VALUES(?, SEQ_SUBNO.NEXTVAL, ?, ?, ?, SYSDATE)";
         int result = 0;
         try {
-
             result = jdbcTemplate.update(sql, commNo, vo.getPostNo(), vo.getUserId(), vo.getContent());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -44,7 +42,6 @@ public class CommentsDAO {
         String sql = "INSERT INTO COMMENTS (COMMNO, SUBNO, POSTNO, USERID, CCONTENT, CDATE) VALUES(SEQ_COMMNO.NEXTVAL, SEQ_SUBNO.NEXTVAL, ?, ?, ?, SYSDATE)";
         int result = 0;
         try {
-
             result = jdbcTemplate.update(sql, vo.getPostNo(), vo.getUserId(), vo.getContent());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -73,6 +70,7 @@ public class CommentsDAO {
         }
         return result > 0;
     }
+
     public CommentsVO getComment(int subNo) {
         String sql = "SELECT * FROM VM_COMM WHERE SUBNO = ?";
         List<CommentsVO> result = null;
@@ -99,5 +97,4 @@ public class CommentsDAO {
             );
         }
     }
-
 }

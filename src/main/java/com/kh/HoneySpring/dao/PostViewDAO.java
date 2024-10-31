@@ -4,7 +4,6 @@ import com.kh.HoneySpring.vo.PostsVO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -27,6 +26,7 @@ public class PostViewDAO {
         }
             return (result != null && !result.isEmpty())? result.get(0) : null;
     }
+
     public boolean updatePost(PostsVO vo){
         String sql = "UPDATE POSTS SET TITLE = ?, PCONTENT = ?, CATE = ? WHERE POSTNO = ?";
         int result = 0;

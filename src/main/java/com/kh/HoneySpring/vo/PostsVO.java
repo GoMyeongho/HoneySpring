@@ -21,6 +21,7 @@ public class PostsVO implements Comparable<PostsVO>{
     public int compareTo(PostsVO o) {
         return o.getPostno() - getPostno();
     }
+
     // 글 작성자용 생성자
     public PostsVO(String category, String author, String content, String title, int postno) {
         this.category = category;

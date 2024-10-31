@@ -13,14 +13,13 @@
             if (postDelete===1) alert('글이 삭제 되었습니다.');
             else alert('글 삭제에 실패하였습니다')
         }
-
-
 </script>
 
 <div th:class="head">
     <a th:href="@{/posts/board}">
         <img th:src="@{/image/honey.png}" alt="게시판" class="icon">
     </a>
+
     <span>
       <table th:class="mypage-table">
           <thead th:class="mypage-head">
@@ -30,6 +29,7 @@
               <th th:unless="${isUser}" class="no-login">로그인이 안되어 있습니다</th>
           </tr>
           </thead>
+
           <tbody>
           <tr th:class="mypage-select">
               <!-- isUser가 true일 때 마이페이지와 내정보수정 링크 표시 -->
@@ -48,11 +48,8 @@
     </span>
 </div>
 
-
-
 <div class="category-toggle">
     <button id="toggleButton" onclick="toggleCategories()" class="button-container">CATEGORY</button>
-
     <div id="categoryContainer" style="display: none; overflow: hidden;">
         <div class="category-content" th:each="category : ${categories}">
             <a th:href="@{/posts/board(value=${category}, type='type3')}" class="button-big">
@@ -82,6 +79,23 @@
         }
     }
 </script>
+
+<div class="sort">
+    <form th:action="@{/posts/board}" method="get" class="search-form">
+        <label for="sortOptions">정렬:</label>
+        <select id="sortOptions" th:field="*{sort}" onchange="updateSort();">
+            <option value=""></option>
+            <option th:each="option : ${sortOptions}" th:value="${option}" th:text="${option}"></option>
+        </select>
+
+        <input type="hidden" id="sort" name="sort" th:value="${sort}"/>
+        <input type="hidden" name="page" th:value="1"/>
+        <input type="hidden" name="value" th:value="${value}"/>
+        <input type="hidden" name="type" th:value="${type}"/>
+        <button type="submit" >정렬</button>
+    </form>
+</div>
+
   <div id="posts">
     <table th:class="board-table">
       <thead>
@@ -94,6 +108,7 @@
             <th th:if="${isUser}">좋아요</th>
         </tr>
       </thead>
+
       <tbody>
         <tr th:each="post, postStat : ${board}"
         th:if="${postStat.index < page * maxBoard
@@ -112,6 +127,7 @@
                   th:class="icon"  alt="좋아요" />
           </td>
         </tr>
+
         <tr th:if="${boardNo == 0}">
             <td></td>
             <td></td>
@@ -122,24 +138,31 @@
       </tbody>
     </table>
   </div>
+
   <p>현재 페이지:
       <span th:text="${page}"></span>
       <span><a th:if="${isUser}" th:class="button" th:href="@{/posts/create}">글 작성</a> </span></p>
+
 <div th:if="${boardNo > 0}">
   <a class="button" th:each="number : ${#numbers.sequence(1, boardNo)}" th:text="${number}"
      th:href="@{/posts/board(value=${value}, page=${number},
-     type=${type}, search=${search}, searchType=${searchType})}">
+     type=${type}, search=${search}, searchType=${searchType}, sort=${sort})}">
   </a>
 </div>
+
 <form th:action="@{/posts/board}" method="get" class="search-form">
     <label for="searchOptions">검색:</label>
     <select id="searchOptions" th:field="*{searchType}" onchange="updateType()">
         <option value=""></option>
         <option th:each="option : ${searchOptions}" th:value="${option}" th:text="${option}"></option>
     </select>
+
     <input type="text" id="search" name="search" placeholder="검색내용을 입력하세요" th:value="${search}" />
     <input type="hidden" id="searchType" name="searchType" th:value="${searchType}"/>
     <input type="hidden" name="page" th:value="1"/>
+    <input type="hidden" name="value" th:value="${value}"/>
+    <input type="hidden" name="type" th:value="${type}"/>
+    <input type="hidden" name="sort" th:value="${sort}"/>
     <button type="submit">검색</button>
 </form>
 
@@ -160,6 +183,19 @@
       } else {
         typeInput.value = 'type1'; // 기본값
       }
+    }
+    function updateSort() {
+        const selectedOption = document.getElementById('sortOptions').value;
+        const typeInput = document.getElementById('sort');
+
+        // 선택된 옵션에 따라 type 값을 설정합니다.
+        if (selectedOption === '인기순') {
+            typeInput.value = 'type2';
+        } else if (selectedOption === '오래된순') {
+            typeInput.value = 'type3';
+        } else {
+            typeInput.value = 'type1'; // 기본값
+        }
     }
   </script>
 </body>

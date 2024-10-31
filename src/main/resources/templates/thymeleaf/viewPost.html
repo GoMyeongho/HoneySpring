@@ -38,6 +38,7 @@
     <a th:href="@{/posts/board}">
         <img th:src="@{/image/honey.png}" alt="메인" class="icon">
     </a>
+
     <span>
       <table th:class="mypage-table">
           <thead th:class="mypage-head">
@@ -47,6 +48,7 @@
               <th th:unless="${isUser}" class="no-login">로그인이 안되어 있습니다</th>
           </tr>
           </thead>
+
           <tbody>
           <tr th:class="mypage-select">
               <!-- isUser가 true일 때 마이페이지와 내정보수정 링크 표시 -->
@@ -109,10 +111,12 @@
         </th>
     </tr>
     </thead>
+
     <tbody>
     <tr>
         <td colspan="2" class="content" th:text="${post.content}">게시글 내용</td>
     </tr>
+
     <tr>
         <td class="like-section">
             <form th:if="${isUser}" th:action="@{/posts/view/like}" method="post">
@@ -121,6 +125,7 @@
                     <img th:src="${likeMark == '♥' ? '/image/filledHeart.png' : '/image/emptyHeart.png'}" alt="좋아요 버튼" />
                 </button>
             </form>
+
             <img th:unless="${isUser}" style="width: 40px; height: 40px;"
                  th:src="@{/image/filledHeart.png}" alt="좋아요 버튼" >
             <span th:text="${likeNo}">좋아요 개수</span>
@@ -129,7 +134,6 @@
     </tr>
     </tbody>
 </table>
-
 
 <div class="comments" th:each="comment : ${cList}">
     <h3>
@@ -164,6 +168,7 @@
         </div>
     </div>
 </div >
+
 <div th:if="${isUser}">
     <form  style="display: inline-block; margin-right: 10px; margin-top: 10px"
            th:action="@{/posts/view(postno=${post.postno})}" method="get">
@@ -172,6 +177,7 @@
         <button class="button" type="submit" >댓글 작성</button>
     </form>
 </div>
+
 <div class="post-actions" style="margin-top: 10px;">
     <a th:if="${name==post.author}" th:href="@{/posts/update(postno=${post.postno})}" class="button">글 수정</a>
 
@@ -188,6 +194,7 @@
         <input type="hidden" th:field="*{postNo}">
         <input type="hidden" th:field="*{commNo}">
         <input type="hidden" th:field="*{subNo}">
+
         <div>
             <label for="content">댓글 내용 입력</label>
             <textarea id="content" maxlength="200" placeholder="내용을 입력 해 주세요(최대 200자)" th:field="*{content}"></textarea>
@@ -195,6 +202,5 @@
     </div>
     </form>
 </div>
-
 </body>
 </html>

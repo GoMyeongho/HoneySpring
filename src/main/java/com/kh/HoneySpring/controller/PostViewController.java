@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import java.util.Collections;
 import java.util.List;
 
@@ -70,6 +69,7 @@ public class PostViewController {
         model.addAttribute("name", (vo!=null)?vo.getNName():null);
         return "thymeleaf/viewPost";
     }
+
     @PostMapping(value = "/view/like")
     public String like(@SessionAttribute("login") UsersVO vo, @RequestParam("postno") int postno, RedirectAttributes redirectAttributes) {
         List<LikesVO> lList = lDao.likeList(postno);
@@ -118,43 +118,7 @@ public class PostViewController {
         redirectAttributes.addFlashAttribute("deleteSuccess", (success)?1:2);
         return "redirect:/posts/board";
     }
-/*
-    @GetMapping("/comment/create")
-    public String createComment(@SessionAttribute("login") UsersVO vo, @RequestParam("commType")String type,
-                                @RequestParam(value = "commNo", required = false) Integer commNo,
-                                @RequestParam("postno") int postNo, Model model) {
-        CommentsVO comm = new CommentsVO();
-        comm.setCommNo((type.equals("type1") ? 0 : commNo));
-        comm.setNName(vo.getNName());
-        comm.setUserId(vo.getUserID());
-        comm.setPostNo(postNo);
-        model.addAttribute("comment", comm);
-        return "thymeleaf/createComment";
-    }
 
-    @PostMapping("/comment/create")
-    public String submitComment(@ModelAttribute("comment") CommentsVO vo, @RequestParam(value = "commNo", defaultValue = "0") int commNo, RedirectAttributes redirectAttributes) {
-        boolean success;
-        if (commNo == 0) success = cDao.addComment(vo);
-        else success = cDao.addComment(vo, commNo);
-        redirectAttributes.addFlashAttribute("createCommSuccess", (success)?1:2);
-        return "redirect:/posts/view?postno="+vo.getPostNo();
-    }
-
-    @GetMapping("/comment/update")
-    public String updateComment(@RequestParam("subNo") int subno, Model model) {
-        CommentsVO vo = cDao.getComment(subno);
-        model.addAttribute("comment", vo);
-        return "thymeleaf/updateComment";
-    }
-
-    @PostMapping("/comment/update")
-    public String submitUpdateComment(@ModelAttribute("comment") CommentsVO vo, RedirectAttributes redirectAttributes) {
-        boolean success = cDao.updateComment(vo);
-        redirectAttributes.addFlashAttribute("updateCommSuccess", (success)?1:2);
-        return "redirect:/posts/view?postno="+vo.getPostNo();
-    }
-*/
     @PostMapping("/comment/delete")
     public String submitDeleteComment(@RequestParam("subNo") int subNo, RedirectAttributes redirectAttributes) {
         CommentsVO vo = cDao.getComment(subNo);
@@ -162,6 +126,5 @@ public class PostViewController {
         redirectAttributes.addFlashAttribute("deleteCommSuccess", (success)?1:2);
         return "redirect:/posts/view?postno="+vo.getPostNo();
     }
-
 
 }
