@@ -132,13 +132,13 @@
 }
 
 .category-content {
-    transform: translateY(-20px); /* 위쪽으로 살짝 이동 */
+    transform: translateX(-600px); /* 위쪽으로 살짝 이동 */
     opacity: 0; /* 초기 투명도 설정 */
-    transition: transform 0.3s ease, opacity 0.3s ease; /* 변형 및 투명도에 애니메이션 추가 */
+    transition: transform 1s ease, opacity 1s ease; /* 변형 및 투명도에 애니메이션 추가 */
 }
 
 .category-container-active .category-content {
-    transform: translateY(0); /* 원래 위치로 복귀 */
+    transform: translateX(0); /* 원래 위치로 복귀 */
     opacity: 1; /* 불투명으로 변경 */
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
