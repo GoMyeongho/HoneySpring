@@ -21,7 +21,7 @@ public class LoginDAO {
         // 아이디를 이용해 유저를 찾는 쿼리문
         String sql = "SELECT * FROM USERS WHERE USERID = ?";
 
-        // RowMapper 로
+        // RowMapper 로 생성자를 통해 ID, PW, UserNickName 을 입력
         RowMapper<UsersVO> rowMapper = new RowMapper<UsersVO>() {
             @Override
             public UsersVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -32,7 +32,7 @@ public class LoginDAO {
                 return usersVO;
             }
         };
-
+        // 위 쿼리 RowMapper, UserID 찾기 실패시 예외처리
         try {
             return jdbcTemplate.queryForObject(sql, rowMapper, userID);
         } catch (EmptyResultDataAccessException e) {    // Try Catch 구문 추가

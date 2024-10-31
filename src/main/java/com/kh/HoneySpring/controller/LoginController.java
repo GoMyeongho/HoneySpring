@@ -26,15 +26,17 @@ public class LoginController {
 
     @PostMapping("/login")  // http://localhost:8112/users/login
     public String login(@ModelAttribute("login") UsersVO usersVO, Model model, HttpSession session) {
+        // 기존에 DB 내에 있는 매개변수를 통해 페이지내에서 입력받은 ID 와 PW 비교
         UsersVO dbBasedUser = loginDAO.FindByUserID(usersVO.getUserID());
+
+        // 로그인 입력시 Null 값이 오지않고 기존에 있는 데이터베이스와 새로 GetMapping 에서 전달받은 아이디 비밀번호와 비교
         if (dbBasedUser != null && usersVO.getUserPW().equals(dbBasedUser.getUserPW())) {
-            dbBasedUser.setUserPW(null);    // 비밀번호 가리기
+            dbBasedUser.setUserPW(null);
             session.setAttribute("login", dbBasedUser);
-            return "redirect:/posts/board"; // 로그인 성공 시 posts/board로 리디렉션
+            return "redirect:/posts/board"; // 로그인 성공 시 posts/board 로 리디렉션
         } else {
-            model.addAttribute("login", new UsersVO());
-            model.addAttribute("에러", "아이디, 비밀번호가 올바르지 않습니다.");
-            return "redirect:/users/login"; // 실패 시 로그인 페이지로 리디렉션
+            model.addAttribute("error", "아이디, 비밀번호가 올바르지 않습니다.");   // 로그인 실패시 에러표시
+            return "Thymeleaf/login"; // 실패 시 로그인 페이지로
         }
     }
 
