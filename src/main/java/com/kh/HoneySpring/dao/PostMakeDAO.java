@@ -4,8 +4,6 @@ import com.kh.HoneySpring.vo.PostsVO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public class PostMakeDAO {

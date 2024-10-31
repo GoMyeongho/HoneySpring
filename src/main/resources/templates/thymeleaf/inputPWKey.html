@@ -12,7 +12,7 @@
 <form th:action="@{/login/inputPWKey}" method="post">
   <input type="hidden" name="userID" th:value="${userID}" />
   <input type="text" id="pwKey" name="pwKey" placeholder="제시어를 입력 해 주세요" required />
-  <button type="submit">제시어 확인</button>
+  <button type="submit">비밀번호 확인</button>
   <br>
   <button onclick="location.href='/users/login';">로그인 페이지로</button>
 </form>
