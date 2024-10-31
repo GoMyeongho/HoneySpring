@@ -93,12 +93,28 @@
     transition: background-color 0.3s, transform 0.3s; /* 전환 효과 */
 }
 
-/* 버튼 hover 효과를 유지하려면 아래 규칙을 추가 */
-.button:hover, .button-big:hover {
+.category-toggle {
+    display: flex; /* Flexbox를 사용하여 수평 정렬 */
+    align-items: center; /* 수직 정렬을 중앙으로 설정 */
+}
+
+#categoryContainer {
+    display: flex; /* Flexbox로 가로 정렬 */
+    flex-wrap: wrap; /* 줄 바꿈을 허용 */
+}
+
+.category-content {
+    display: flex; /* Flexbox로 가로 정렬 */
+    margin-right: 10px; /* 카테고리 항목 간의 간격 */
+}
+
+/* 기존 스타일 유지 */
+.button:hover, .button-big:hover, .button-container:hover {
     background-color: #F94144; /* 마우스 오버 시 색상 변경 */
     transform: scale(1.05); /* 마우스 오버 시 크기 증가 효과 */
 }
-.button-big {
+
+.button-big, .button-container{
     display: inline-block; /* 버튼처럼 보이도록 inline-block 설정 */
     padding: 5px 10px; /* 여백 */
     font-size: 20px; /* 글자 크기 */
@@ -108,10 +124,25 @@
     border: 2px solid #F94144; /* 테두리 */
     border-radius: 5px; /* 둥근 모서리 */
     text-decoration: none; /* 밑줄 제거 */
-    transition: background-color 0.3s, transform 0.3s; /* 전환 효과 */
-    margin-outside: 10px;
-    margin-top: 20px;
+    transition: background-color 0.3s, transform 0.3s ease; /* 전환 효과 */
 }
+.button-container {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.category-content {
+    transform: translateY(-20px); /* 위쪽으로 살짝 이동 */
+    opacity: 0; /* 초기 투명도 설정 */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* 변형 및 투명도에 애니메이션 추가 */
+}
+
+.category-container-active .category-content {
+    transform: translateY(0); /* 원래 위치로 복귀 */
+    opacity: 1; /* 불투명으로 변경 */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
 
 
 .head {
@@ -123,6 +154,10 @@
     width: 50px;
     height: auto;
     margin-right: 15px;
+    transition: transform 0.3s;
+}
+.icon:hover{
+    transform: scale(1.05);
 }
 
 .mypage-table {

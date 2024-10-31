@@ -49,13 +49,39 @@
 </div>
 
 
-<div>
-    <div th:each="category : ${categories}" style="display: inline-block; margin-right: 10px;">
-        <a th:href="@{/posts/board(value=${category}, type='type3')}" class="button-big">
-            <span th:text="${category}"></span>
-        </a>
+
+<div class="category-toggle">
+    <button id="toggleButton" onclick="toggleCategories()" class="button-container">CATEGORY</button>
+
+    <div id="categoryContainer" style="display: none; overflow: hidden;">
+        <div class="category-content" th:each="category : ${categories}">
+            <a th:href="@{/posts/board(value=${category}, type='type3')}" class="button-big">
+                <span th:text="${category}"></span>
+            </a>
+        </div>
     </div>
 </div>
+
+<script>
+    function toggleCategories() {
+        const categoryContainer = document.getElementById('categoryContainer');
+        const toggleButton = document.getElementById('toggleButton');
+
+        // 카테고리 컨테이너의 표시 상태 토글
+        if (categoryContainer.style.display === 'none') {
+            categoryContainer.style.display = 'flex'; // flex로 변경하여 수평 정렬
+            setTimeout(() => {
+                categoryContainer.classList.add('category-container-active'); // 애니메이션 적용
+            }, 10); // 약간의 지연 후 클래스 추가
+        } else {
+            categoryContainer.classList.remove('category-container-active'); // 애니메이션 제거
+            setTimeout(() => {
+                categoryContainer.style.display = 'none'; // display 속성 숨김
+            }, 300); // 애니메이션이 끝난 후 숨김
+            toggleButton.classList.remove('moved'); // 오른쪽으로 이동하는 클래스 제거
+        }
+    }
+</script>
   <div id="posts">
     <table th:class="board-table">
       <thead>

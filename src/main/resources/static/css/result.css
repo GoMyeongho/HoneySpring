@@ -40,3 +40,6 @@
         height: auto;
         margin-right: 15px;
     }
+    .icon:hover{
+        transform: scale(1.05);
+    }
